@@ -1,0 +1,8 @@
+.Nav.active {
+    color: blue;
+    font-weight: bold;
+  }
+
+  .Navbar{
+    border-bottom: 0.75px solid #E4E4E4;
+  }

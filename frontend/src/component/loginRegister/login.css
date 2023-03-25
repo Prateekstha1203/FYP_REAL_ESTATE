@@ -1,7 +1,12 @@
 section {
-    max-height: 90vh;
+    height: 100vh;
+    width: 100vw;
 }
-
+.loginTop{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .logRegForm{
     width: 100%;
 }

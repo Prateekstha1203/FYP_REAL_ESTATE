@@ -13,7 +13,7 @@ const Header = () => {
         {/* buttons */}
         <div className="flex items-center gap-6">
           <Link to="/login"className="hover:bg-violet-800 transition"> Log In</Link>
-          <Link to="/register" className="bg-violet-800 hover:bg-violet-800 text-white px-4 py-3 rounded-lg transition"> Sign Up</Link>
+          <Link to="/register" className="button1"> Sign Up</Link>
         </div>
       </div>
     </header>

@@ -1,37 +1,88 @@
 const mongoose = require("mongoose");
 
+
+
 const productSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:[true, "Please enter a name of a product"],
+    propertyTitle: {
+        type: String,
+        required: [true, "Please enter Listing Name."],
         trim: true,
-        maxLength:[20, "Product name not exceed than 20 characters"]
-    },
-    description:{
-        type:String,
-        required:[true, "Please add a description of your product"],
-        maxlength:[4000,"Description is can not exceed than 4000 characters"]
-    },
-    price:{
-        type:Number,
-        required: [true, "Please add a price for your product"],
-        maxLength:[8, "Price can not exceed than 8 characters"],
-    },
-    offerPrice:{
-        type:String,
-        maxLength: [4, "Discount price can not exceed than 4 characters"],
-    },
-    color:{
+        maxLength: [30, "Product name not exceed than 30 characters."],
+      },
+      sellerID: {
+        type: mongoose.Schema.ObjectId,
+        required: false,
+      },
+      propertyType: {
         type: String,
-    },
-    size:{
+        enum: ["Sale", "Rent"],
+        required: true,
+      },
+      category: {
         type: String,
-    },
-    ratings:{
+        enum: ["Banglow", "Apartment","Villa"],
+        required: true,
+      },
+      description: {
+        type: String,
+        required: [true, "Please add a description of your Listing"],
+        maxlength: [4500, "Description is can not exceed than 4500 characters."],
+      },
+      address: {
+        type: String,
+        required: true,
+      },
+      location: {
+        type: {
+          type: String,
+          enum: ["Point"],
+          required: false,
+        // },
+        // coordinates: {
+        //   type: [Number],
+        //   required: false,
+        },
+      },
+    
+      bedrooms: {
+        type: Number,
+        required: true,
+      },
+      bathrooms: {
+        type: Number,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: [true, "Please add a price for your Listing"],
+        maxLength: [8, "Price can not exceed than 8 characters."],
+      },
+      ratings: {
         type: Number,
         default: 0,
-    },
-    images:[
+      },
+      propertyFace:{
+        type: String,
+          required: true,
+      },
+      buildYear:{
+        type:String,
+        required:true,
+      },
+      
+      areaSqFt: {
+        type: Number,
+        required: true,
+      },
+      parking:{
+        type:String,
+        required: true,
+      },
+      isFurnished:{
+        type:String,
+        required:true,
+      },
+      images:[
         {
             public_id:{
                 type:String,
@@ -43,52 +94,38 @@ const productSchema = new mongoose.Schema({
             },
         }
     ],
-    category:{
-        type: String,
-        required:[true,"Please add a category of your product"],
-    },
-    Stock:{
+      numOfReviews: {
         type: Number,
-        required:[true,"Please add some stoke for your product"],
-        maxLength: [3, "Stock can not exceed than 3 characters"],
-    },
-  numOfReviews:{
-      type: Number,
-      default: 0
-  },
-  reviews:[
-      {
-          user: {
-              type:mongoose.Schema.ObjectId,
-              ref:"User",
-              required: true,
-          },
-          name:{
-              type: String,
-              required: true,
-          },
-          rating:{
-              type: Number,
-              required: true,
-          },
-          comment:{
-              type:String,
-          },
-          time:{
-              type: Date,
-              default: Date.now()
-          },
+        default: 0,
       },
-  ],
-  user:{
-      type: mongoose.Schema.ObjectId,
-      ref:"User",
-    //   required: true
-  },
-  createAt:{
-      type:Date,
-      default: Date.now()
-  }
-})
+      reviews: [
+        {
+          user: {
+            type: mongoose.Schema.ObjectId,
+            ref: "User",
+            required: true,
+          },
+          name: {
+            type: String,
+            required: true,
+          },
+          rating: {
+            type: Number,
+            required: true,
+          },
+          comment: {
+            type: String,
+          },
+          time: {
+            type: Date,
+            default: Date.now(),
+          },
+        },
+      ],
+      createAt: {
+        type: Date,
+        default: Date.now(),
+      },
+    });
 
 module.exports = mongoose.model("Product",productSchema);

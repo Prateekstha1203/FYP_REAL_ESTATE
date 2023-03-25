@@ -14,30 +14,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-@layer base {
-  body {
-    @apply font-primary bg-gray-200;
-  }
-
-  .font-primary {
-    font-family: "Helvetica Neue", sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-  }
-  .dropdown {
-    @apply w-full lg:max-w-[296px] cursor-pointer flex gap-1;
-  }
-  .dropdown-btn {
-    @apply flex h-[64px] items-center px-[18px] border rounded-lg text-slate-800 justify-between;
-  }
-  .dropdown-icon-primary {
-    @apply text-2xl mr-[18px] text-violet-700;
-  }
-  .dropdown-icon-secondary {
-    @apply text-2xl text-violet-700 ml-auto;
-  }
-  /* .dropdown-menu {
-    @apply px-6 py-8 text-[15px] space-y-6 shadow-md bg-white absolute w-full z-10 list-none rounded-b-lg text-slate-900;
-  } */
-  
-}

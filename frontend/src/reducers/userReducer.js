@@ -41,6 +41,13 @@ import {
   USER_DETAILS_SUCCESS,
 } from "../constans/userContans";
 
+
+const initialState = {
+  token: localStorage.getItem('token'),
+  isAuthenticated:localStorage.getItem('token'),
+  isLoading: false,
+  isRegistered: false
+}
 export const userReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -53,11 +60,13 @@ export const userReducer = (state = { user: {} }, action) => {
     case LOGIN_SUCCESS:
     case REGISTER_USER_SUCCESS:
     case LOAD_USER_SUCCESS:
+      
       return {
         ...state,
         loading: false,
         isAuthenticated: true,
         user: action.payload,
+        
       };
 
     case LOGOUT_SUCCESS:

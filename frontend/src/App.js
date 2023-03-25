@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import Home from "./component/Home/Home";
 import WebFont from "webfontloader";
@@ -24,13 +25,15 @@ import Register from "./component/loginRegister/Register";
 import Login from "./component/loginRegister/Login";
 //import Login from "./component/loginRegister/Login";
 //import LoginSignup from "./component/Authentication/LoginSignup";
+
+import Team from './component/Home/userDashboard/Team/Team'
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
   return (
     <Router>
       {isAuthenticated && <UserData user={user} />}
-
+    
       <HouseContextProvider>
         <Switch>
           <Route exact path="/" component={Home} />

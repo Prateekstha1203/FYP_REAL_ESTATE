@@ -1,0 +1,26 @@
+
+.imgCard{
+    background-image: url("https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
+    height: 25vh;
+    background-size: cover;
+}
+.rentBtn{
+    border:none;
+    background-color:#5b21b6d9;
+    color:white;
+    width:100px;
+    border-radius: 6px;
+}
+.build{
+    transform: translateY(-600px);
+    background-color: bisque;
+    border-radius: 4px;
+}
+.myCol{
+    transform: translateY(65px);
+}
+.location{
+    font-size:10px;
+    color:darkgray;
+    font-weight: 700;
+}

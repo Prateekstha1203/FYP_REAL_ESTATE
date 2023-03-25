@@ -43,7 +43,7 @@ const Login = ( location) => {
         <Loader />
       ) : (
         <>
-          <section className="background-radial-gradient overflow-hidden">
+          <section className="background-radial-gradient loginTop">
             <style
               dangerouslySetInnerHTML={{
                 __html:
