@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "../../../assets/img/house-banner.png";
-import Search from "../userDashboard/Search";
+// import Search from "../userDashboard/Search";
 const Banner = () => {
   return (
     <section className="py-6 h-full max-h-[640px] mb-8 xl:mb-24">
@@ -19,7 +19,7 @@ const Banner = () => {
           <img src={Image} alt=""></img>
         </div>
       </div>
-      <Search />
+      {/* <Search /> */}
     </section>
   );
 };

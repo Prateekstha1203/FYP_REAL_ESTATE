@@ -2,15 +2,14 @@ import React from "react";
 import "./login.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast , ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { login, clearErrors } from "../../actions/userAction";
 import Loader from "../../more/Loader";
-import { useHistory } from "react-router-dom"; 
+import { useHistory } from "react-router-dom";
 
-
-const Login = ( location) => {
-    const dispatch = useDispatch();
-    const history = useHistory();
+const Login = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.user
@@ -24,7 +23,6 @@ const Login = ( location) => {
     dispatch(login(loginEmail, loginPassword));
   };
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -33,7 +31,7 @@ const Login = ( location) => {
 
     if (isAuthenticated) {
       history.push("/");
-      toast.success("Successfully login to home page.")
+      toast.success("Successfully login to home page.");
     }
   }, [dispatch, error, alert, history, isAuthenticated]);
 
@@ -59,17 +57,16 @@ const Login = ( location) => {
                   >
                     The best offer <br />
                     <span style={{ color: "hsl(218, 81%, 75%)" }}>
-                      for your business
+                      for your future home.
                     </span>
                   </h1>
                   <p
                     className="mb-4 opacity-70"
                     style={{ color: "hsl(218, 81%, 85%)" }}
                   >
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Temporibus, expedita iusto veniam atque, magni tempora
-                    mollitia dolorum consequatur nulla, neque debitis eos
-                    reprehenderit quasi ab ipsum nisi dolorem modi. Quos?
+                    Real estate is not about selling houses, it's about making
+                    dreams come true and building lasting relationships with our
+                    clients.
                   </p>
                 </div>
                 <div className="col-lg-6 mb-5 mb-lg-0 position-relative">

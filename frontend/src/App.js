@@ -23,10 +23,6 @@ import AllReviews from "../../frontend/src/component/Admin/AllReviews";
 import HouseContextProvider from "./component/Home/userDashboard/HouseContext";
 import Register from "./component/loginRegister/Register";
 import Login from "./component/loginRegister/Login";
-//import Login from "./component/loginRegister/Login";
-//import LoginSignup from "./component/Authentication/LoginSignup";
-
-import Team from './component/Home/userDashboard/Team/Team'
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
