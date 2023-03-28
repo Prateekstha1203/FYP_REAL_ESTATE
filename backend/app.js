@@ -19,15 +19,13 @@ if(process.env.NODE_ENV!=="PRODUCTION"){
     })}
 
 // Route imports
-const product = require("./routes/ProductRoute");
+const property = require("./routes/PropertyRoute");
 const user = require("./routes/UserRoute");
-const cart = require("./routes/WishListRoute");
 
-app.use("/",product);
+app.use("/",property);
 
 app.use("/",user);
 
-app.use("/",cart);
 
 app.use(express.static(path.join(__dirname,"../frontend/build")));
 

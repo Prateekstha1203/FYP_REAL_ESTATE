@@ -103,7 +103,7 @@ const Footer = () => {
             <h5>Buiseness</h5>
              <Link to="/creator"><h3>Create A Seller Account</h3></Link>
              <Link to="/creator"><h3>Seller Rules</h3></Link>
-             <Link to="/Products"><h3>View Shop</h3></Link>
+             <Link to="/Properties"><h3>View Shop</h3></Link>
              <Link to="/support"><h3>Report us</h3></Link>
        </div>
       {/* Footer 5th part */}

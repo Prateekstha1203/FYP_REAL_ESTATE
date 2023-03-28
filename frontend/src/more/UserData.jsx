@@ -17,9 +17,8 @@ import { logout } from "../actions/userAction";
 import { useRef } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
-const UserData = ({ user }) => {
+const UserData  = ({ user }) => {
 
-  const { favouriteItems } = useSelector((state) => state.favourite);
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
@@ -36,17 +35,7 @@ const UserData = ({ user }) => {
 
   const options = [
     { icon: <HomeIcon />, name: "Home", func: home },
-    {
-      icon:
-          <HeartIcon 
-          style={{
-            color: favouriteItems.length === 0 ? "" : "tomato",
-           }}
-          />,
-      name:
-      `Favourite (${favouriteItems.length})`,
-      func: favourite,
-    },
+    
     { icon: <PersonIcon />, name: "Profile", func: account },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
@@ -71,9 +60,6 @@ const UserData = ({ user }) => {
   }
   function home() {
     history.push("/");
-  }
-  function favourite() {
-    history.push("/favourites");
   }
   function account() {
     history.push("/me");

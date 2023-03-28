@@ -36,11 +36,11 @@ const Sidebar = () => {
           <DashboardIcon /> Dashboard
         </p>
       </Link>
-          <Link to="/admin/products">
+          <Link to="/admin/properties">
               <p className="Dashboard__item"><PostAddIcon /> All Products</p>
           </Link>
 
-          <Link to="/admin/product">
+          <Link to="/admin/property">
              <p><AddIcon />Create Product</p>
           </Link>
 

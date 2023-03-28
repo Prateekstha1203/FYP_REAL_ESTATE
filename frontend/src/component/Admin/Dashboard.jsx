@@ -9,29 +9,28 @@ import Chart from 'chart.js/auto';
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../../more/Metadata.js";
 import Loading from "../../more/Loader.js";
-import { getAdminProduct } from "../../actions/ProductActions.js";
+import { getAdminProperty } from "../../actions/PropertyActions.js";
 import { getAllUsers } from "../../actions/userAction.js";
 
 const Dashboard = () => {
 
   const dispatch = useDispatch();
 
-  const { products,loading } = useSelector((state) => state.products);
+  const { properties,loading } = useSelector((state) => state.properties);
 
 
   const { users } = useSelector((state) => state.allUsers);
 
-   let outOfStock = 0;
      
-   products &&
-    products.forEach((item) => {
-      if (item.Stock === 0) {
-        outOfStock += 1;
-      }
+  properties &&
+  properties.forEach((listing) => {
+      // if (listing === 0) {
+      //   // outOfStock += 1;
+      // }
     });
 
     useEffect(() => {
-        dispatch(getAdminProduct());
+        dispatch(getAdminProperty());
         dispatch(getAllUsers());
       }, [dispatch]);    
 

@@ -20,8 +20,8 @@ const SearchProperty = () => {
       <h1>Let me Find your dream place right now</h1>
       <h3>Search the best selection of real estate</h3>
       </div>
-      <form onSubmit={handleSearch}>
-        <input
+      <form onSubmit={handleSearch} className="searchForm">
+        <input className="searchInput"
           type="search"
           placeholder="Enter your property Address"
           value={address}

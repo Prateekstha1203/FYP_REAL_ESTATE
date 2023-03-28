@@ -70,17 +70,17 @@ function Header() {
                 </Link>
                 <ul className="dropdown-menu dropdown-menu-end fade-down">
                   <li>
-                    <Link className="dropdown-item" to="/product/sell">
+                    <Link className="dropdown-item" to="/property/sell">
                       Sell
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/product/rent">
+                    <Link className="dropdown-item" to="/property/rent">
                       Rent
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/products">
+                    <Link className="dropdown-item" to="/property">
                       All Properties
                     </Link>
                   </li>
