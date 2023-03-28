@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { clearErrors, getProduct } from "../../actions/ProductActions";
+import SearchProperty from "./userDashboard/Search/SearchBar";
 
 //  import Properties from "../User/Rent/Properties";
 const Home = () => {
@@ -26,15 +27,15 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <Banner />
+      <SearchProperty />
 
-      <h2 className="homeHeading">Featured Products</h2>
+      {/* <h2 className="homeHeading">Featured Products</h2>
       <div className="container" id="container">
         {products &&
           products.map((product) => (
             <Productcard key={product._id} product={product} />
           ))}
-      </div>
+      </div> */}
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

@@ -17,17 +17,11 @@ exports.createUser = catchAsyncErrors(async (req, res, next) => {
         .status(400)
         .json({ success: false, message: "User already exists" });
     }
-
-    // const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-    //   folder: "avatars",
-    // });
-
     user = await User.create({
       name,
       email,
       mobile,
       password,
-      // avatar: { public_id: myCloud.public_id, url: myCloud.secure_url },
     });
     
     sendToken(user, 201, res);

@@ -40,9 +40,9 @@ function Header() {
       {/* navbar */}
       <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container">
-          <a className="navbar-brand" href="index.html">
+          <Link className="navbar-brand" to="/">
             <img src={Logo}></img>
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
