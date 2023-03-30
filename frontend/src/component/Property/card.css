@@ -1,24 +1,102 @@
-.imgCard{
-    height: 25vh;
-    background-size: cover;
+.cardDesign {
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 0;
 }
-.rentBtn{
-    border:none;
-    background-color:#5b21b6d9;
-    color:white;
-    width:100px;
-    border-radius: 6px;
+
+.wishlist svg {
+    width: 40px;
+    height: 40px;
+  }
+.wishlist {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
-.build{
-    transform: translateY(-600px);
-    background-color: bisque;
-    border-radius: 4px;
+
+.imageDiv {
+  position: relative;
 }
-.myCol{
-    transform: translateY(65px);
+img {
+  height: 100%;
+  width: 100%;
 }
-.location{
-    font-size:10px;
-    color:darkgray;
-    font-weight: 700;
+.area {
+  color: #374151;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform:uppercase;
+  margin: 0;
+}
+p {
+  margin: 0.5rem 0;
+}
+.price {
+  color: #111827;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  
+}
+.contentDiv{
+    padding: 0 1rem;
+}
+.type {
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.002em;
+  text-transform: uppercase;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  padding: 8px 12px;
+  background-color: rgba(0, 0, 0, 0.336);
+  color: #ffffff;
+}
+
+
+
+.amenties {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  color: #374151;
+  border-top-width: 1px;
+  border-color: #d1d5db;
+}
+.bedroom-container {
+  display: inline-flex;
+  flex: 1 1 0%;
+  align-items: center;
+}
+
+svg {
+  margin-right: 0.75rem;
+  color: #4b5563;
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+.bedroom {
+  color: #111827;
+  font-weight: 700;
+}
+.bathroom-container {
+  display: inline-flex;
+  flex: 1 1 0%;
+  align-items: center;
+}
+.bathroom {
+  color: #111827;
+  font-weight: 700;
+}
+
+
+.wishlistBtn{
+  margin-top: 8.2rem;
 }

@@ -11240,7 +11240,7 @@ raw-body@2.5.1:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-alert@^7.0.3:
+react-alert@7.0.3:
   version "7.0.3"
   resolved "https://registry.npmjs.org/react-alert/-/react-alert-7.0.3.tgz"
   integrity sha512-cZ2ZhxytECTxljDfBKpQmwWbfJQFzFf2Qf03L/IB5shbEXtWhDD2JjiW60rwmKT1oZoU+GEnUQw5MFM5+f0B6A==

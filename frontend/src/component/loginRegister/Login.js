@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { login, clearErrors } from "../../actions/userAction";
 import Loader from "../../more/Loader";
 import { useHistory } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -107,7 +107,7 @@ const Login = () => {
                           </div>
                           <div className="form-row">
                             <div className="col">
-                              <div className="input-group">
+                              <div className="input-group mb-3">
                                 <input
                                   type="password"
                                   name="password"
@@ -128,6 +128,16 @@ const Login = () => {
                               </div>
                             </div>
                           </div>
+                          <div className="form-row mb-0">
+                            <div className="col">
+                              <div className="d-flex justify-content-end align-items-center  forget">
+                                <Link to="/password/forgot">
+                                  Forget Password ?
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
+
                           <div className="form-row">
                             <div className="col-md-12">
                               <div className="col-md-12">

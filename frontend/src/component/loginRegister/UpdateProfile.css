@@ -1,0 +1,15 @@
+
+  #updateProfileImage > img {
+    width: 3rem;
+    border-radius: 100%;
+    height: 3rem;
+  }
+  
+  @media screen and (max-width: 600px) {
+    #updateProfileImage > img {
+      width: 8vmax;
+      border-radius: 100%;
+    }
+  
+   
+  }

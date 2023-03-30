@@ -12,6 +12,7 @@ const {
   getSingleUser,
   updateUserRole,
   deleteUser,
+  getAgents,
 } = require("../controller/UserController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
@@ -21,6 +22,8 @@ router.route("/register").post(createUser);
 router.route("/login").post(loginUser);
 
 router.route("/logout").get(logoutUser);
+
+router.route("/agent").get(getAgents);
 
 router.route("/password/forgot").post(forgotPassword);
 

@@ -34,7 +34,7 @@ exports.createProperty = catchAsyncErrors(async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    product,
+    property,
   });
 });
 

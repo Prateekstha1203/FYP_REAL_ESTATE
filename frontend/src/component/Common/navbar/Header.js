@@ -1,42 +1,44 @@
 import React from "react";
-import { FaPhoneSquare, FaSearch } from "react-icons/fa";
 import "./header.css";
-import { useEffect, useState } from "react";
 import Logo from "../fortune.jpg";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import ForgotPassword from "../../loginRegister/ForgetPassword";
 function Header() {
-  
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   return (
     <header id="header">
-      <div className="topBar">
-        <div className="container">
-          <div className="row d-flex align-items-center">
-            <div className="col-md-6">
-              <div className="topBar-left">
-                <span>Furtune Real estate</span>
+      {isAuthenticated ? null : (
+        <div className="topBar">
+          <div className="container">
+            <div className="row d-flex align-items-center">
+              <div className="col-md-6">
+                <div className="topBar-left">
+                  <span>Furtune Real estate</span>
+                </div>
               </div>
-            </div>
 
-            <div className="col-md-6">
-              <div className="topBar-right ">
-                <ul className="navbar-nav ">
-                  <li className="nav-item">
-                    <Link to="/login" className="nav-link ">
-                      LOGIN
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/register" className="nav-link ">
-                      SIGN UP
-                    </Link>
-                  </li>
-                </ul>
+              <div className="col-md-6">
+                <div className="topBar-right ">
+                  <ul className="navbar-nav ">
+                    <li className="nav-item">
+                      <Link to="/login" className="nav-link ">
+                        LOGIN
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/register" className="nav-link ">
+                        SIGN UP
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
       {/* navbar */}
       <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container">
@@ -60,31 +62,10 @@ function Header() {
                   HOME
                 </Link>
               </li>
-              <li className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  data-bs-toggle="dropdown"
-                >
-                  PROPERTIES
+              <li className="nav-item">
+                <Link to="/properties" className="nav-link ">
+                 PROPERTIES
                 </Link>
-                <ul className="dropdown-menu dropdown-menu-end fade-down">
-                  <li>
-                    <Link className="dropdown-item" to="/property/sell">
-                      Sell
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/property/rent">
-                      Rent
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/properties">
-                      All Properties
-                    </Link>
-                  </li>
-                </ul>
               </li>
               <li className="nav-item">
                 <Link to="/aboutus" className="nav-link ">
@@ -101,32 +82,13 @@ function Header() {
                   AGENTS
                 </Link>
               </li>
-              <li className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  data-bs-toggle="dropdown"
-                >
-                  Dropdown right
-                </Link>
-                <ul className="dropdown-menu dropdown-menu-end fade-down">
-                  <li>
-                    <Link className="dropdown-item" to="/">
-                      Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/">
-                      Change Password
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/logout">
-                      Logout 
-                    </Link>
-                  </li>
-                </ul>
-              </li>
+              {!isAuthenticated ? null : (
+                <li className="nav-item">
+                  <Link to="/favourite" className="nav-link ">
+                    FAVOURITE
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>

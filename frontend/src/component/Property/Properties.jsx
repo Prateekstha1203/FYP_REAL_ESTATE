@@ -10,7 +10,6 @@ import "./Properties.css";
 import Typography from "@material-ui/core/Typography"
 // import { useAlert } from "react-alert";
 import MetaData from "../../more/Metadata";
-import BottomTab from "../../more/BottomTab";
 import { Link } from "react-router-dom";
 
 const categories = [
@@ -157,7 +156,6 @@ const Properties = ({ match }) => {
             </div>
           </div>
           <Footer />
-          <BottomTab />
         </>
       )}
     </>

@@ -36,6 +36,9 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  FETCH_AGENTS_REQUEST,
+  FETCH_AGENTS_SUCCESS,
+  FETCH_AGENTS_FAILURE,
 } from "../constans/userContans";
 
 // Login
@@ -248,3 +251,16 @@ export const clearErrors= () => async (dispatch)=>{
       type: CLEAR_ERRORS
   })
 }
+
+
+export const fetchAgents = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/agent');
+    console.log("Agents data:", res.data); // add this line to log the data
+    dispatch({ type: FETCH_AGENTS_SUCCESS, payload: res.data });
+  } catch (err) {
+    console.error(err);
+    dispatch({ type: FETCH_AGENTS_FAILURE });
+  }
+};
+

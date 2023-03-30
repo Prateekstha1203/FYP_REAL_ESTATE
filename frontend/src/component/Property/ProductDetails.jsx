@@ -15,7 +15,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { addItemsToCart } from "../../actions/CartAction";
 import { addFavouriteItemsToCart } from "../../actions/FavouriteAction";
 import ReviewCard from "./ReviewCard.jsx";
-import BottomTab from "../../more/BottomTab";
 import Loading from "../../more/Loader";
 
 const PropertyDetails = ({ match, history }) => {
@@ -87,7 +86,6 @@ const PropertyDetails = ({ match, history }) => {
             pauseOnHover
           />
           <Footer />
-          <BottomTab />
         </>
       )}
     </>

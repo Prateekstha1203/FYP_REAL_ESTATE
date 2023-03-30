@@ -109,3 +109,18 @@ margin-bottom: 20px;
 font-size: 40px;
 line-height: 45px;
 }
+
+.forget{
+    text-decoration: none;
+}
+.imgsrc{
+    height: 40px;
+    width: 40px;
+}
+.acocunt{
+    font-size: 0.8rem;
+   
+}
+#registerImage{
+    width: 50%;
+}

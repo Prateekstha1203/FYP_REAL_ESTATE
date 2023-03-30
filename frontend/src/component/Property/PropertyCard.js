@@ -4,111 +4,102 @@ import "./card.css";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { addFavouriteItemsToCart } from "../../actions/FavouriteAction";
-import {
-    clearErrors,
-    getPropertyDetails,
-  } from "../../actions/PropertyActions";
+import { clearErrors, getPropertyDetails } from "../../actions/PropertyActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
+// import {
+//   addToWishlist,
+//   removeFromWishlist,
+// } from "../../actions/WistlistAction";
 
 const PropertyCard = ({ property }) => {
-    const dispatch = useDispatch();
+  // const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
 
-    const {  error } = useSelector(
-      (state) => state.propertyDetails
-    );
-  
-  
-    
-  
-    useEffect(() => {
-      if (error) {
-        alert.error(error);
-        dispatch(clearErrors());
-      }
-      dispatch(getPropertyDetails());
-    }, [dispatch, error, alert]);
-  
-   
-  
-    // Increase quantity
-    const [quantity] = useState(1);
-  
-  
-    const addToFavouriteHandler = () => {
-      dispatch(addFavouriteItemsToCart( quantity));
-      toast.success("Product Added to Favourites");
-    };
+  // const handleAddToWishlist = (property) => {
+  //   dispatch(addToWishlist(property));
+  //   setIsAddedToWishlist(true);
+  //   console.log(property);
+  // };
+
+  // const handleRemoveFromWishlist = (propertyId) => {
+  //   dispatch(removeFromWishlist(propertyId));
+  //   setIsAddedToWishlist(false);
+  // };
+
+  const dispatch = useDispatch();
+
+  const { error } = useSelector((state) => state.propertyDetails);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+    dispatch(getPropertyDetails(property._id));
+  }, [dispatch, error]);
 
   return (
     <>
-      <div className="row row-cols-1 row-cols-md-3 g-4">
-        <div>
-          <Card>
-            <div className="imgCard ps-3 pt-3">
-              <Card.Body>
-                <Card.Title>{property.propertyTitle}</Card.Title>
-                <Card.Text>
-                <div
-                    className="wishlist"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      padding: "15px 5px",
-                    }}
-                    onClick={addToFavouriteHandler}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      fill="currentColor"
-                      class="bi bi-heart"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
-                    </svg>
-                    <span
-                      className="cartBtn"
-                      style={{ opacity: 0.7, padding: "0px 5px" }}
-                    >
-                      Add to wishlist
-                    </span>
-                  </div>
-
-
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    {property.price}
-                  </h6>
-                  <p className="location">
-                    <i className="fa-solid fa-location-dot me-2"></i>
-                    {property.description}
+      <div className="row">
+        <div className="col-md-3">
+          <Card className=" cardDesign">
+            <div className="imageDiv">
+              <img
+                class="card-img-top"
+                // src={property.images[0].url}
+                src="https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+                alt={property.propertyTitle}
+              ></img>
+              <div className="wishlist">
+                {/* {isAddedToWishlist ? ( */}
+                <button
+                  className="wishlistBtn"
+                  // onClick={() => handleRemoveFromWishlist(property._id)}
+                >
+                  Remove from wishlist
+                </button>
+                {/* ) : ( */}
+                <button
+                  className="wishlistBtn"
+                  // onClick={() => handleAddToWishlist(property)}
+                >
+                  Add to wishlist
+                </button>
+                {/* )} */}
+              </div>
+            </div>
+            <div className="contentDiv">
+              <div class="p-1">
+                <p class="type">FOR {property.propertyType}</p>
+                <p class="area">{property.address}</p>
+                <p class="price">$ {property.price}</p>
+              </div>
+              <div class="amenties">
+                <div class="bedroom-container">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M0 16L3 5V1a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4l3 11v5a1 1 0 0 1-1 1v2h-1v-2H2v2H1v-2a1 1 0 0 1-1-1v-5zM19 5h1V1H4v4h1V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h2V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1zm0 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V6h-2v2a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6H3.76L1.04 16h21.92L20.24 6H19zM1 17v4h22v-4H1zM6 4v4h4V4H6zm8 0v4h4V4h-4z"></path>
+                  </svg>
+                  <p>
+                    <span class="bedroom">3</span> Bedrooms
                   </p>
-                  <div className="row">
-                    <div className="col-4 d-flex justify-content-center">
-                      <p className="location ">
-                        <i className="fa-l fa-solid fa-home"></i>
-                        {property.areaSqFt}
-                      </p>
-                    </div>
-                    <div className="col-4 d-flex justify-content-center">
-                      <p className="location ">
-                        <i className="fa-l fa-solid fa-bed"></i>{" "}
-                        {property.bedrooms} Bed
-                      </p>
-                    </div>
-                    <div className="col-4 d-flex justify-content-center">
-                      <p className="location ">
-                        <i className="fa-l fa-solid fa-bath"></i>{" "}
-                        {property.bathrooms} Bath
-                      </p>
-                    </div>
-                  </div>
-                </Card.Text>
-              </Card.Body>
+                </div>
+                <div class="bathroom-container">
+                  <svg
+                    class="h-6 w-6 text-gray-600 fill-current mr-3"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M17.03 21H7.97a4 4 0 0 1-1.3-.22l-1.22 2.44-.9-.44 1.22-2.44a4 4 0 0 1-1.38-1.55L.5 11h7.56a4 4 0 0 1 1.78.42l2.32 1.16a4 4 0 0 0 1.78.42h9.56l-2.9 5.79a4 4 0 0 1-1.37 1.55l1.22 2.44-.9.44-1.22-2.44a4 4 0 0 1-1.3.22zM21 11h2.5a.5.5 0 1 1 0 1h-9.06a4.5 4.5 0 0 1-2-.48l-2.32-1.15A3.5 3.5 0 0 0 8.56 10H.5a.5.5 0 0 1 0-1h8.06c.7 0 1.38.16 2 .48l2.32 1.15a3.5 3.5 0 0 0 1.56.37H20V2a1 1 0 0 0-1.74-.67c.64.97.53 2.29-.32 3.14l-.35.36-3.54-3.54.35-.35a2.5 2.5 0 0 1 3.15-.32A2 2 0 0 1 21 2v9zm-5.48-9.65l2 2a1.5 1.5 0 0 0-2-2zm-10.23 17A3 3 0 0 0 7.97 20h9.06a3 3 0 0 0 2.68-1.66L21.88 14h-7.94a5 5 0 0 1-2.23-.53L9.4 12.32A3 3 0 0 0 8.06 12H2.12l3.17 6.34z"
+                    ></path>
+                  </svg>
+                  <p>
+                    <span class="bathroom">2</span> Bathrooms
+                  </p>
+                </div>
+              </div>
             </div>
           </Card>
         </div>

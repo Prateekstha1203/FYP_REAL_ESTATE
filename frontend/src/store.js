@@ -7,7 +7,7 @@ import {
   propertyDetailsReducer,
   propertiesReducer,
 } from "./reducers/PropertyReducer";
-import { allUsersReducer, forgotPasswordReducer, profileReducer, userDetailsReducer, userReducer } from "./reducers/userReducer";
+import { allUsersReducer, forgotPasswordReducer, profileReducer, userDetailsReducer, userReducer, agentReducer } from "./reducers/userReducer";
 
 
 const reducer = combineReducers({
@@ -20,11 +20,15 @@ const reducer = combineReducers({
   allUsers: allUsersReducer,
   userDetails: userDetailsReducer,
   forgotPassword:forgotPasswordReducer,
+  agent:agentReducer,
 });
 
 let initialState = {
-  properties:[],
+  properties: [],
+  agent:[],
+  isAuthenticated: false,
 };
+
 
 const middleWare = [thunk];
 

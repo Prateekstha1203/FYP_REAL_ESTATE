@@ -49,7 +49,6 @@ const UpdateProperty = ({ history, match }) => {
       setPropertyType(property.propertyType);
       setPrice(property.price);
       setCategory(property.category);
-      setOldImages(property.images);
       setAddress(property.address);
       setAreaSqFt(property.areaSqFt);
       setBathrooms(property.bathrooms);
@@ -59,6 +58,7 @@ const UpdateProperty = ({ history, match }) => {
       setParking(property.parking);
       setPropertyFace(property.propertyFace)
       setDescription(property.description)
+      setOldImages(property.images);
     }
     if (error) {
       toast.error(error);
@@ -71,7 +71,7 @@ const UpdateProperty = ({ history, match }) => {
     }
 
     if (isUpdated) {
-      toast.success("Product Updated Successfully");
+      toast.success("Property Updated Successfully");
       history.push("/admin/property");
       dispatch({ type: UPDATE_PROPERTY_RESET });
     }
@@ -147,7 +147,7 @@ const UpdateProperty = ({ history, match }) => {
                 <label for="inputPassword4">Property Title</label>
                 <input
                   type="string"
-                  placeholder="Product Title"
+                  placeholder="Property Title"
                   class="form-control"
                   required
                   value={propertyTitle}
@@ -222,7 +222,7 @@ const UpdateProperty = ({ history, match }) => {
                 <label for="inputZip">Price</label>
                 <input
                   type="number"
-                  placeholder="Product Price"
+                  placeholder="Property Price"
                   class="form-control"
                   required
                   value={price}

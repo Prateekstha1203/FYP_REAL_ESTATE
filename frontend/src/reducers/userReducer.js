@@ -39,15 +39,17 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  FETCH_AGENTS_SUCCESS,
+  FETCH_AGENTS_FAILURE,
+  FETCH_AGENTS_REQUEST,
 } from "../constans/userContans";
 
-
 const initialState = {
-  token: localStorage.getItem('token'),
-  isAuthenticated:localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
+  isAuthenticated: localStorage.getItem("token"),
   isLoading: false,
-  isRegistered: false
-}
+  isRegistered: false,
+};
 export const userReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -60,13 +62,11 @@ export const userReducer = (state = { user: {} }, action) => {
     case LOGIN_SUCCESS:
     case REGISTER_USER_SUCCESS:
     case LOAD_USER_SUCCESS:
-      
       return {
         ...state,
         loading: false,
         isAuthenticated: true,
         user: action.payload,
-        
       };
 
     case LOGOUT_SUCCESS:
@@ -207,6 +207,49 @@ export const allUsersReducer = (state = { users: [] }, action) => {
   }
 };
 
+export const agentReducer = (state = { agent: {} }, action) => {
+  switch (action.type) {
+    case FETCH_AGENTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FETCH_AGENTS_SUCCESS:
+      console.log(action.payload);
+      
+      return { ...state, loading: false, agent: action.payload };
+    case FETCH_AGENTS_FAILURE:
+      return state;
+    default:
+      return state;
+  }
+};
+// export const agentsReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case FETCH_AGENTS_REQUEST:
+//       return {
+//         ...state,
+//         loading: true,
+//         error: null
+//       };
+//     case FETCH_AGENTS_SUCCESS:
+//       return {
+//         ...state,
+//         agents: action.payload,
+//         loading: false
+//       };
+//     case FETCH_AGENTS_FAILURE:
+//       return {
+//         ...state,
+//         loading: false,
+//         error: action.payload
+//       };
+//     default:
+//       return state;
+//   }
+// };
+
 // User Details
 export const userDetailsReducer = (state = { user: {} }, action) => {
   switch (action.type) {
@@ -281,3 +324,14 @@ export const forgotPasswordReducer = (state = {}, action) => {
       return state;
   }
 };
+
+function authReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'AUTHENTICATE':
+      return { ...state, isAuthenticated: true };
+    case 'LOGOUT':
+      return { ...state, isAuthenticated: false };
+    default:
+      return state;
+  }
+}

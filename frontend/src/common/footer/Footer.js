@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from '../fortune.jpg'
-import "./footer.css";
+import "./css";
 import { NavLink } from "react-router-dom";
 export const footer = [
   {
@@ -69,7 +69,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {footer.map((val, index) => (
+          {map((val, index) => (
             <div className="box">
               <h3 className="font-semibold text-1.5xl" key={index}>{val.title}</h3>
               <ul>
