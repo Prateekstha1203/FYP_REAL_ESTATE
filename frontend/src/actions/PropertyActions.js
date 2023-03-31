@@ -10,15 +10,9 @@ import {
   DELETE_PROPERTY_FAIL,
   DELETE_PROPERTY_REQUEST,
   DELETE_PROPERTY_SUCCESS,
-  // DELETE_REVIEW_FAIL,
-  // DELETE_REVIEW_REQUEST,
-  // DELETE_REVIEW_SUCCESS,
   NEW_PROPERTY_FAIL,
   NEW_PROPERTY_REQUEST,
   NEW_PROPERTY_SUCCESS,
-  // NEW_REVIEW_FAIL,
-  // NEW_REVIEW_REQUEST,
-  // NEW_REVIEW_SUCCESS,
   PROPERTY_DETAILS_FAIL,
   PROPERTY_DETAILS_REQUEST,
   PROPERTY_DETAILS_SUCCESS,
@@ -190,48 +184,6 @@ export const updateProperty = (id, propertyData) => async (dispatch) => {
   }
 };
 
-
-// Get All Reviews of a Product
-// export const getAllReviews = (id) => async (dispatch) => {
-//   try {
-//     dispatch({ type: ALL_REVIEW_REQUEST });
-
-//     const { data } = await axios.get(`/reviews?id=${id}`);
-
-//     dispatch({
-//       type: ALL_REVIEW_SUCCESS,
-//       payload: data.reviews,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: ALL_REVIEW_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
-
-
-
-// // Delete Review of a Product ------ Admin
-// export const deleteReviews = (reviewId, productId) => async (dispatch) => {
-//   try {
-//     dispatch({ type: DELETE_REVIEW_REQUEST });
-
-//     const { data } = await axios.delete(
-//       `/reviews?id=${reviewId}&productId=${productId}`
-//     );
-
-//     dispatch({
-//       type: DELETE_REVIEW_SUCCESS,
-//       payload: data.success,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: DELETE_REVIEW_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
 
 //   Clearing errors
 export const clearErrors= () => async (dispatch)=>{

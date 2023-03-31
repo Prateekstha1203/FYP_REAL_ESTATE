@@ -7,8 +7,9 @@ import {
   propertyDetailsReducer,
   propertiesReducer,
 } from "./reducers/PropertyReducer";
+// import wishlistReducer from './reducers/WistlistReducer';
 import { allUsersReducer, forgotPasswordReducer, profileReducer, userDetailsReducer, userReducer, agentReducer } from "./reducers/userReducer";
-
+import { wishlistReducer } from "./reducers/WistlistReducer";
 
 const reducer = combineReducers({
   properties: propertiesReducer,
@@ -21,12 +22,14 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   forgotPassword:forgotPasswordReducer,
   agent:agentReducer,
+  wishlist:wishlistReducer,
 });
 
 let initialState = {
   properties: [],
   agent:[],
   isAuthenticated: false,
+  wishlist:[],
 };
 
 

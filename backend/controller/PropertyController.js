@@ -3,7 +3,7 @@ const ErrorHandler = require("../utils/ErrorHandler.js");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures");
 const cloudinary = require("cloudinary");
-
+const axios = require("axios");
 // create Product --Admin
 exports.createProperty = catchAsyncErrors(async (req, res, next) => {
   let images = [];
@@ -71,12 +71,8 @@ exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
-
-
-
 exports.getPropertyDetails = catchAsyncErrors(async (req, res, next) => {
-  const property= await Property.findById(req.params.id);
+  const property = await Property.findById(req.params.id);
 
   if (!property) {
     return next(new ErrorHandler("Property not found", 404));
@@ -87,7 +83,6 @@ exports.getPropertyDetails = catchAsyncErrors(async (req, res, next) => {
     property,
   });
 });
-
 
 // Update Property ---Admin
 exports.updateProperty = catchAsyncErrors(async (req, res, next) => {
@@ -170,107 +165,235 @@ exports.getSingleProperty = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Create New Review or Update the review
-// exports.createPropertyReview = catchAsyncErrors(async (req, res, next) => {
-//   const { rating, comment, propertyId } = req.body;
 
-//   const review = {
-//     user: req.user._id,
-//     name: req.user.name,
-//     rating: Number(rating),
-//     comment,
-//   };
+exports.getPropertyLocation = async (req, res, next) => {
+  const address = req.params.address;
+  const AMENITY_CATEGORIES = ["hospital", "park", "restaurant","mart"];
+  function haversine(lat1, lon1, lat2, lon2) {
+    const toRadians = (degrees) => (degrees * Math.PI) / 180;
+    const R = 6371; // Earth's radius in kilometers
+    const φ1 = toRadians(lat1);
+    const φ2 = toRadians(lat2);
+    const Δφ = toRadians(lat2 - lat1);
+    const Δλ = toRadians(lon2 - lon1);
 
-//   const product = await Product.findById(productId);
+    const a =
+      Math.sin(Δφ / 2) ** 2 +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
 
-//   const isReviewed = product.reviews.find(
-//     (rev) => rev.user.toString() === req.user._id.toString()
-//   );
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-//   if (isReviewed) {
-//     product.reviews.forEach((rev) => {
-//       if (rev.user.toString() === req.user._id.toString())
-//         (rev.rating = rating), (rev.comment = comment);
-//     });
-//   } else {
-//     product.reviews.push(review);
-//     product.numOfReviews = product.reviews.length;
+    return R * c;
+  }
+  try {
+    const property = await Property.findOne({ address: address });
+
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+
+    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+      property.address
+    )}.json?access_token=pk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2w5ZHVicmM4MGJ3YTNvcDlhemhxMXh4NiJ9.pPca72n4BLDfidsxfvd9Ag`;
+
+    const geocodeResponse = await axios.get(geocodeUrl);
+    const geocodeData = geocodeResponse.data;
+
+    if (!geocodeData.features || geocodeData.features.length === 0) {
+      return res.status(404).json({ message: "Address not found" });
+    }
+
+    const longitude = geocodeData.features[0].center[0];
+    const latitude = geocodeData.features[0].center[1];
+
+    const amenities = await Promise.all(
+      AMENITY_CATEGORIES.map(async (category) => {
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyCETfYHnB3ZszmOzR7br1tWUSI7XpBwJk4`;
+
+        const response = await axios.get(url);
+        const data = response.data;
+
+        if (!data.results || data.results.length === 0) {
+          return null;
+        }
+
+        const amenities = data.results.map((result) => ({
+          name: result.name,
+          distance: result.vicinity,
+          location: {
+            latitude: result.geometry.location.lat,
+            longitude: result.geometry.location.lng,
+          },
+        }));
+
+        const closestAmenity = amenities.reduce((prev, curr) => {
+          const prevDistance = haversine(
+            latitude,
+            longitude,
+            prev.location.latitude,
+            prev.location.longitude
+          );
+          const currDistance = haversine(
+            latitude,
+            longitude,
+            curr.location.latitude,
+            curr.location.longitude
+          );
+
+          return prevDistance < currDistance ? prev : curr;
+        });
+
+        return { category: category, ...closestAmenity };
+      })
+    );
+
+    const validAmenities = amenities.filter((amenity) => amenity !== null);
+
+    res.json({
+      amenities: validAmenities,
+      longitude: longitude,
+      latitude: latitude,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// exports.getPropertyAmenities = async (req, res, next) => {
+//   const address = req.params.address;
+//   const AMENITY_CATEGORIES = ["hospital", "park", "restaurant","mart"];
+//   function haversine(lat1, lon1, lat2, lon2) {
+//     const toRadians = (degrees) => (degrees * Math.PI) / 180;
+//     const R = 6371; // Earth's radius in kilometers
+//     const φ1 = toRadians(lat1);
+//     const φ2 = toRadians(lat2);
+//     const Δφ = toRadians(lat2 - lat1);
+//     const Δλ = toRadians(lon2 - lon1);
+
+//     const a =
+//       Math.sin(Δφ / 2) ** 2 +
+//       Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
+
+//     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+//     return R * c;
 //   }
+//   try {
+//     const property = await Property.findOne({ address: address });
 
-//   let avg = 0;
-
-//   product.reviews.forEach((rev) => {
-//     avg += rev.rating;
-//   });
-
-//   product.ratings = avg / product.reviews.length;
-
-//   await product.save({ validateBeforeSave: false });
-
-//   res.status(200).json({
-//     success: true,
-//   });
-// });
-
-// // Get All reviews of a single product
-// exports.getSingleProductReviews = catchAsyncErrors(async (req, res, next) => {
-//   const product = await Product.findById(req.query.id);
-
-//   if (!product) {
-//     return next(new ErrorHandler("Product is not found with this id", 404));
-//   }
-
-//   res.status(200).json({
-//     success: true,
-//     reviews: product.reviews,
-//   });
-// });
-
-// // Delete Review --Admin
-// exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
-//   const product = await Product.findById(req.query.productId);
-
-//   if (!product) {
-//     return next(new ErrorHandler("Product not found with this id", 404));
-//   }
-
-//   const reviews = product.reviews.filter(
-//     (rev) => rev._id.toString() !== req.query.id.toString()
-//   );
-
-//   let avg = 0;
-
-//   reviews.forEach((rev) => {
-//     avg += rev.rating;
-//   });
-
-//   let ratings = 0;
-
-//   if (reviews.length === 0) {
-//     ratings = 0;
-//   } else {
-//     ratings = avg / reviews.length;
-//   }
-
-//   const numOfReviews = reviews.length;
-
-//   await Product.findByIdAndUpdate(
-//     req.query.productId,
-//     {
-//       reviews,
-//       ratings,
-//       numOfReviews,
-//     },
-//     {
-//       new: true,
-//       runValidators: true,
-//       useFindAndModify: false,
+//     if (!property) {
+//       return res.status(404).json({ message: "Property not found" });
 //     }
-//   );
 
-//   res.status(200).json({
-//     success: true,
-//   });
-// });
+//     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+//       property.address
+//     )}.json?access_token=pk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2w5ZHVicmM4MGJ3YTNvcDlhemhxMXh4NiJ9.pPca72n4BLDfidsxfvd9Ag`;
 
-// 
+//     const geocodeResponse = await axios.get(geocodeUrl);
+//     const geocodeData = geocodeResponse.data;
+
+//     if (!geocodeData.features || geocodeData.features.length === 0) {
+//       return res.status(404).json({ message: "Address not found" });
+//     }
+
+//     const longitude = geocodeData.features[0].center[0];
+//     const latitude = geocodeData.features[0].center[1];
+
+//     const amenities = await Promise.all(
+//       AMENITY_CATEGORIES.map(async (category) => {
+//         const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyCETfYHnB3ZszmOzR7br1tWUSI7XpBwJk4`;
+
+//         const response = await axios.get(url);
+//         const data = response.data;
+
+//         if (!data.results || data.results.length === 0) {
+//           return null;
+//         }
+
+//         const amenities = data.results.map((result) => ({
+//           name: result.name,
+//           distance: result.vicinity,
+//           location: {
+//             latitude: result.geometry.location.lat,
+//             longitude: result.geometry.location.lng,
+//           },
+//         }));
+
+//         const closestAmenity = amenities.reduce((prev, curr) => {
+//           const prevDistance = haversine(
+//             latitude,
+//             longitude,
+//             prev.location.latitude,
+//             prev.location.longitude
+//           );
+//           const currDistance = haversine(
+//             latitude,
+//             longitude,
+//             curr.location.latitude,
+//             curr.location.longitude
+//           );
+
+//           return prevDistance < currDistance ? prev : curr;
+//         });
+
+//         return { category: category, ...closestAmenity };
+//       })
+//     );
+
+//     const validAmenities = amenities.filter((amenity) => amenity !== null);
+
+//     res.json({
+//       amenities: validAmenities,
+//       longitude: longitude,
+//       latitude: latitude,
+//       property,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+// exports.getPropertyLocation = async (req, res, next) => {
+//   const address = req.params.address; // get the address parameter from the request
+
+//   try {
+//     // find the property with the given address
+//     const property = await Property.findOne({ address: address });
+
+//     if (!property) {
+//       return res.status(404).json({ message: "Property not found" });
+//     }
+
+//     // fetch the longitude and latitude of the property's address using Google Geocoding API
+//     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+//       property.address
+//     )}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+
+//     const geocodeResponse = await axios.get(geocodeUrl);
+//     const geocodeData = geocodeResponse.data;
+//     if (!geocodeData.results || geocodeData.results.length === 0) {
+//       return res.status(404).json({ message: "Address not found" });
+//     }
+
+//     const longitude = geocodeData.results[0].geometry.location.lng;
+//     const latitude = geocodeData.results[0].geometry.location.lat;
+
+//     // use the property's location to query Google Places API for nearby amenities
+//     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=hospital|park|restaurant|shopping_mall&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+
+//     const response = await axios.get(url); // send the request to Google Places API
+//     const data = response.data; // parse the response JSON
+
+//     // extract the relevant data from the response and add the distance to each amenity
+//     const amenities = data.results.map((result) => ({
+//       name: result.name,
+//       category: result.types[0],
+//       distance: result.vicinity,
+//     }));
+
+//     // send the amenities back to the client
+//     res.json({ amenities: amenities });
+//   } catch (error) {
+//     next(error);
+//   }
+// };

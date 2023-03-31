@@ -6,6 +6,8 @@ const {
   deleteProperty,
   getPropertyDetails,
   getAdminProperties,
+  // getNearbyAmenities,
+  getPropertyLocation,
 } = require("../controller/PropertyController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
@@ -23,9 +25,11 @@ router
 router
   .route("/admin/property/:id")
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateProperty)
-  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProperty)
-
+  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProperty);
+// router.route("/property/:address").get(getNearbyAmenities);
 
 router.route("/property/:id").get(getPropertyDetails);
 
 module.exports = router;
+
+router.route("/:address").get(getPropertyLocation)

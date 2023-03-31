@@ -13,9 +13,9 @@ import MetaData from "../../more/Metadata";
 import { Link } from "react-router-dom";
 
 const categories = [
-  "All",
-  "Men",
-  "Women"
+  "Bungalow",
+  "Villa",
+  "Apartment"
 ]
 
 const Properties = ({ match }) => {

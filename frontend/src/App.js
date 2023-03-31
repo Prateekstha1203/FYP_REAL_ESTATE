@@ -28,7 +28,7 @@ import Header from "./component/Common/navbar/Header";
 import Profile from "./component/loginRegister/Profile";
 import UpdateProfile from "./component/loginRegister/UpdateProfile";
 import Agents from "./component/Home/userDashboard/Agent/Agents";
-
+import PropertyDetail from "./component/Property/PropertyDetail";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -55,6 +55,7 @@ function App() {
         <Route path="/properties/:keywalue" component={Properties} />
         <Route exact path="/logout" component={Login} />
         <Route exact path="/search" component={Search} />
+        <Route exact path="/property/:id" component={PropertyDetail} />
         <ProtectedRoute
           exact
           path="/password/update"

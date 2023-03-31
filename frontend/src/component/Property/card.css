@@ -7,9 +7,13 @@
   padding: 0;
 }
 
+p{
+  text-decoration: none !important;
+}
 .wishlist svg {
     width: 40px;
     height: 40px;
+    
   }
 .wishlist {
   position: absolute;
@@ -30,6 +34,7 @@ img {
   font-weight: 700;
   text-transform:uppercase;
   margin: 0;
+  text-decoration: none !important;
 }
 p {
   margin: 0.5rem 0;
@@ -39,6 +44,7 @@ p {
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0;
+  text-decoration: none;
   
 }
 .contentDiv{
@@ -57,6 +63,7 @@ p {
   padding: 8px 12px;
   background-color: rgba(0, 0, 0, 0.336);
   color: #ffffff;
+  text-decoration: none;
 }
 
 
@@ -85,6 +92,7 @@ svg {
 .bedroom {
   color: #111827;
   font-weight: 700;
+  margin-left: 0.5rem;
 }
 .bathroom-container {
   display: inline-flex;

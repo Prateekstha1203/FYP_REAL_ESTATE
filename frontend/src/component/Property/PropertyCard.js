@@ -1,6 +1,7 @@
 import React from "react";
-import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
 import "./card.css";
+import Card from "react-bootstrap/Card";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -8,24 +9,24 @@ import { clearErrors, getPropertyDetails } from "../../actions/PropertyActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
-// import {
-//   addToWishlist,
-//   removeFromWishlist,
-// } from "../../actions/WistlistAction";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../../actions/WistlistAction";
 
 const PropertyCard = ({ property }) => {
-  // const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
 
-  // const handleAddToWishlist = (property) => {
-  //   dispatch(addToWishlist(property));
-  //   setIsAddedToWishlist(true);
-  //   console.log(property);
-  // };
+  const handleAddToWishlist = (property) => {
+    dispatch(addToWishlist(property));
+    setIsAddedToWishlist(true);
+    console.log(property);
+  };
 
-  // const handleRemoveFromWishlist = (propertyId) => {
-  //   dispatch(removeFromWishlist(propertyId));
-  //   setIsAddedToWishlist(false);
-  // };
+  const handleRemoveFromWishlist = (propertyId) => {
+    dispatch(removeFromWishlist(propertyId));
+    setIsAddedToWishlist(false);
+  };
 
   const dispatch = useDispatch();
 
@@ -52,21 +53,21 @@ const PropertyCard = ({ property }) => {
                 alt={property.propertyTitle}
               ></img>
               <div className="wishlist">
-                {/* {isAddedToWishlist ? ( */}
-                <button
-                  className="wishlistBtn"
-                  // onClick={() => handleRemoveFromWishlist(property._id)}
-                >
-                  Remove from wishlist
-                </button>
-                {/* ) : ( */}
-                <button
-                  className="wishlistBtn"
-                  // onClick={() => handleAddToWishlist(property)}
-                >
-                  Add to wishlist
-                </button>
-                {/* )} */}
+                {isAddedToWishlist ? (
+                  <button
+                    className="wishlistBtn"
+                    onClick={() => handleRemoveFromWishlist(property._id)}
+                  >
+                    Remove from wishlist
+                  </button>
+                ) : (
+                  <button
+                    className="wishlistBtn"
+                    onClick={() => handleAddToWishlist(property)}
+                  >
+                    Add to wishlist
+                  </button>
+                )}
               </div>
             </div>
             <div className="contentDiv">
@@ -100,6 +101,9 @@ const PropertyCard = ({ property }) => {
                   </p>
                 </div>
               </div>
+              <Link className="viewDetail" to={`/property/${property._id}`}>
+                <button className="btn viewBtn"> View Details</button>
+              </Link>
             </div>
           </Card>
         </div>
