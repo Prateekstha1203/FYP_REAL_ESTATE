@@ -3,32 +3,39 @@ import "./App.css";
 import Home from "./component/Home/Home";
 import WebFont from "webfontloader";
 import { useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-import Properties from "./component/Property/Properties";
-import UserData from "./more/UserData";
-import { useSelector } from "react-redux";
-import { loadUser } from "./actions/userAction";
 import Store from "./store";
+import { useSelector } from "react-redux";
 import ProtectedRoute from "./route/ProtectedRoute";
-import Dashboard from "./component/Admin/Dashboard";
-import CreateProperty from "./component/Admin/CreateProperty";
-import AllProperty from "./component/Admin/AllProperty";
-import EditProperty from "./component/Admin/EditProperty";
-import AllUsers from "../../frontend/src/component/Admin/AllUsers";
-import UpdateUser from "../../frontend/src/component/Admin/UpdateUser";
-import Register from "./component/loginRegister/Register";
-import Login from "./component/loginRegister/Login";
-import Search from "./component/Property/Search";
-import UpdatePassword from "./component/loginRegister/UpdatePassword";
-import ResetPassword from "./component/loginRegister/ResetPassword";
-import ForgotPassword from "./component/loginRegister/ForgetPassword";
-import Footer from "./component/Common/footer/Footer";
-import Header from "./component/Common/navbar/Header";
-import Profile from "./component/loginRegister/Profile";
-import UpdateProfile from "./component/loginRegister/UpdateProfile";
-import Agents from "./component/Home/userDashboard/Agent/Agents";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import NewListingCard from "./component/Common/CardComponent/NewListingCard";
+
+
+
+import Login from "./component/loginRegister/loginRegister/Login"
+import Register from "./component/loginRegister/loginRegister/Register"
+import SearchProperty from "./component/Home/Search/SearchBar";
+import ContactForm from "./component/Home/ContactUs/ContactForm";
+import Properties from "./component/Property/Properties";
 import PropertyDetail from "./component/Property/PropertyDetail";
+
+import CreateProperty from "./component/Admin/CreateProperty/CreateProperty";
+import AllUsers from "../../frontend/src/component/Admin/allpropertyuser/AllUsers";
+import Dashboard from "./component/Admin/adminDashboard/Dashboard";
+import AllProperty from "./component/Admin/allpropertyuser/AllProperty";
+import EditProperty from "./component/Admin/EditPropertyUser/EditProperty";
+
+import Agents from "./component/Home/Agent/Agents";
+import UserData from "./more/UserData";
+
+import Profile from "./component/loginRegister/userprofile/Profile";
+import UpdateUser from "../../frontend/src/component/Admin/EditPropertyUser/UpdateUser";
+import UpdatePassword from "./component/loginRegister/reset_password/UpdatePassword";
+import ResetPassword from "./component/loginRegister/reset_password/ResetPassword";
+import ForgotPassword from "./component/loginRegister/forget_password/ForgetPassword";
+import UpdateProfile from "./component/loginRegister/userprofile/UpdateProfile";
+import NewListing from "./component/Home/NewListing/NewListing";
+import { loadUser } from "./actions/userAction";
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -46,15 +53,17 @@ function App() {
     <Router>
       {isAuthenticated && <UserData user={user} />}
       <Switch>
+      <Route exact path="/card" component={NewListingCard} />
         <Route exact path="/" component={Home} />
         <Route exact path="/register" component={Register} />
-        
+        <Route exact path="/newListing" component={NewListing} />
+        <Route exact path="/contact" component={ContactForm} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/agent" component={Agents} />
         <Route exact path="/properties" component={Properties} />
         <Route path="/properties/:keywalue" component={Properties} />
         <Route exact path="/logout" component={Login} />
-        <Route exact path="/search" component={Search} />
+        {/* <Route exact path="/search" component={SearchProperty} /> */}
         <Route exact path="/property/:id" component={PropertyDetail} />
         <ProtectedRoute
           exact

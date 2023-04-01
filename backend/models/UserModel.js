@@ -46,6 +46,8 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Property" }],
+  compareList: [{ type: mongoose.Schema.Types.ObjectId, ref: "Property" }],
   resetPasswordToken: String,
   resetPasswordTime: Date,
 });

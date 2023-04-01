@@ -4,18 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, getPropertyDetails } from "../../actions/PropertyActions";
 import { ToastContainer, toast } from "react-toastify";
 import MetaData from "../../more/Metadata";
-import Header from "../Common/navbar/Header";
-import Footer from "../Common/footer/Footer";
 import Loading from "../../more/Loader";
 import { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faRupeeSign,
-  faBedFront,
-  faBath,
-} from "@fortawesome/free-solid-svg-icons";
+import { faRupeeSign , faBedEmpty} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import "./propertyDetail.css";
-import Agent from "../../component/Home/userDashboard/Agent/agent.png";
+import Agent from "../../component/Home/Agent/agent.png";
 import { Link } from "react-router-dom";
 {
   /* <FontAwesomeIcon icon={faBedFront} />
@@ -77,7 +72,7 @@ const PropertyDetail = ({ match, history }) => {
                   <div className=" details ">
                     <div className="d-flex gap-3 text-purple my-3">
                       <div className="d-flex gap-2 align-items-center">
-                        <FontAwesomeIcon icon={faRupeeSign} className="fs-6" />
+                      <i class="fa-solid fa-bed"></i>
                         <div>{property.bedrooms}</div> <span>Bedrooms</span>
                       </div>
                       <div className="d-flex gap-2 align-items-center">
@@ -91,7 +86,9 @@ const PropertyDetail = ({ match, history }) => {
                         <span>Area SqFt</span>
                       </div>
                     </div>
-                    <div className="desc">Description: {property.description}</div>
+                    <div className="desc">
+                      Description: {property.description}
+                    </div>
                   </div>
                 </div>
                 <div className="messageClass ">

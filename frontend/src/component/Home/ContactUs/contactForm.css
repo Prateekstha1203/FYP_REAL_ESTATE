@@ -1,0 +1,69 @@
+.section {
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-align: center;
+  font-family: "Courgette", cursive;
+}
+.section .heading {
+  font-weight: 500;
+}
+@media (max-width: 767.98px) {
+  .section .heading {
+    font-size: 36px;
+  }
+}
+
+.address {
+  margin-bottom: 1rem;
+  font-style: normal;
+}
+
+.form {
+  margin-top: 3.5rem;
+}
+
+.contact-info .home {
+  font-size: 20px;
+  width: 44px;
+  height: 44px;
+  background: #00204a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  border-radius: 50px;
+  transition: all 0.3s;
+  color: #fff;
+}
+.my-icon-large {
+  color: #fff;
+  margin-left: 0.7rem;
+  font-size: 5rem;
+  font-weight: bold;
+}
+.contact-info h4,
+.contact-info .h4 {
+  font-size: 18px;
+  padding: 0 0 0 30px;
+}
+
+.contact-info p {
+  padding: 0 0 0 30px;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.btn1 {
+  color: #fff;
+  background-color: #00204a;
+  border-color: #00204a;
+}
+.btn1:hover {
+  color: #fff;
+  background-color: #001b3f;
+  border-color: #001a3b;
+}

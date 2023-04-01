@@ -1,15 +1,28 @@
 
+footer {
+  background-color: #72448d;
+  padding: 30px 0;
+  color: #fff;
+}
 footer .container {
   display: grid;
-  grid-template-columns: 6fr 2fr 2fr 1fr;
+  grid-template-columns: 4fr 3fr 3fr 2fr;
   grid-gap: 20px;
 }
-footer input {
-  background-color: #fff;
-  padding: 17px;
-  width: 100%;
-  border-radius: 5px;
+footer img {
+  width: 170px;
+  height: 100px;
 }
+footer .anyThing{
+  font-weight: 300;
+  color: #fff;
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 0;
+  margin: 0;
+  padding: 10px 0px 1rem 0;
+}
+
 footer h3 {
   font-weight: 500;
   margin-bottom: 30px;
@@ -19,11 +32,44 @@ footer ul {
 }
 footer ul li {
   display: block;
-  color: grey;
+  color: white;
   margin-bottom: 20px;
+}
+.legal {
+  text-align: center;
+  padding: 20px;
+  background: #1d2636;
+  color: white;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 @media screen and (max-width: 800px) {
   footer .container {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+
+
+.non-resp {
+  display: block;
+  height: 3.55rem;
+  width: 10rem;
+  background: #72448d;
+  color: #ffffff;
+  border: 2px solid white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 3.25rem;
+  font-family: Arial;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+.non-resp:hover {
+  opacity: 80%;
+  border: 2px solid #72448d;
+  background-color: #fff;
+  color:#72448d;
+  transition: 0.5s;
 }

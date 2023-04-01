@@ -7,7 +7,7 @@ class ApiFeatures {
 
   search() {
     if (this.executed) {
-      throw new Error('Query has already been executed');
+      throw new Error("Query has already been executed");
     }
     const keyvalue = this.queryStr.keyvalue
       ? {
@@ -24,7 +24,7 @@ class ApiFeatures {
 
   filter() {
     if (this.executed) {
-      throw new Error('Query has already been executed');
+      throw new Error("Query has already been executed");
     }
     const queryCopy = { ...this.queryStr };
     //   Removing some fields for category
@@ -41,10 +41,16 @@ class ApiFeatures {
 
     return this;
   }
-
+  sort() {
+    if (this.executed) {
+      throw new Error("Query has already been executed");
+    }
+    this.query = this.query.sort({ date: "desc" });
+    return this;
+  }
   pagination(resultPerPage) {
     if (this.executed) {
-      throw new Error('Query has already been executed');
+      throw new Error("Query has already been executed");
     }
     const currentPage = Number(this.queryStr.page) || 1;
 

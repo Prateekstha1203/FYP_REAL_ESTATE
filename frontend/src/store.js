@@ -6,9 +6,17 @@ import {
   newPropertyReducer,
   propertyDetailsReducer,
   propertiesReducer,
+  topListingsReducer,
 } from "./reducers/PropertyReducer";
-// import wishlistReducer from './reducers/WistlistReducer';
-import { allUsersReducer, forgotPasswordReducer, profileReducer, userDetailsReducer, userReducer, agentReducer } from "./reducers/userReducer";
+import {
+  allUsersReducer,
+  forgotPasswordReducer,
+  profileReducer,
+  userDetailsReducer,
+  userReducer,
+  agentReducer,
+  sendContactEmailReducer,
+} from "./reducers/userReducer";
 import { wishlistReducer } from "./reducers/WistlistReducer";
 
 const reducer = combineReducers({
@@ -20,18 +28,21 @@ const reducer = combineReducers({
   deleteProperty: deletePropertyReducer,
   allUsers: allUsersReducer,
   userDetails: userDetailsReducer,
-  forgotPassword:forgotPasswordReducer,
-  agent:agentReducer,
-  wishlist:wishlistReducer,
+  forgotPassword: forgotPasswordReducer,
+  agents: agentReducer,
+  wishlist: wishlistReducer,
+  sendContactEmail: sendContactEmailReducer,
+  topListings: topListingsReducer,
 });
 
-let initialState = {
+const initialState = {
   properties: [],
-  agent:[],
+  agents: [],
   isAuthenticated: false,
-  wishlist:[],
+  wishlist: [],
+  loading: false,
+  error: null,
 };
-
 
 const middleWare = [thunk];
 
@@ -40,5 +51,4 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleWare))
 );
-
 export default store;

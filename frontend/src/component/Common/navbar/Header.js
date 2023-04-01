@@ -1,10 +1,10 @@
 import React from "react";
 import "./header.css";
-import Logo from "../fortune.jpg";
+import Logo from "../fortune.png";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import ForgotPassword from "../../loginRegister/ForgetPassword";
+import ForgotPassword from "../../loginRegister/forget_password/ForgetPassword";
 function Header() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   return (
@@ -57,6 +57,7 @@ function Header() {
           </button>
           <div className="collapse navbar-collapse" id="main_nav">
             <ul className="navbar-nav ms-auto">
+              
               <li className="nav-item">
                 <Link to="/" className="nav-link active">
                   HOME
@@ -73,12 +74,12 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/contactus" className="nav-link ">
+                <Link to="/contact" className="nav-link ">
                   CONTACT US
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/agents" className="nav-link ">
+                <Link to="/agent" className="nav-link ">
                   AGENTS
                 </Link>
               </li>

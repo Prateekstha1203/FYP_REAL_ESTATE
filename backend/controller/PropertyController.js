@@ -48,7 +48,7 @@ exports.getAdminProperties = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// get All Products
+// get All Properties
 exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
   const resultPerPage = 8;
   const propertiesCount = await Property.countDocuments();
@@ -56,6 +56,7 @@ exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
   const apiFeature = new ApiFeatures(Property.find(), req.query)
     .search()
     .filter()
+    .sort() 
     .pagination(resultPerPage);
 
   const properties = await apiFeature.execute();
@@ -165,10 +166,9 @@ exports.getSingleProperty = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 exports.getPropertyLocation = async (req, res, next) => {
   const address = req.params.address;
-  const AMENITY_CATEGORIES = ["hospital", "park", "restaurant","mart"];
+  const AMENITY_CATEGORIES = ["hospital", "park", "restaurant", "mart"];
   function haversine(lat1, lon1, lat2, lon2) {
     const toRadians = (degrees) => (degrees * Math.PI) / 180;
     const R = 6371; // Earth's radius in kilometers
@@ -397,3 +397,18 @@ exports.getPropertyLocation = async (req, res, next) => {
 //     next(error);
 //   }
 // };
+
+
+exports.getTopListings = catchAsyncErrors(async (req, res, next) => {
+  const resultPerPage = 4;
+
+  const apiFeature = new ApiFeatures(Property.find().sort('-createdAt').limit(resultPerPage), req.query);
+
+  const topListings = await apiFeature.execute();
+
+  res.status(200).json({
+    success: true,
+    topListings,
+  });
+});
+

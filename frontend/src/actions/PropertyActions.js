@@ -19,78 +19,79 @@ import {
   UPDATE_PROPERTY_FAIL,
   UPDATE_PROPERTY_REQUEST,
   UPDATE_PROPERTY_SUCCESS,
+  GET_TOP_LISTINGS_REQUEST,
+  GET_TOP_LISTINGS_SUCCESS,
+  GET_TOP_LISTINGS_FAIL,
 } from "../constans/PropertyConstans";
 
-
-export const getProperty= (keyvalue="",currentPage=1,category,propertyType) => async (dispatch)=>{
+export const getProperty = (
+  keyvalue = "",
+  currentPage = 1,
+  category,
+  propertyType
+) => async (dispatch) => {
   try {
-      dispatch({
-          type: ALL_PROPERTY_REQUEST
-      });
+    dispatch({
+      type: ALL_PROPERTY_REQUEST,
+    });
 
-     let link = `/properties?keyvalue=${keyvalue}&page=${currentPage}}`;
-      
-     if(category){
+    let link = `/properties?keyvalue=${keyvalue}&page=${currentPage}}`;
+
+    if (category) {
       link = `/properties?keyvalue=${keyvalue}&page=${currentPage}&category=${category}&propertyType=${propertyType}`;
-     }
-      const {data} = await axios.get(link);
+    }
+    const { data } = await axios.get(link);
 
-      dispatch({
-          type:ALL_PROPERTY_SUCCESS,
-          payload: data,
-      })
+    dispatch({
+      type: ALL_PROPERTY_SUCCESS,
+      payload: data,
+    });
   } catch (error) {
-      dispatch({
-          type:ALL_PROPERTY_FAIL,
-          payload: error.response.data.message,
-      })
+    dispatch({
+      type: ALL_PROPERTY_FAIL,
+      payload: error.response.data.message,
+    });
   }
-}; 
+};
+export const getTopListings = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_TOP_LISTINGS_REQUEST });
 
+    const { data } = await axios.get("/newListing");
+
+    dispatch({
+      type: GET_TOP_LISTINGS_SUCCESS,
+      payload: data.topListings,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_TOP_LISTINGS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 // Get All Products Details
-export const getPropertyDetails= (id) => async (dispatch)=>{
+export const getPropertyDetails = (id) => async (dispatch) => {
   try {
-      dispatch({ type: PROPERTY_DETAILS_REQUEST });
-  
-      const { data } = await axios.get(`/property/${id}`);
-  
-      dispatch({
-        type: PROPERTY_DETAILS_SUCCESS,
-        payload: data.property,
-      });
-    } catch (error) {
-      dispatch({
-        type: PROPERTY_DETAILS_FAIL,
-        payload: error.response.message,
-      });
-    }
-  };
+    dispatch({ type: PROPERTY_DETAILS_REQUEST });
 
+    const { data } = await axios.get(`/property/${id}`);
 
-// NEW REVIEW
-// export const newReview = (reviewData) => async (dispatch) => {
-//   try {
-//     dispatch({ type: NEW_REVIEW_REQUEST });
-
-//     const config = {
-//       headers: { "Content-Type": "application/json" },
-//     };
-
-//     const { data } = await axios.post(`/product/review`, reviewData, config);
-
-//     dispatch({
-//       type: NEW_REVIEW_SUCCESS,
-//       payload: data.success,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: NEW_REVIEW_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
-
+    dispatch({
+      type: PROPERTY_DETAILS_SUCCESS,
+      payload: data.property,
+    });
+  } catch (error) {
+    dispatch({
+      type: PROPERTY_DETAILS_FAIL,
+      payload: error.response.message,
+    });
+  }
+};
 
 // Create Product --------Admin
 export const createProperty = (propertyData) => async (dispatch) => {
@@ -120,25 +121,25 @@ export const createProperty = (propertyData) => async (dispatch) => {
 };
 
 // Get Admin Products -----Admin
-  export const getAdminProperty = () => async (dispatch) => {
-    try {
-      dispatch({ type: ADMIN_PROPERTY_REQUEST });
-  
-      const { data } = await axios.get("/admin/properties");
-  
-      dispatch({
-        type: ADMIN_PROPERTY_SUCCESS,
-        payload: data.properties,
-      });
-    } catch (error) {
-      dispatch({
-        type: ADMIN_PROPERTY_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+export const getAdminProperty = () => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_PROPERTY_REQUEST });
 
-  // Delete Product ------Admin
+    const { data } = await axios.get("/admin/properties");
+
+    dispatch({
+      type: ADMIN_PROPERTY_SUCCESS,
+      payload: data.properties,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_PROPERTY_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Delete Product ------Admin
 export const deleteProperty = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PROPERTY_REQUEST });
@@ -166,11 +167,7 @@ export const updateProperty = (id, propertyData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const { data } = await axios.put(
-      `/property/${id}`,
-      propertyData,
-      config
-    );
+    const { data } = await axios.put(`/property/${id}`, propertyData, config);
 
     dispatch({
       type: UPDATE_PROPERTY_SUCCESS,
@@ -184,10 +181,9 @@ export const updateProperty = (id, propertyData) => async (dispatch) => {
   }
 };
 
-
 //   Clearing errors
-export const clearErrors= () => async (dispatch)=>{
+export const clearErrors = () => async (dispatch) => {
   dispatch({
-      type: CLEAR_ERRORS
-  })
-}
+    type: CLEAR_ERRORS,
+  });
+};

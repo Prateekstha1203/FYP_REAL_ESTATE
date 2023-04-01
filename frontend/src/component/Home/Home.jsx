@@ -1,15 +1,15 @@
 import React from "react";
 import Footer from "../Common/footer/Footer";
 import Header from "../Common/navbar/Header";
-import PropertyCard from "../Property/PropertyCard";
+import PropertyCard from "../Common/CardComponent/PropertyCard";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { clearErrors, getProperty } from "../../actions/PropertyActions";
-import SearchProperty from "./userDashboard/Search/SearchBar";
-import Team from "./userDashboard/Agent/Team";
+import SearchProperty from "../Home/Search/SearchBar";
+import Agents from "./Agent/Agents";
 
 //  import Properties from "../User/Rent/Properties";
 const Home = () => {
@@ -31,14 +31,13 @@ const Home = () => {
       <Header />
       <SearchProperty />
 
-      <h2 className="homeHeading">Featured Products</h2>
+      <h2 className="homeHeading">Featured Properties</h2>
       <div className="container" id="container">
         {properties &&
           properties.map((property) => (
             <PropertyCard key={property._id} property={property} />
           ))}
       </div>
-      <Team />
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

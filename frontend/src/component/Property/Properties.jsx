@@ -3,14 +3,12 @@ import Footer from "../Common/footer/Footer";
 import Header from "../Common/navbar/Header";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "../../more/Loader";
-import PropertyCard from "./PropertyCard";
+import PropertyCard from "../Common/CardComponent/PropertyCard";
 import { getProperty } from "../../actions/PropertyActions";
 import Pagination from "react-js-pagination";
 import "./Properties.css";
 import Typography from "@material-ui/core/Typography"
-// import { useAlert } from "react-alert";
 import MetaData from "../../more/Metadata";
-import { Link } from "react-router-dom";
 
 const categories = [
   "Bungalow",

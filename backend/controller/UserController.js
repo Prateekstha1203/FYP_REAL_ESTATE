@@ -6,6 +6,22 @@ const sendMail = require("../utils/sendMail.js");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 
+
+
+
+const AWS = require('aws-sdk');
+const { aws, adminEmail } = require('../config/.config');
+
+AWS.config.update(aws);
+const { v4: uuidv4 } = require('uuid');
+const ses = new AWS.SES({ apiVersion: '2010-12-01' });
+
+
+
+
+
+
+
 // Register user
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
   try {
@@ -253,7 +269,6 @@ exports.getAgents = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // Get Single User Details ---Admin
 exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
@@ -306,3 +321,54 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     message: "User deleted successfully",
   });
 });
+
+
+exports.sendContactEmail = async (req, res) => {
+  const { name, email, message, subject } = req.body;
+
+  const params = {
+    Destination: {
+      ToAddresses: [adminEmail],
+    },
+    Message: {
+      Body: {
+        Html: {
+          Data: `
+            <h3>Contact Form Submission</h3>
+            <p>Name: ${name}</p>
+            <p>Email: ${email}</p>
+            <p>Message:</p>
+            <p>${message}</p>
+          `
+        }
+      },
+      Subject: {
+        Data: `${
+          subject
+        }`
+      }
+    },
+    Source: 'prateekshrestha1203@gmail.com',
+    ReplyToAddresses: [adminEmail],
+    ReturnPath: adminEmail,
+    Tags: [
+      {
+        Name: 'Type',
+        Value: 'Contact_Form'
+      },
+      {
+        Name: 'SubmissionId',
+        Value: uuidv4()
+      }
+    ]
+  };
+
+  try {
+    await ses.sendEmail(params).promise();
+    res.status(200).json({ message: 'Email sent successfully' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Failed to send email' });
+  }
+};
+

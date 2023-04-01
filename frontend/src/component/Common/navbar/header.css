@@ -46,11 +46,11 @@
   }
 }
 #header .navbar {
-  padding: 10px 0px;
+  padding: 5px 0px;
 }
 #header .navbar .navbar-brand img {
-  width: 90px;
-  height: auto;
+  width: 120px;
+  height: 70px;
 }
 #header .navbar .navbar-nav .nav-item .dropdown-menu {
   background: #643c7c !important;
@@ -64,10 +64,22 @@
 #header .navbar .navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
   color: rgba(202, 202, 202, 0.7) !important;
 }
+#header .navbar .nav-item .nav-link {
+  font-size: 18px;
+  padding: 6px 10px;
+  border-radius: 24px;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 500;
+  border: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+}
 @media screen and (max-width: 1192px) {
   #header .nav-item .search-bar .form-control {
     width: 150px;
   }
+
+
 }
 @media screen and (min-width: 992px) {
   #header::after {
@@ -94,7 +106,7 @@
     padding: 10px 5px;
   }
   #header .navbar .nav-item .nav-link {
-    font-size: 14px;
+    font-size: 18px;
     padding: 6px 10px;
     border-radius: 24px;
     text-transform: uppercase;
@@ -155,128 +167,3 @@
   }
 }
 
-/* useEffect(() => {
-    const handleScroll = () => {
-      if (window.pageYOffset > 100) {
-        document.getElementById("header").classList.add("fixed-top");
-        document.querySelector(".topBar").style.display = "none";
-      } else {
-        document.getElementById("header").classList.remove("fixed-top");
-        document.querySelector(".topBar").style.display = "block";
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []); */
-
-
-  /* navbar */
-  /* <nav className="navbar navbar-expand-lg navbar-dark">
-  <div className="container">
-    <a className="navbar-brand" href="index.html">
-      <img src={Logo}></img>
-    </a>
-    <button
-      className="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#main_nav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="main_nav">
-      <ul className="navbar-nav ms-auto">
-        <li className="nav-item">
-          <Link to="/" className="nav-link active">
-            HOME
-          </Link>
-        </li>
-        <li className="nav-item dropdown">
-          <Link
-            className="nav-link dropdown-toggle"
-            href="#"
-            data-bs-toggle="dropdown"
-          >
-            PROPERTIES
-          </Link>
-          <ul className="dropdown-menu dropdown-menu-end fade-down">
-            <li>
-              <Link className="dropdown-item" href="shop.html">
-                Shop
-              </Link>
-            </li>
-            <li>
-              <Link className="dropdown-item" href="#">
-                Gallery
-              </Link>
-            </li>
-            <li>
-              <Link className="dropdown-item" href="Contact.html">
-                Contact
-              </Link>
-            </li>
-            <li>
-              <Link className="dropdown-item" href="Appointment.html">
-                Appointments
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li className="nav-item">
-          <Link to="/" className="nav-link ">
-            ABOUT US
-          </Link>
-        </li>
-        {/* <li className="nav-item">
-          <a className="nav-link" href="#">
-            Gallery
-          </a>
-        </li>
-        <li className="nav-item">
-          <Link to="/" className="nav-link ">
-            CONTACT US
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/" className="nav-link ">
-            AGENTS
-          </Link>
-        </li>
-        <li className="nav-item dropdown">
-          <a
-            className="nav-link dropdown-toggle"
-            href="#"
-            data-bs-toggle="dropdown"
-          >
-            Dropdown right
-          </a>
-          <ul className="dropdown-menu dropdown-menu-end fade-down">
-            <li>
-              <a className="dropdown-item" href="shop.html">
-                Shop
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                Gallery
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="Contact.html">
-                Contact
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="Appointment.html">
-                Appointments
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-</header> */

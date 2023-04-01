@@ -39,6 +39,10 @@ import {
   FETCH_AGENTS_REQUEST,
   FETCH_AGENTS_SUCCESS,
   FETCH_AGENTS_FAILURE,
+  SEND_CONTACT_EMAIL_REQUEST,
+  SEND_CONTACT_EMAIL_SUCCESS,
+  SEND_CONTACT_EMAIL_FAILURE,
+  SEND_CONTACT_EMAIL_RESET,
 } from "../constans/userContans";
 
 // Login
@@ -264,3 +268,24 @@ export const fetchAgents = () => async (dispatch) => {
   }
 };
 
+
+
+export const sendContactEmail = (name, email, subject, message) => async (
+  dispatch
+) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.post(
+      "/contact",
+      { name, email, subject, message },
+      config
+    );
+    return Promise.resolve(data.message);
+  } catch (error) {
+    return Promise.reject(error.response.data.error);
+  }
+};

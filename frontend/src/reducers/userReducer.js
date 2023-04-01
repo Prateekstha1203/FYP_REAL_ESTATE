@@ -42,6 +42,9 @@ import {
   FETCH_AGENTS_SUCCESS,
   FETCH_AGENTS_FAILURE,
   FETCH_AGENTS_REQUEST,
+  SEND_CONTACT_EMAIL_REQUEST,
+  SEND_CONTACT_EMAIL_SUCCESS,
+  SEND_CONTACT_EMAIL_FAILURE,
 } from "../constans/userContans";
 
 const initialState = {
@@ -217,7 +220,7 @@ export const agentReducer = (state = { agent: {} }, action) => {
       };
     case FETCH_AGENTS_SUCCESS:
       console.log(action.payload);
-      
+
       return { ...state, loading: false, agent: action.payload };
     case FETCH_AGENTS_FAILURE:
       return state;
@@ -327,11 +330,29 @@ export const forgotPasswordReducer = (state = {}, action) => {
 
 function authReducer(state = initialState, action) {
   switch (action.type) {
-    case 'AUTHENTICATE':
+    case "AUTHENTICATE":
       return { ...state, isAuthenticated: true };
-    case 'LOGOUT':
+    case "LOGOUT":
       return { ...state, isAuthenticated: false };
     default:
       return state;
   }
 }
+
+export const sendContactEmailReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SEND_CONTACT_EMAIL_REQUEST:
+      return { loading: true };
+    case SEND_CONTACT_EMAIL_SUCCESS:
+      return { loading: false, success: true };
+    case SEND_CONTACT_EMAIL_FAILURE:
+      return { loading: false, error: action.payload };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};

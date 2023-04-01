@@ -25,13 +25,9 @@ import {
   UPDATE_PROPERTY_FAIL,
   DELETE_PROPERTY_RESET,
   UPDATE_PROPERTY_RESET,
-  // DELETE_REVIEW_REQUEST,
-  // DELETE_REVIEW_SUCCESS,
-  // DELETE_REVIEW_FAIL,
-  // DELETE_REVIEW_RESET,
-  // ALL_REVIEW_REQUEST,
-  // ALL_REVIEW_SUCCESS,
-  // ALL_REVIEW_FAIL,
+  GET_TOP_LISTINGS_REQUEST,
+  GET_TOP_LISTINGS_SUCCESS,
+  GET_TOP_LISTINGS_FAIL,
 } from "../constans/PropertyConstans";
 
 export const propertiesReducer = (state = { properties: [] }, action) => {
@@ -99,7 +95,6 @@ export const propertyDetailsReducer = (state = { property: {} }, action) => {
       return state;
   }
 };
-
 
 // New Property ----Admin
 export const newPropertyReducer = (state = { property: {} }, action) => {
@@ -179,6 +174,32 @@ export const deletePropertyReducer = (state = {}, action) => {
       return {
         ...state,
         error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const topListingsReducer = (state = { topListings: [] }, action) => {
+  switch (action.type) {
+    case GET_TOP_LISTINGS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_TOP_LISTINGS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        topListings: action.payload,
+        success: true,
+      };
+    case GET_TOP_LISTINGS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        success: false,
       };
     default:
       return state;

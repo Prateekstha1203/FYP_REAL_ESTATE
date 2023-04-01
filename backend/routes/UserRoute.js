@@ -13,12 +13,13 @@ const {
   updateUserRole,
   deleteUser,
   getAgents,
+  sendContactEmail,
 } = require("../controller/UserController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 
 router.route("/register").post(createUser);
-
+router.route("/contact").post(sendContactEmail);
 router.route("/login").post(loginUser);
 
 router.route("/logout").get(logoutUser);
