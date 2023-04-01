@@ -166,98 +166,98 @@ exports.getSingleProperty = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-exports.getPropertyLocation = async (req, res, next) => {
-  const address = req.params.address;
-  const AMENITY_CATEGORIES = ["hospital", "park", "restaurant", "mart"];
-  function haversine(lat1, lon1, lat2, lon2) {
-    const toRadians = (degrees) => (degrees * Math.PI) / 180;
-    const R = 6371; // Earth's radius in kilometers
-    const φ1 = toRadians(lat1);
-    const φ2 = toRadians(lat2);
-    const Δφ = toRadians(lat2 - lat1);
-    const Δλ = toRadians(lon2 - lon1);
+// exports.getPropertyLocation = async (req, res, next) => {
+//   const address = req.params.address;
+//   const AMENITY_CATEGORIES = ["hospital", "park", "restaurant", "mart"];
+//   function haversine(lat1, lon1, lat2, lon2) {
+//     const toRadians = (degrees) => (degrees * Math.PI) / 180;
+//     const R = 6371; // Earth's radius in kilometers
+//     const φ1 = toRadians(lat1);
+//     const φ2 = toRadians(lat2);
+//     const Δφ = toRadians(lat2 - lat1);
+//     const Δλ = toRadians(lon2 - lon1);
 
-    const a =
-      Math.sin(Δφ / 2) ** 2 +
-      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
+//     const a =
+//       Math.sin(Δφ / 2) ** 2 +
+//       Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
 
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+//     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c;
-  }
-  try {
-    const property = await Property.findOne({ address: address });
+//     return R * c;
+//   }
+//   try {
+//     const property = await Property.findOne({ address: address });
 
-    if (!property) {
-      return res.status(404).json({ message: "Property not found" });
-    }
+//     if (!property) {
+//       return res.status(404).json({ message: "Property not found" });
+//     }
 
-    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-      property.address
-    )}.json?access_token=pk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2w5ZHVicmM4MGJ3YTNvcDlhemhxMXh4NiJ9.pPca72n4BLDfidsxfvd9Ag`;
+//     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+//       property.address
+//     )}.json?access_token=;
 
-    const geocodeResponse = await axios.get(geocodeUrl);
-    const geocodeData = geocodeResponse.data;
+//     const geocodeResponse = await axios.get(geocodeUrl);
+//     const geocodeData = geocodeResponse.data;
 
-    if (!geocodeData.features || geocodeData.features.length === 0) {
-      return res.status(404).json({ message: "Address not found" });
-    }
+//     if (!geocodeData.features || geocodeData.features.length === 0) {
+//       return res.status(404).json({ message: "Address not found" });
+//     }
 
-    const longitude = geocodeData.features[0].center[0];
-    const latitude = geocodeData.features[0].center[1];
+//     const longitude = geocodeData.features[0].center[0];
+//     const latitude = geocodeData.features[0].center[1];
 
-    const amenities = await Promise.all(
-      AMENITY_CATEGORIES.map(async (category) => {
-        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyCETfYHnB3ZszmOzR7br1tWUSI7XpBwJk4`;
+//     const amenities = await Promise.all(
+//       AMENITY_CATEGORIES.map(async (category) => {
+//         const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=`;
 
-        const response = await axios.get(url);
-        const data = response.data;
+//         const response = await axios.get(url);
+//         const data = response.data;
 
-        if (!data.results || data.results.length === 0) {
-          return null;
-        }
+//         if (!data.results || data.results.length === 0) {
+//           return null;
+//         }
 
-        const amenities = data.results.map((result) => ({
-          name: result.name,
-          distance: result.vicinity,
-          location: {
-            latitude: result.geometry.location.lat,
-            longitude: result.geometry.location.lng,
-          },
-        }));
+//         const amenities = data.results.map((result) => ({
+//           name: result.name,
+//           distance: result.vicinity,
+//           location: {
+//             latitude: result.geometry.location.lat,
+//             longitude: result.geometry.location.lng,
+//           },
+//         }));
 
-        const closestAmenity = amenities.reduce((prev, curr) => {
-          const prevDistance = haversine(
-            latitude,
-            longitude,
-            prev.location.latitude,
-            prev.location.longitude
-          );
-          const currDistance = haversine(
-            latitude,
-            longitude,
-            curr.location.latitude,
-            curr.location.longitude
-          );
+//         const closestAmenity = amenities.reduce((prev, curr) => {
+//           const prevDistance = haversine(
+//             latitude,
+//             longitude,
+//             prev.location.latitude,
+//             prev.location.longitude
+//           );
+//           const currDistance = haversine(
+//             latitude,
+//             longitude,
+//             curr.location.latitude,
+//             curr.location.longitude
+//           );
 
-          return prevDistance < currDistance ? prev : curr;
-        });
+//           return prevDistance < currDistance ? prev : curr;
+//         });
 
-        return { category: category, ...closestAmenity };
-      })
-    );
+//         return { category: category, ...closestAmenity };
+//       })
+//     );
 
-    const validAmenities = amenities.filter((amenity) => amenity !== null);
+//     const validAmenities = amenities.filter((amenity) => amenity !== null);
 
-    res.json({
-      amenities: validAmenities,
-      longitude: longitude,
-      latitude: latitude,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+//     res.json({
+//       amenities: validAmenities,
+//       longitude: longitude,
+//       latitude: latitude,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 // exports.getPropertyAmenities = async (req, res, next) => {
 //   const address = req.params.address;
