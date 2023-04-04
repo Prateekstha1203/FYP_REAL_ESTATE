@@ -42,7 +42,6 @@ import {
   SEND_CONTACT_EMAIL_REQUEST,
   SEND_CONTACT_EMAIL_SUCCESS,
   SEND_CONTACT_EMAIL_FAILURE,
-  SEND_CONTACT_EMAIL_RESET,
 } from "../constans/userContans";
 
 // Login
@@ -259,6 +258,7 @@ export const clearErrors= () => async (dispatch)=>{
 
 export const fetchAgents = () => async (dispatch) => {
   try {
+    dispatch({ type: FETCH_AGENTS_REQUEST });
     const res = await axios.get('/agent');
     console.log("Agents data:", res.data); // add this line to log the data
     dispatch({ type: FETCH_AGENTS_SUCCESS, payload: res.data });
@@ -274,6 +274,7 @@ export const sendContactEmail = (name, email, subject, message) => async (
   dispatch
 ) => {
   try {
+    dispatch({ type: SEND_CONTACT_EMAIL_REQUEST });
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -284,8 +285,11 @@ export const sendContactEmail = (name, email, subject, message) => async (
       { name, email, subject, message },
       config
     );
+    dispatch({ type: SEND_CONTACT_EMAIL_SUCCESS, payload: data.message });
     return Promise.resolve(data.message);
   } catch (error) {
+    dispatch({ type: SEND_CONTACT_EMAIL_FAILURE, payload: error.response.data.error });
     return Promise.reject(error.response.data.error);
   }
 };
+

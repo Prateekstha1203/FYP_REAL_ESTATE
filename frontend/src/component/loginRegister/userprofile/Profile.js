@@ -33,12 +33,12 @@ const Profile = ({ history }) => {
                     <h3 className="m-0">Profile Picture</h3>
                   </div>
                   <div className="card-body text-center">
-                    <img
+                    {/* <img
                       className="img-account-profile rounded-circle mb-2"
                       src={user.avatar.url}
                       alt={user.name}
                       style={{ width: "130px", height: "130px" }}
-                    />
+                    /> */}
                     <div className="small font-italic text-muted mb-2">
                       JPG or PNG no larger than 5 MB
                     </div>

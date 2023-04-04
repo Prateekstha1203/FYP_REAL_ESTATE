@@ -66,7 +66,7 @@ const Register = ({ history, location }) => {
     if (isAuthenticated) {
       history.push("/");
     }
-  }, [dispatch, error, alert, history, isAuthenticated, redirect]);
+  }, [dispatch, error,  history, isAuthenticated, redirect]);
 
   return (
     <>

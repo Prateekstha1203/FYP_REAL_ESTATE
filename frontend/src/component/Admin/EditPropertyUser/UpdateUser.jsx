@@ -59,7 +59,6 @@ const UpdateUser = ({ history, match }) => {
     }
   }, [
     dispatch,
-    alert,
     userDetailsError,
     history,
     isUpdated,

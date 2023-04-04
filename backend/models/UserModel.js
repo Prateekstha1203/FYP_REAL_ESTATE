@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please enter your mobile number"],
     unique: true,
   },
+  wishlist: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Wishlist',
+  },
   password: {
     type: String,
     required: [true, "Please enter your password!"],

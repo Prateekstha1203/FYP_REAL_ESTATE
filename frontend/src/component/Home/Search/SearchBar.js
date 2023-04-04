@@ -28,6 +28,7 @@ const SearchProperty = ({history}) => {
         <input className="searchInput"
           type="search"
           placeholder="Enter your property Address"
+          id="address-input"
           value={keyvalue}
           onChange={(e) => setKeyvalue(e.target.value)}
         />

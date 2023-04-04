@@ -3,12 +3,11 @@ import React, { Fragment, useState, useEffect } from "react";
 import Loader from "../../../more/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, resetPassword } from "../../../actions/userAction";
-import { useAlert } from "react-alert";
-import MetaData from "../../../more/Metadata";
 
+import MetaData from "../../../more/Metadata";
+import toast from "react-toastify"
 const ResetPassword = ({ history, match }) => {
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const { error, success, loading } = useSelector(
     (state) => state.forgotPassword
@@ -30,16 +29,16 @@ const ResetPassword = ({ history, match }) => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (success) {
-      alert.success("Password Updated Successfully");
+      toast.success("Password Updated Successfully");
 
       history.push("/login");
     }
-  }, [dispatch, error, alert, history, success]);
+  }, [dispatch, error,  history, success]);
 
   return (
     <Fragment>

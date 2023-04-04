@@ -35,7 +35,7 @@ import ForgotPassword from "./component/loginRegister/forget_password/ForgetPass
 import UpdateProfile from "./component/loginRegister/userprofile/UpdateProfile";
 import NewListing from "./component/Home/NewListing/NewListing";
 import { loadUser } from "./actions/userAction";
-
+import Wishlist from "./component/Property/Wishlist";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -56,6 +56,7 @@ function App() {
       <Route exact path="/card" component={NewListingCard} />
         <Route exact path="/" component={Home} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/wishlist" component={Wishlist} />
         <Route exact path="/newListing" component={NewListing} />
         <Route exact path="/contact" component={ContactForm} />
         <Route exact path="/login" component={Login} />
@@ -65,6 +66,7 @@ function App() {
         <Route exact path="/logout" component={Login} />
         {/* <Route exact path="/search" component={SearchProperty} /> */}
         <Route exact path="/property/:id" component={PropertyDetail} />
+        
         <ProtectedRoute
           exact
           path="/password/update"

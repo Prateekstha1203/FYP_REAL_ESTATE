@@ -4,11 +4,11 @@ const {
   createProperty,
   updateProperty,
   deleteProperty,
-  getPropertyDetails,
   getAdminProperties,
   // getNearbyAmenities,
   getTopListings,
   getPropertyLocation,
+  sendAgentEmail,
 } = require("../controller/PropertyController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
@@ -28,26 +28,6 @@ router
   .route("/admin/property/:id")
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateProperty)
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProperty);
-// router.route("/property/:address").get(getPropertyLocation);
-
-router.route("/property/:id").get(getPropertyDetails);
-
-
-
-// router.get('/property/:address/:id', async (req, res, next) => {
-//   try {
-//     const [locationResult, detailsResult] = await Promise.all([
-//       getPropertyAmenities(req, res, next),
-//       getPropertyDetails(req, res, next)
-//     ]);
-
-//     res.json({
-//       location: locationResult,
-//       details: detailsResult
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.route("/property/:id").get(getPropertyLocation).post(sendAgentEmail);
 
 module.exports = router;

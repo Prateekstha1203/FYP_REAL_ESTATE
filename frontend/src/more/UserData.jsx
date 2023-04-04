@@ -80,7 +80,16 @@ const UserData  = ({ user }) => {
         onOpen={() => setOpen(true)}
         direction="down"
         className="speedDial"
-        icon={<PersonIcon />}
+        icon={
+          <img
+            className="speedDialIcon"
+            src={user.avatar.url ? user.avatar.url : ("/profile.png")}
+            alt="Profile"
+            style={{
+              position:"fixed"
+            }}
+          />
+        }
         open={open}
       >
         {options.map((item) => (

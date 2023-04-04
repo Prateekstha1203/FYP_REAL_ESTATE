@@ -51,7 +51,7 @@ const AllProperties = ({ history }) => {
 
   useEffect(() => {
     if (error) {
-      alert(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     if (deleteError) {
@@ -65,7 +65,7 @@ const AllProperties = ({ history }) => {
       dispatch({ type: DELETE_PROPERTY_RESET });
     }
     dispatch(getAdminProperty());
-  }, [dispatch, alert, error, history]);
+  }, [dispatch, error, isDeleted, history]);
 
   return (
     <Fragment>

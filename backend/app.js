@@ -21,12 +21,13 @@ if(process.env.NODE_ENV!=="PRODUCTION"){
 // Route imports
 const property = require("./routes/PropertyRoute");
 const user = require("./routes/UserRoute");
+const wishlist = require("./routes/WishlistRoute");
 
 app.use("/",property);
 
 app.use("/",user);
 
-
+app.use("/",wishlist);
 app.use(express.static(path.join(__dirname,"../frontend/build")));
 
 app.get("*",(req,res) =>{

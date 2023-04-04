@@ -28,6 +28,9 @@ import {
   GET_TOP_LISTINGS_REQUEST,
   GET_TOP_LISTINGS_SUCCESS,
   GET_TOP_LISTINGS_FAIL,
+  SEND_EMAIL_REQUEST,
+  SEND_EMAIL_SUCCESS,
+  SEND_EMAIL_FAILURE,
 } from "../constans/PropertyConstans";
 
 export const propertiesReducer = (state = { properties: [] }, action) => {
@@ -79,7 +82,10 @@ export const propertyDetailsReducer = (state = { property: {} }, action) => {
     case PROPERTY_DETAILS_SUCCESS:
       return {
         loading: false,
-        property: action.payload,
+        property: action.payload.property,
+        amenities: action.payload.amenities,
+        longitude: action.payload.longitude,
+        latitude: action.payload.latitude,
       };
     case PROPERTY_DETAILS_FAIL:
       return {
@@ -201,6 +207,33 @@ export const topListingsReducer = (state = { topListings: [] }, action) => {
         error: action.payload,
         success: false,
       };
+    default:
+      return state;
+  }
+};
+
+const initialState = {
+  loading: false,
+  success: false,
+  error: false,
+};
+
+export const sendAgentEmailReducer = (
+  state = { loading: false, success: false, error: null },
+  action
+) => {
+  switch (action.type) {
+    case SEND_EMAIL_REQUEST:
+      return { loading: true, success: false, error: null };
+    case SEND_EMAIL_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        error: null,
+        message: action.payload,
+      };
+    case SEND_EMAIL_FAILURE:
+      return { loading: false, success: false, error: action.payload };
     default:
       return state;
   }

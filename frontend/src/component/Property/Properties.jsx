@@ -7,14 +7,10 @@ import PropertyCard from "../Common/CardComponent/PropertyCard";
 import { getProperty } from "../../actions/PropertyActions";
 import Pagination from "react-js-pagination";
 import "./Properties.css";
-import Typography from "@material-ui/core/Typography"
+import Typography from "@material-ui/core/Typography";
 import MetaData from "../../more/Metadata";
 
-const categories = [
-  "Bungalow",
-  "Villa",
-  "Apartment"
-]
+const categories = ["Bungalow", "Villa", "Apartment"];
 
 const Properties = ({ match }) => {
   const dispatch = useDispatch();
@@ -37,7 +33,6 @@ const Properties = ({ match }) => {
     setCurrentPage(e);
   };
 
-
   useEffect(() => {
     if (category === "All") {
       dispatch(getProperty(keyvalue, currentPage));
@@ -45,8 +40,6 @@ const Properties = ({ match }) => {
       dispatch(getProperty(keyvalue, currentPage, category));
     }
   }, [dispatch, keyvalue, currentPage, category, error]);
-
-
 
   return (
     <>
@@ -57,9 +50,9 @@ const Properties = ({ match }) => {
           <MetaData title="Products" />
           <Header />
           <div>
-            {properties.length === 0 ?
+            {properties.length === 0 ? (
               ""
-              :
+            ) : (
               <h2
                 style={{
                   textAlign: "center",
@@ -73,59 +66,79 @@ const Properties = ({ match }) => {
               >
                 Featured Products
               </h2>
-            }
-            <div className="sidebar__product" style={{
-              display: "flex",
-              flex: 1,
-            }}>
-              <div className="sidebar__products" style={{
-                border: "1px solid #999",
-                margin: "1vmax",
-                flex: ".177"
-              }}>
-                <Typography style={{ fontSize: "1.2vmax", padding: "5px" }}>CHOOSE CATEGORIES</Typography>
-                <ul className="categoryBox" style={{
-                  boxSizing: "inherit"
-                }}>
+            )}
+            <div
+              className="sidebar__product"
+              style={{
+                display: "flex",
+                flex: 1,
+              }}
+            >
+              <div
+                className="sidebar__products"
+                style={{
+                  border: "1px solid #999",
+                  margin: "1vmax",
+                  flex: ".177",
+                }}
+              >
+                <Typography style={{ fontSize: "1.2vmax", padding: "5px" }}>
+                  CHOOSE CATEGORIES
+                </Typography>
+                <ul
+                  className="categoryBox"
+                  style={{
+                    boxSizing: "inherit",
+                  }}
+                >
                   {categories.map((category) => (
                     <li
                       className="category-link"
                       key={category}
                       onClick={() => setCategory(category)}
-                      type="checkbox">
+                      type="checkbox"
+                    >
                       {category}
                     </li>
                   ))}
                 </ul>
-                <Typography style={{ fontSize: "1.2vmax", padding: "5px" }}>QUICK LINKS</Typography>
-                
+                <Typography style={{ fontSize: "1.2vmax", padding: "5px" }}>
+                  QUICK LINKS
+                </Typography>
               </div>
 
-              {properties.length === 0 ?
-                <span style={{
-                  display: "block",
-                  padding: "30px 0",
-                  fontSize: "1.5rem",
-                  flex: ".9",
-                  textAlign: "center"
-                }}>No Product Found ....</span>
-                :
+              {properties.length === 0 ? (
+                <span
+                  style={{
+                    display: "block",
+                    padding: "30px 0",
+                    fontSize: "1.5rem",
+                    flex: ".9",
+                    textAlign: "center",
+                  }}
+                >
+                  No Product Found ....
+                </span>
+              ) : (
                 <div
                   className="products"
                   style={{
                     display: "flex",
                     flexWrap: "wrap",
                     justifyContent: "center",
-                    flex: ".9"
+                    flex: ".9",
                   }}
                 >
-                  {properties &&
-                    properties.map((property) => (
-                      <PropertyCard key={property.id} property={property} />
-                    ))}
+                  <div className="row">
+                    {properties &&
+                      properties.map((property) => (
+                        <div className="col-md-4" key={property.id}>
+                          <PropertyCard property={property} className="card" />
+                        </div>
+                      ))}
+                  </div>
                 </div>
-              }
-
+              )}
             </div>
 
             <div

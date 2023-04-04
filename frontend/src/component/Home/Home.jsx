@@ -33,10 +33,14 @@ const Home = () => {
 
       <h2 className="homeHeading">Featured Properties</h2>
       <div className="container" id="container">
-        {properties &&
-          properties.map((property) => (
-            <PropertyCard key={property._id} property={property} />
-          ))}
+        <div className="row">
+          {properties &&
+            properties.map((property) => (
+              <div className="col-md-4" key={property.id}>
+                <PropertyCard property={property} className="card" />
+              </div>
+            ))}
+        </div>
       </div>
       <ToastContainer
         position="bottom-center"

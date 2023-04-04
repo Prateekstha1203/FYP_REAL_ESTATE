@@ -48,7 +48,7 @@ const UpdatePassword = ({ history }) => {
         type: UPDATE_PASSWORD_RESET,
       });
     }
-  }, [dispatch, error, alert, history, isUpdated]);
+  }, [dispatch, error,  history, isUpdated]);
 
   return (
     <Fragment className="container-fluid">

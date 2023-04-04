@@ -17,7 +17,7 @@ p{
   }
 .wishlist {
   position: absolute;
-  top: 5px;
+  top: 12rem;
   right: 5px;
 }
 
@@ -89,6 +89,16 @@ svg {
   height: 1rem;
   fill: currentColor;
 }
+.viewBtn{
+  padding: 12px 17px;
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #72448d;
+  margin: 0.5rem 0 1rem 0;
+}
 .bedroom {
   color: #111827;
   font-weight: 700;
@@ -106,5 +116,5 @@ svg {
 
 
 .wishlistBtn{
-  margin-top: 8.2rem;
+  position: relative;
 }

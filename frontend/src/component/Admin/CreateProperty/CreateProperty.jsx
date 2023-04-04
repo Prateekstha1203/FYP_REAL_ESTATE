@@ -6,6 +6,8 @@ import MetaData from "../../../more/Metadata";
 import SideBar from "../SideBarAdmin/Sidebar";
 import { NEW_PROPERTY_RESET } from "../../../constans/PropertyConstans";
 import { ToastContainer, toast } from "react-toastify";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { GOOGLE_PLACES_API_KEY } from "../../../config.js";
 
 const CreateProperty = ({ history }) => {
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ const CreateProperty = ({ history }) => {
       history.push("/dashboard");
       dispatch({ type: NEW_PROPERTY_RESET });
     }
-  }, [dispatch, alert, error, history, success]);
+  }, [dispatch, error, history, success]);
 
   const createPropertySubmitHandler = (e) => {
     e.preventDefault();
@@ -76,15 +78,8 @@ const CreateProperty = ({ history }) => {
     setImagesPreview([]);
 
     files.forEach((file) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagesPreview((old) => [...old, reader.result]);
-          setImages((old) => [...old, reader.result]);
-        }
-      };
-      reader.readAsDataURL(file);
+      setImagesPreview((old) => [...old, URL.createObjectURL(file)]);
+      setImages((old) => [...old, file]);
     });
   };
 
@@ -101,7 +96,7 @@ const CreateProperty = ({ history }) => {
             onSubmit={createPropertySubmitHandler}
           >
             <div class="row mt-3">
-              <div class="form-group col-md-6">
+              <div className="form-group col-md-6">
                 <label for="inputPassword4">Property Title</label>
                 <input
                   type="text"
@@ -114,15 +109,40 @@ const CreateProperty = ({ history }) => {
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword4">Address</label>
-                <input
+                
+                 <GooglePlacesAutocomplete
+                 apiKey={GOOGLE_PLACES_API_KEY}
+                 apiOptions={{ region: "au" }}
                   placeholder="Property Address"
                   type="text"
                   class="form-control"
                   required
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                ></input>
+                  selectProps={{
+                
+                    placeholder: "Search for address..",
+                    onChange: ({ value }) => {
+                      console.log("address onchange => ", value.description);
+                      //setAd({ ...ad, address: value.description });
+                      setAddress(value.description)
+                    },
+                  }}
+                  // onChange=({value}) =>{ setAddress({address: value.description})}
+                  />
+              
               </div>
+              {/* <div className="mb-3 form-control">
+               
+                  selectProps={{
+                    //defaultInputValue: ad?.address,
+                    placeholder: "Search for address..",
+                    onChange: ({ value }) => {
+                      // console.log("address onchange => ", value.description);
+                      //setAd({ ...ad, address: value.description });
+                    },
+                  }}
+                
+              </div> */}
+
               <div class="form-group col-md-6 mt-4">
                 <label for="inputAddress">Property Type</label>
                 <select
@@ -141,7 +161,8 @@ const CreateProperty = ({ history }) => {
                 <label for="inputAddress">Property Category</label>
                 <select
                   onChange={(e) => setCategory(e.target.value)}
-                  className="ms-3" value={category}
+                  className="ms-3"
+                  value={category}
                 >
                   <option value="">Choose Property Category</option>
                   {propertyCategories.map((category) => (
@@ -251,10 +272,17 @@ const CreateProperty = ({ history }) => {
               </div>
               <div class="form-group col-md-3  mt-4 fw-bold display-1">
                 <div id="createProductFormFile">
-                  <input
+                  {/* <input
                     type="file"
                     name="avatar"
                     class="form-control"
+                    accept="image/*"
+                    onChange={createPropertyImagesChange}
+                    multiple
+                  /> */}
+                  <input
+                    type="file"
+                    name="images"
                     accept="image/*"
                     onChange={createPropertyImagesChange}
                     multiple

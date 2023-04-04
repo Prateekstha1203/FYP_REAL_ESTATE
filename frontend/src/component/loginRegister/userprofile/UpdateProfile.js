@@ -69,7 +69,7 @@ const UpdateProfile = ({ history }) => {
         type: UPDATE_PROFILE_RESET,
       });
     }
-  }, [dispatch, error, alert, history, user, isUpdated]);
+  }, [dispatch, error,  history, user, isUpdated]);
   return (
     <Fragment>
       {loading ? (
@@ -140,7 +140,7 @@ const UpdateProfile = ({ history }) => {
                         <div className="col-md-9">
                           <div className="form-group">
                             <input
-                              type="string"
+                              type="number"
                               className="form-control"
                               id="mobile"
                               placeholder="Contact No"
@@ -170,7 +170,7 @@ const UpdateProfile = ({ history }) => {
                           </div>
                         </div>
                       </div>
-                      <button type="submit" className="btn btn-secondary">
+                      <button type="submit" value="Update" className="btn btn-secondary">
                         Update
                       </button>
                     </form>

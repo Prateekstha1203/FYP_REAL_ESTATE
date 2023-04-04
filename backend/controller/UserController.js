@@ -25,31 +25,29 @@ const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 // Register user
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
   try {
-    const myCloudImage = await cloudinary.v2.uploader.upload(req.body.avatar, {
-      folder: "avator",
-      width: 150,
-      crop: "scale",
-    });
-    const { name, email, password, mobile } = req.body;
+    const { name, email, password, mobile, avatar } = req.body;
 
     let user = await User.findOne({ email });
     if (user) {
       return res
         .status(400)
-        .json({ success: false, message: "User already exists in the sytem." });
+        .json({ success: false, message: "User already exists" });
     }
+
+    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+      folder: "avatars",
+    });
+
     user = await User.create({
       name,
       email,
       mobile,
       password,
-      avatar: {
-        public_id: myCloudImage.public_id,
-        url: myCloudImage.secure_url,
-      },
+      avatar: { public_id: myCloud.public_id, url: myCloud.secure_url },
     });
-
+    
     sendToken(user, 201, res);
+
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -212,6 +210,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
+    mobile:req.body.mobile,
   };
 
   if (req.body.avatar !== "") {
@@ -234,7 +233,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
-    runValidator: true,
+    runValidators: true,
     useFindAndModify: false,
   });
 
@@ -371,4 +370,5 @@ exports.sendContactEmail = async (req, res) => {
     res.status(500).json({ message: 'Failed to send email' });
   }
 };
+
 

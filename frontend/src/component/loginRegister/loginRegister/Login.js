@@ -7,6 +7,7 @@ import { login, clearErrors } from "../../../actions/userAction";
 import Loader from "../../../more/Loader";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -33,7 +34,7 @@ const Login = () => {
       history.push("/");
       toast.success("Successfully login to home page.");
     }
-  }, [dispatch, error, alert, history, isAuthenticated]);
+  }, [dispatch, error,  history, isAuthenticated]);
 
   return (
     <>

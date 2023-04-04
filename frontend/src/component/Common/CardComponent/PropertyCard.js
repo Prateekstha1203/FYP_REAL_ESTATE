@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./card.css";
 import Card from "react-bootstrap/Card";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   clearErrors,
   getPropertyDetails,
@@ -18,20 +16,31 @@ import {
 } from "../../../actions/WistlistAction";
 
 const PropertyCard = ({ property }) => {
-  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
-
-  const handleAddToWishlist = (property) => {
-    dispatch(addToWishlist(property));
-    setIsAddedToWishlist(true);
-    console.log(property);
-  };
-
-  const handleRemoveFromWishlist = (propertyId) => {
-    dispatch(removeFromWishlist(propertyId));
-    setIsAddedToWishlist(false);
-  };
-
   const dispatch = useDispatch();
+
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(
+    localStorage.getItem(`wishlist_${property._id}`) === "true"
+  );
+
+  const handleAddToWishlist = () => {
+    localStorage.setItem(`wishlist_${property._id}`, "true");
+    setIsAddedToWishlist(true);
+    dispatch(addToWishlist(property));
+  };
+
+  const handleRemoveFromWishlist = () => {
+    localStorage.setItem(`wishlist_${property._id}`, "false");
+    setIsAddedToWishlist(false);
+    dispatch(removeFromWishlist(property._id));
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem(`wishlist_${property._id}`) === "true") {
+      setIsAddedToWishlist(true);
+    } else {
+      setIsAddedToWishlist(false);
+    }
+  }, []);
 
   const { error } = useSelector((state) => state.propertyDetails);
 
@@ -57,15 +66,12 @@ const PropertyCard = ({ property }) => {
             {isAddedToWishlist ? (
               <button
                 className="wishlistBtn"
-                onClick={() => handleRemoveFromWishlist(property._id)}
+                onClick={handleRemoveFromWishlist}
               >
                 Remove from wishlist
               </button>
             ) : (
-              <button
-                className="wishlistBtn"
-                onClick={() => handleAddToWishlist(property)}
-              >
+              <button className="wishlistBtn" onClick={handleAddToWishlist}>
                 Add to wishlist
               </button>
             )}
@@ -84,6 +90,7 @@ const PropertyCard = ({ property }) => {
               </svg>
               <p>
                 <span class="bedroom">3</span> Bedrooms
+                
               </p>
             </div>
             <div class="bathroom-container">
@@ -103,7 +110,7 @@ const PropertyCard = ({ property }) => {
             </div>
           </div>
           <Link className="viewDetail" to={`/property/${property._id}`}>
-            <button className="btn viewBtn"> View Details</button>
+            <button className="viewBtn"> View Details</button>
           </Link>
         </div>
       </Card>

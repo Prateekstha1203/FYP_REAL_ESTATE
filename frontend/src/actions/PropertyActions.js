@@ -22,6 +22,9 @@ import {
   GET_TOP_LISTINGS_REQUEST,
   GET_TOP_LISTINGS_SUCCESS,
   GET_TOP_LISTINGS_FAIL,
+  SEND_EMAIL_REQUEST,
+  SEND_EMAIL_SUCCESS,
+  SEND_EMAIL_FAILURE,
 } from "../constans/PropertyConstans";
 
 export const getProperty = (
@@ -83,7 +86,7 @@ export const getPropertyDetails = (id) => async (dispatch) => {
 
     dispatch({
       type: PROPERTY_DETAILS_SUCCESS,
-      payload: data.property,
+      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -144,7 +147,7 @@ export const deleteProperty = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PROPERTY_REQUEST });
 
-    const { data } = await axios.delete(`/property/${id}`);
+    const { data } = await axios.delete(`/admin/property/${id}`);
 
     dispatch({
       type: DELETE_PROPERTY_SUCCESS,
@@ -167,7 +170,7 @@ export const updateProperty = (id, propertyData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const { data } = await axios.put(`/property/${id}`, propertyData, config);
+    const { data } = await axios.put(`/admin/property/${id}`, propertyData, config);
 
     dispatch({
       type: UPDATE_PROPERTY_SUCCESS,
@@ -186,4 +189,35 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+
+
+
+export const sendAgentEmail = (name, email, userMessage, propertyId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SEND_EMAIL_REQUEST,
+    });
+
+    const { data } = await axios.post("/property/:id", {
+      name,
+      email,
+      userMessage,
+      propertyId,
+    });
+    dispatch({
+      type: SEND_EMAIL_SUCCESS,
+      payload: data.message,
+    });
+
+  } catch (error) {
+    dispatch({
+      type: SEND_EMAIL_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };

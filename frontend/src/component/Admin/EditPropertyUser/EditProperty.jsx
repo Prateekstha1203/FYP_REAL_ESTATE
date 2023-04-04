@@ -39,8 +39,51 @@ const UpdateProperty = ({ history, match }) => {
   const [oldImages, setOldImages] = useState([]);
 
   const propertyId = match.params.id;
-  const propertyCategories = ["Banglow", "Apartment", "Villa"];
+  const propertyCategories = ["Bungalow", "Apartment", "Villa"];
   const propertyTypeList = ["Rent", "Sale"];
+  // useEffect(() => {
+  //   if (property && property._id !== propertyId) {
+  //     dispatch(getPropertyDetails(propertyId));
+  //   } else {
+  //     setPropertyTitle(property.propertyTitle);
+  //     setPropertyType(property.propertyType);
+  //     setPrice(property.price);
+  //     setCategory(property.category);
+  //     setAddress(property.address);
+  //     setAreaSqFt(property.areaSqFt);
+  //     setBathrooms(property.bathrooms);
+  //     setBedrooms(property.bedrooms);
+  //     setBuildYear(property.buildYear);
+  //     setIsFurnished(property.isFurnished);
+  //     setParking(property.parking);
+  //     setPropertyFace(property.propertyFace)
+  //     setDescription(property.description)
+  //     setOldImages(property.images);
+  //   }
+  //   if (error) {
+  //     toast.error(error);
+  //     dispatch(clearErrors());
+  //   }
+
+  //   if (updateError) {
+  //     toast.error(updateError);
+  //     dispatch(clearErrors());
+  //   }
+
+  //   if (isUpdated) {
+  //     toast.success("Property Updated Successfully");
+  //     history.push("/admin/property");
+  //     dispatch({ type: UPDATE_PROPERTY_RESET });
+  //   }
+  // }, [
+  //   dispatch,
+  //   error,
+  //   history,
+  //   isUpdated,
+  //   propertyId,
+  //   property,
+  //   updateError,
+  // ]);
   useEffect(() => {
     if (property && property._id !== propertyId) {
       dispatch(getPropertyDetails(propertyId));
@@ -56,36 +99,27 @@ const UpdateProperty = ({ history, match }) => {
       setBuildYear(property.buildYear);
       setIsFurnished(property.isFurnished);
       setParking(property.parking);
-      setPropertyFace(property.propertyFace)
-      setDescription(property.description)
+      setPropertyFace(property.propertyFace);
+      setDescription(property.description);
       setOldImages(property.images);
     }
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-
+  
     if (updateError) {
       toast.error(updateError);
       dispatch(clearErrors());
     }
-
+  
     if (isUpdated) {
       toast.success("Property Updated Successfully");
       history.push("/admin/property");
       dispatch({ type: UPDATE_PROPERTY_RESET });
     }
-  }, [
-    dispatch,
-    alert,
-    error,
-    history,
-    isUpdated,
-    propertyId,
-    property,
-    updateError,
-  ]);
-
+  }, [  dispatch,  error,  isUpdated,  property,  propertyId,  updateError,  history,]);
+  
   const updatePropertySubmitHandler = (e) => {
     e.preventDefault();
 
@@ -296,7 +330,7 @@ const UpdateProperty = ({ history, match }) => {
                   class="form-control"
                   required
                   value={propertyFace}
-                  onChange={(e) => setPropertyFace(e.target.value)}
+              onChange={(e) => setPropertyFace(e.target.value)}
                 />
               </div>
               <div class="form-group col-md-3  mt-4 fw-bold display-1">

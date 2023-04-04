@@ -7,6 +7,7 @@ import {
   propertyDetailsReducer,
   propertiesReducer,
   topListingsReducer,
+  sendAgentEmailReducer,
 } from "./reducers/PropertyReducer";
 import {
   allUsersReducer,
@@ -17,7 +18,7 @@ import {
   agentReducer,
   sendContactEmailReducer,
 } from "./reducers/userReducer";
-import { wishlistReducer } from "./reducers/WistlistReducer";
+import { wishlistReducer} from "./reducers/WistlistReducer";
 
 const reducer = combineReducers({
   properties: propertiesReducer,
@@ -33,15 +34,16 @@ const reducer = combineReducers({
   wishlist: wishlistReducer,
   sendContactEmail: sendContactEmailReducer,
   topListings: topListingsReducer,
+  sendAgentEmail:sendAgentEmailReducer,
 });
 
 const initialState = {
-  properties: [],
-  agents: [],
-  isAuthenticated: false,
+  // properties: [],
+  // agents: [],
+  //isAuthenticated: false,
   wishlist: [],
-  loading: false,
-  error: null,
+  // loading: false,
+  // error: null,
 };
 
 const middleWare = [thunk];

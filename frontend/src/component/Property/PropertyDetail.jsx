@@ -7,11 +7,13 @@ import MetaData from "../../more/Metadata";
 import Loading from "../../more/Loader";
 import { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRupeeSign , faBedEmpty} from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faRupeeSign, faBedEmpty } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import "./propertyDetail.css";
 import Agent from "../../component/Home/Agent/agent.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { sendAgentEmail } from "../../actions/PropertyActions";
 {
   /* <FontAwesomeIcon icon={faBedFront} />
 <FontAwesomeIcon icon={faBath} /> 
@@ -20,19 +22,46 @@ import { Link } from "react-router-dom";
 const PropertyDetail = ({ match, history }) => {
   const dispatch = useDispatch();
 
-  const { property, loading, error } = useSelector(
-    (state) => state.propertyDetails
-  );
-
+  const {
+    property,
+    amenities,
+    longitude,
+    latitude,
+    loading,
+    error,
+  } = useSelector((state) => state.propertyDetails);
   const { isAuthenticated } = useSelector((state) => state.user);
-
+  // const nearAmenities = JSON.parse(amenities)
+  console.log(amenities);
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     dispatch(getPropertyDetails(match.params.id));
-  }, [dispatch, match.params.id, error, alert]);
+  }, [dispatch, match.params.id, error]);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "Hello I am interested in your Real estate.",
+  });
+
+  const handleInputChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const { name, email, userMessage } = formData;
+    const propertyId = match.params.id;
+    console.log(name,email,userMessage,propertyId);
+    dispatch(sendAgentEmail(name, email, userMessage, propertyId));
+  };
 
   return (
     <Fragment>
@@ -72,7 +101,7 @@ const PropertyDetail = ({ match, history }) => {
                   <div className=" details ">
                     <div className="d-flex gap-3 text-purple my-3">
                       <div className="d-flex gap-2 align-items-center">
-                      <i class="fa-solid fa-bed"></i>
+                        <i class="fa-solid fa-bed"></i>
                         <div>{property.bedrooms}</div> <span>Bedrooms</span>
                       </div>
                       <div className="d-flex gap-2 align-items-center">
@@ -87,7 +116,19 @@ const PropertyDetail = ({ match, history }) => {
                       </div>
                     </div>
                     <div className="desc">
-                      Description: {property.description}
+                      <p>Description: {property.description}</p>
+                      <p>longitude:{longitude}</p>
+                      <p>latitude:{latitude}</p>
+                      {amenities && (
+                        <ul>
+                          {amenities.map((amenity, index) => (
+                            <li key={index}>
+                              {amenity.category} - {amenity.name} -{" "}
+                              {amenity.distance}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -103,41 +144,40 @@ const PropertyDetail = ({ match, history }) => {
                       </Link>
                     </div>
                   </div>
-                  <form className="d-flex flex-column gap-2">
-                    <input type="text" placeholder="Enter your name"></input>
-                    <input type="text" placeholder="Enter your Email"></input>
+                  <form
+                    className="d-flex flex-column gap-2"
+                    onSubmit={handleSubmit}
+                  >
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Enter your name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                    />
+                    <input
+                      type="text"
+                      name="email"
+                      placeholder="Enter your Email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                    />
                     <textarea
+                      name="message"
                       placeholder="Message"
-                      defaultValue="Hello I am interested in your Real estate."
-                    ></textarea>
+                      value={formData.userMessage}
+                      onChange={handleInputChange}
+                    />
                     <div className="d-flex gap-x-2">
-                      <button className="btnMessage">Send Message</button>
+                      <button type="submit" className="btnMessage">
+                        Send Message
+                      </button>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
           </section>
-          {/* <div className="ProductDetails">
-            <div className="first__varse">
-              <Carousel>
-                {property.images &&
-                  property.images.map((listing, i) => (
-                    <img
-                      className="CarouselImage"
-                      key={i}
-                      src={listing.url}
-                      alt={`${i} Slide`}
-                    />
-                  ))}
-              </Carousel>
-            </div>
-            <div className="varse__2">
-              <div className="detailsBlock-1">
-                <h2>{property.propertyTitle}</h2>
-              </div>
-            </div>
-          </div> */}
           <ToastContainer
             position="bottom-center"
             autoClose={5000}
@@ -154,54 +194,5 @@ const PropertyDetail = ({ match, history }) => {
     </Fragment>
   );
 };
-
-// return (
-//   <>
-//     {loading ? (
-//       <Loading />
-//     ) : (
-//       <>
-//         <MetaData title={`${property.propertyTitle}`} />
-//         <Header />
-//         <section className="propertyDetails">
-//           <div className="container mx-auto min-h-[800px] px-14"></div>
-//         </section>
-//         <div className="ProductDetails">
-//           <div className="first__varse">
-//             <Carousel>
-//               {property.images &&
-//                 property.images.map((listing, i) => (
-//                   <img
-//                     className="CarouselImage"
-//                     key={i}
-//                     src={listing.url}
-//                     alt={`${i} Slide`}
-//                   />
-//                 ))}
-//             </Carousel>
-//           </div>
-//           <div className="varse__2">
-//             <div className="detailsBlock-1">
-//               <h2>{property.propertyTitle}</h2>
-//             </div>
-//            </div>
-//         </div>
-//         <ToastContainer
-//           position="bottom-center"
-//           autoClose={5000}
-//           hideProgressBar={false}
-//           newestOnTop={false}
-//           closeOnClick
-//           rtl={false}
-//           pauseOnFocusLoss
-//           draggable
-//           pauseOnHover
-//         />
-//         <Footer />
-//       </>
-//     )}
-//   </>
-// );
-// };
 
 export default PropertyDetail;
