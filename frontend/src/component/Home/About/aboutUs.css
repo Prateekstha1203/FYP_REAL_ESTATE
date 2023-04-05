@@ -1,0 +1,54 @@
+
+* {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.home {
+    background-image: url(../../../assets/img/apartments/a1lg.png);
+    height: 60vh;
+    background-size: 100% 100%;
+    background-blend-mode: difference;
+  }
+.abKarma {
+  font-weight: 700;
+  font-size: 46px;
+}
+.motto {
+  font-weight: 400;
+  font-size: 24px;
+}
+.learn {
+  background: #f3d562;
+  width: 125px;
+  height: 58px;
+  border: none;
+  border-radius: 10px;
+}
+.motto2 {
+  font-weight: 600;
+  font-size: 36px;
+}
+.under {
+  width: 71px;
+  height: 5px;
+  background: #f3d562;
+  margin-left: 790px;
+}
+.dig,
+.down,
+.fast {
+  font-size: 34px;
+}
+.how_Work {
+  width: 700px;
+  height: 70vh;
+  border-radius: 15px 110px 15px 15px;
+}
+.left {
+  border-left: 3px solid blue;
+  height: 200px;
+  position: absolute;
+}

@@ -28,21 +28,26 @@ import {
 } from "../constans/PropertyConstans";
 
 export const getProperty = (
-  keyvalue = "",
+  keyword = "",
   currentPage = 1,
-  category,
-  propertyType
+  category = "",
+  propertyType = "",
 ) => async (dispatch) => {
   try {
     dispatch({
       type: ALL_PROPERTY_REQUEST,
     });
 
-    let link = `/properties?keyvalue=${keyvalue}&page=${currentPage}}`;
+    let link = `/properties?keyword=${keyword}&page=${currentPage}`;
 
     if (category) {
-      link = `/properties?keyvalue=${keyvalue}&page=${currentPage}&category=${category}&propertyType=${propertyType}`;
+      link += `&category=${category}`;
     }
+
+    if (propertyType) {
+      link += `&propertyType=${propertyType}`;
+    }
+
     const { data } = await axios.get(link);
 
     dispatch({
@@ -56,6 +61,7 @@ export const getProperty = (
     });
   }
 };
+
 export const getTopListings = () => async (dispatch) => {
   try {
     dispatch({ type: GET_TOP_LISTINGS_REQUEST });
@@ -82,7 +88,7 @@ export const getPropertyDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PROPERTY_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/property/${id}`);
+    const { data } = await axios.get(`/properties/${id}`);
 
     dispatch({
       type: PROPERTY_DETAILS_SUCCESS,

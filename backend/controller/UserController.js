@@ -254,7 +254,6 @@ exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
 
 exports.getAgents = catchAsyncErrors(async (req, res, next) => {
   const agents = await User.find({ role: "agent" });
-
   if (!agents || agents.length === 0) {
     return res.status(404).json({
       success: false,

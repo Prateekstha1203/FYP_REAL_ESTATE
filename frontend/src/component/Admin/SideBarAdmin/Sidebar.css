@@ -39,3 +39,38 @@
   .MuiTypography-root.MuiTreeItem-label.MuiTypography-body1 {
     color: #999;
 }
+
+
+
+
+.dash {
+  font-size: 18px;
+  text-decoration: none;
+  color: black;
+}
+.dashHouse {
+  width: 22.5px;
+  height: 20px;
+}
+.sidebar {
+  background: #72448d;
+  height: 100vh;
+}
+.content {
+  background: #f6faff;
+}
+.search {
+  border-radius: 18px;
+}
+.icon {
+  font-size: 20px;
+}
+.card {
+  height: 20vh;
+}
+.user {
+  font-size: 24px;
+}
+.myCard {
+  height: fit-content;
+}

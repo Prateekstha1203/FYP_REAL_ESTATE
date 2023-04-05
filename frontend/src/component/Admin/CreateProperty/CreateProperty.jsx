@@ -7,7 +7,7 @@ import SideBar from "../SideBarAdmin/Sidebar";
 import { NEW_PROPERTY_RESET } from "../../../constans/PropertyConstans";
 import { ToastContainer, toast } from "react-toastify";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { GOOGLE_PLACES_API_KEY } from "../../../config.js";
+import { GOOGLE_PLACES_API_KEY } from "../../../config";
 
 const CreateProperty = ({ history }) => {
   const dispatch = useDispatch();

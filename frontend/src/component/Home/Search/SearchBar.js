@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./searchBar.css";
 import backgroundImage from "../../../assets/img/houses/house1lg.png";
-const SearchProperty = ({history}) => {
+import { useHistory } from "react-router-dom";
+const SearchProperty = () => {
 
-  const [keyvalue, setKeyvalue] = useState("");
+  const [keyword, setkeyword] = useState("");
+  const history = useHistory();
 
   const searchSubmitHandler = (e) => {
     e.preventDefault();
-    if (keyvalue.trim()) {
-      history.push(`/properties/${keyvalue}`);
+    if (keyword.trim()) {
+      history.push(`/properties/${keyword}`);
     } else {
       history.push("/properties");
     }
@@ -29,8 +31,8 @@ const SearchProperty = ({history}) => {
           type="search"
           placeholder="Enter your property Address"
           id="address-input"
-          value={keyvalue}
-          onChange={(e) => setKeyvalue(e.target.value)}
+          value={keyword}
+          onChange={(e) => setkeyword(e.target.value)}
         />
         <i class="fa fa-search"  onClick={searchSubmitHandler}></i>
       </form>

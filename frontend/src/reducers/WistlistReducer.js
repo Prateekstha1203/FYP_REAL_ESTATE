@@ -4,7 +4,7 @@ import {
   GET_WISHLIST,
 } from "../constans/WistlistConstans";
 
-export const wishlistReducer = (state = {wishlist:[]}, action) => {
+export const wishlistReducer = (state = { wishlist: [] }, action) => {
   switch (action.type) {
     case ADD_TO_WISHLIST:
       return {
@@ -14,10 +14,14 @@ export const wishlistReducer = (state = {wishlist:[]}, action) => {
           : [action.payload],
       };
     case REMOVE_FROM_WISHLIST:
-      return {
-        ...state,
-        wishlist: state.wishlist.filter((id) => id !== action.payload),
-      };
+      if (state.wishlist && Array.isArray(state.wishlist)) {
+        return {
+          ...state,
+          wishlist: state.wishlist.filter((id) => id !== action.payload),
+        };
+      }
+      return state;
+
     case GET_WISHLIST:
       return {
         ...state,

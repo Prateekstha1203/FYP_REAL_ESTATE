@@ -14,3 +14,4 @@ router.delete("/removeFromWishlist/:id", isAuthenticatedUser, removeFromWishlist
 router.get("/wishlist", isAuthenticatedUser, getWishlist);
 
 module.exports = router;
+rts = router;

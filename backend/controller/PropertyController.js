@@ -61,25 +61,23 @@ exports.getAdminProperties = catchAsyncErrors(async (req, res, next) => {
 
 // get All Properties
 exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
-  const resultPerPage = 8;
+  const resultPerPage = 3;
   const propertiesCount = await Property.countDocuments();
 
-  const apiFeature = new ApiFeatures(Property.find(), req.query)
+  const feature = new ApiFeatures(Property.find(), req.query)
     .search()
     .filter()
     .sort()
     .pagination(resultPerPage);
 
-  const properties = await apiFeature.execute();
+  const properties = await feature.query;
 
-  const filteredPropertiesCount = properties.length;
 
   res.status(200).json({
     success: true,
     properties,
     propertiesCount,
     resultPerPage,
-    filteredPropertiesCount,
   });
 });
 
@@ -195,7 +193,7 @@ exports.getTopListings = catchAsyncErrors(async (req, res, next) => {
 
 exports.getPropertyLocation = async (req, res, next) => {
   const propertyId = req.params.id;
-  const AMENITY_CATEGORIES = ["hospital", "park", "restaurant", "mart"];
+  const AMENITY_CATEGORIES = ["hospital", "park", "restaurant", "super market"];
   function haversine(lat1, lon1, lat2, lon2) {
     const toRadians = (degrees) => (degrees * Math.PI) / 180;
     const R = 6371; // Earth's radius in kilometers
@@ -233,6 +231,21 @@ exports.getPropertyLocation = async (req, res, next) => {
     const longitude = geocodeData.features[0].center[0];
     const latitude = geocodeData.features[0].center[1];
 
+    const allAmenities = await Promise.all(
+      AMENITY_CATEGORIES.map(async (category) => {
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyCETfYHnB3ZszmOzR7br1tWUSI7XpBwJk4`;
+
+        const response = await axios.get(url);
+        const data = response.data;
+
+        if (!data.results || data.results.length === 0) {
+          return null;
+        }
+        return {
+          allAmenities:data.results
+        };
+      })
+    );
     const amenities = await Promise.all(
       AMENITY_CATEGORIES.map(async (category) => {
         const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyCETfYHnB3ZszmOzR7br1tWUSI7XpBwJk4`;
@@ -261,18 +274,6 @@ exports.getPropertyLocation = async (req, res, next) => {
         }));
 
         const closestAmenity = amenities.reduce((prev, curr) => {
-          // const prevDistance = haversine(
-          //   latitude,
-          //   longitude,
-          //   prev.location.latitude,
-          //   prev.location.longitude
-          // );
-          // const currDistance = haversine(
-          //   latitude,
-          //   longitude,
-          //   curr.location.latitude,
-          //   curr.location.longitude
-          // );
           const prevDistance = prev.distance;
           const currDistance = curr.distance;
 
@@ -294,6 +295,7 @@ exports.getPropertyLocation = async (req, res, next) => {
       longitude: longitude,
       latitude: latitude,
       property,
+      allAmenities: allAmenities,
     });
   } catch (error) {
     next(error);

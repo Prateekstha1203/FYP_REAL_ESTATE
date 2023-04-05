@@ -38,12 +38,10 @@ const reducer = combineReducers({
 });
 
 const initialState = {
-  // properties: [],
-  // agents: [],
-  //isAuthenticated: false,
+  agents: [],
   wishlist: [],
-  // loading: false,
-  // error: null,
+  marker:[],
+  amenity: "",
 };
 
 const middleWare = [thunk];

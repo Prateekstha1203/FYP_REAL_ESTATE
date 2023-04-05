@@ -6,41 +6,29 @@ class ApiFeatures {
   }
 
   search() {
-    if (this.executed) {
-      throw new Error("Query has already been executed");
-    }
-    const keyvalue = this.queryStr.keyvalue
-      ? {
-          address: {
-            $regex: this.queryStr.keyvalue,
-            $options: "i",
-          },
+    const keyword = this.queryStr.keyword ? {
+        name:{
+            $regex: this.queryStr.keyword, 
+            $options: "i"
         }
-      : {};
-
-    this.query = this.query.find({ ...keyvalue });
-    return this;
-  }
-
-  filter() {
-    if (this.executed) {
-      throw new Error("Query has already been executed");
     }
+    :{
+
+    }
+    this.query = this.query.find({...keyword});
+    return this;
+}
+  filter(){
     const queryCopy = { ...this.queryStr };
-    //   Removing some fields for category
-    const removeFields = ["keyvalue", "page", "limit"];
+
+    // Removing some field for category
+    const removeFields = ["keyword","page","limit"];
 
     removeFields.forEach((key) => delete queryCopy[key]);
 
-    // Filter For Price and Rating
-
-    let queryStr = JSON.stringify(queryCopy);
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
-
-    this.query = this.query.find(JSON.parse(queryStr));
-
+    this.query = this.query.find(queryCopy);
     return this;
-  }
+}
   sort() {
     if (this.executed) {
       throw new Error("Query has already been executed");

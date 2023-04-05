@@ -18,38 +18,17 @@ export const removeFromWishlist = (propertyId) => (dispatch) => {
   dispatch({ type: REMOVE_FROM_WISHLIST, payload: propertyId });
 };
 
-export const getWishlist = () => (dispatch) => {
-  dispatch({ type: GET_WISHLIST });
+export const getWishlist = () => async (dispatch) => {
+  try{dispatch({ type: FETCH_WISHLIST_PROPERTIES_REQUEST });
+  const res = await axios.get('/wishlist');
+    console.log("wishlist data:", res.data.wishlist);
+    dispatch({ type: FETCH_WISHLIST_PROPERTIES_SUCCESS, payload: res.data.wishlist });
+
+}catch (err) {
+  console.error(err);
+  dispatch({ type: FETCH_WISHLIST_PROPERTIES_FAILURE });
+}
 };
-
-// export const addToWishlist = (property) => ({
-//   type: ADD_TO_WISHLIST,
-//   payload: property,
-// });
-
-// export const removeFromWishlist = (propertyId) => ({
-//   type: REMOVE_FROM_WISHLIST,
-//   payload: propertyId,
-// });
-
-// export const getWishlist = () => async (dispatch) => {
-//   try {
-//     dispatch({ type: FETCH_WISHLIST_PROPERTIES_REQUEST });
-//     const { data } = await axios.get("/wishlist");
-//     dispatch({
-//       type: FETCH_WISHLIST_PROPERTIES_SUCCESS,
-//       payload: data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: FETCH_WISHLIST_PROPERTIES_FAILURE,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     });
-//   }
-// };
 
 // export const addToCompare = (property) => {
 //   return {

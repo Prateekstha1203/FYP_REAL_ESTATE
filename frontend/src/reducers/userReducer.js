@@ -210,7 +210,7 @@ export const allUsersReducer = (state = { users: [] }, action) => {
   }
 };
 
-export const agentReducer = (state = { agent: {} }, action) => {
+export const agentReducer = (state = { agents: [], loading: false, error: null }, action) => {
   switch (action.type) {
     case FETCH_AGENTS_REQUEST:
       return {
@@ -219,15 +219,15 @@ export const agentReducer = (state = { agent: {} }, action) => {
         error: null,
       };
     case FETCH_AGENTS_SUCCESS:
-      console.log(action.payload);
-
-      return { ...state, loading: false, agent: action.payload };
+      return { ...state, loading: false, agents: action.payload };
     case FETCH_AGENTS_FAILURE:
-      return state;
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 };
+
+
 // export const agentsReducer = (state = initialState, action) => {
 //   switch (action.type) {
 //     case FETCH_AGENTS_REQUEST:

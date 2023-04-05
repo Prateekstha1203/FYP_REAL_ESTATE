@@ -78,7 +78,7 @@ exports.removeFromWishlist = async (req, res, next) => {
 
 exports.getWishlist = async (req, res, next) => {
   try {
-    const wishlist = await Wishlist.findOne({ user: req.user.id }).populate(
+    const wishlist = await Wishlist.find({ user: req.user.id }).populate(
       'properties'
     );
 

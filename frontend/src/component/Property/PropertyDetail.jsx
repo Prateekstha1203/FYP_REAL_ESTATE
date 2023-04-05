@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Carousel from "react-material-ui-carousel";
 import { useDispatch, useSelector } from "react-redux";
+import Carousel from "react-material-ui-carousel";
 import { clearErrors, getPropertyDetails } from "../../actions/PropertyActions";
 import { ToastContainer, toast } from "react-toastify";
 import MetaData from "../../more/Metadata";
@@ -14,6 +14,7 @@ import Agent from "../../component/Home/Agent/agent.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { sendAgentEmail } from "../../actions/PropertyActions";
+
 {
   /* <FontAwesomeIcon icon={faBedFront} />
 <FontAwesomeIcon icon={faBath} /> 

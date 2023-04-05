@@ -14,13 +14,13 @@ const propertySchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ["Bungalow", "Apartment", "Villa","Commercial"],
+    enum: ["Banglow", "Apartment", "Villa","Commercial"],
     required: true,
   },
-  // wishlists: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Wishlist',
-  // }],
+  wishlists: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Wishlist',
+  }],
   description: {
     type: String,
     required: [true, "Please add a description of your Listing"],
@@ -31,17 +31,6 @@ const propertySchema = new mongoose.Schema({
     required: true,
     maxLength:1000,
   },
-//   location:{
-//     type:{
-//         type: String,
-//         enum: ['Point'],
-//         default:"point",
-//     },
-//     coordinates: {
-//         type: [Number],
-//         default: [85.300140,27.700769],
-//     }
-// },
 
   bedrooms: {
     type: Number,

@@ -261,3 +261,4 @@ const Register = ({ history, location }) => {
   );
 };
 export default Register;
+

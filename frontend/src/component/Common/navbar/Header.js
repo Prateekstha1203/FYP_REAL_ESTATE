@@ -69,7 +69,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/aboutus" className="nav-link ">
+                <Link to="/about" className="nav-link ">
                   ABOUT US
                 </Link>
               </li>
@@ -85,7 +85,7 @@ function Header() {
               </li>
               {!isAuthenticated ? null : (
                 <li className="nav-item">
-                  <Link to="/favourite" className="nav-link ">
+                  <Link to="/wishlist" className="nav-link ">
                     FAVOURITE
                   </Link>
                 </li>

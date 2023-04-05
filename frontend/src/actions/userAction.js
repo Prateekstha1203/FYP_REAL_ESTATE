@@ -260,7 +260,7 @@ export const fetchAgents = () => async (dispatch) => {
   try {
     dispatch({ type: FETCH_AGENTS_REQUEST });
     const res = await axios.get('/agent');
-    console.log("Agents data:", res.data); // add this line to log the data
+    console.log("Agents data:", res.data);
     dispatch({ type: FETCH_AGENTS_SUCCESS, payload: res.data });
   } catch (err) {
     console.error(err);

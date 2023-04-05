@@ -3,9 +3,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import Loader from "../../../more/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, resetPassword } from "../../../actions/userAction";
-
+import { toast, ToastContainer } from "react-toastify";
 import MetaData from "../../../more/Metadata";
-import toast from "react-toastify"
 const ResetPassword = ({ history, match }) => {
   const dispatch = useDispatch();
 
