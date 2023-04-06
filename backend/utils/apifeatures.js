@@ -6,18 +6,21 @@ class ApiFeatures {
   }
 
   search() {
-    const keyword = this.queryStr.keyword ? {
-        name:{
-            $regex: this.queryStr.keyword, 
-            $options: "i"
+    if (this.executed) {
+      throw new Error("Query has already been executed");
+    }
+    const keyword = this.queryStr.keyword
+      ? {
+          address: {
+            $regex: this.queryStr.keyword,
+            $options: "i",
+          },
         }
-    }
-    :{
-
-    }
-    this.query = this.query.find({...keyword});
+      : {};
+    this.query = this.query.find({ ...keyword });
     return this;
-}
+  }
+
   filter(){
     const queryCopy = { ...this.queryStr };
 

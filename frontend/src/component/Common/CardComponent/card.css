@@ -5,6 +5,7 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
   padding: 0;
+  margin-bottom: 2rem;
 }
 
 p{
@@ -17,8 +18,9 @@ p{
   }
 .wishlist {
   position: absolute;
-  top: 12rem;
-  right: 5px;
+  bottom: 0;
+  right: 10px;
+  margin-bottom: 5px;
 }
 
 .imageDiv {

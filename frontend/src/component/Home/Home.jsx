@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { clearErrors, getProperty } from "../../actions/PropertyActions";
-import SearchProperty from "../Home/Search/SearchBar";
+
 import Agents from "./Agent/Agents";
 
 //  import Properties from "../User/Rent/Properties";
@@ -29,7 +29,6 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <SearchProperty />
 
       <h2 className="homeHeading">Featured Properties</h2>
       <div className="container" id="container">

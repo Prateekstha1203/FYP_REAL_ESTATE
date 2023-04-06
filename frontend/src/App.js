@@ -13,7 +13,6 @@ import NewListingCard from "./component/Common/CardComponent/NewListingCard";
 
 import Login from "./component/loginRegister/loginRegister/Login"
 import Register from "./component/loginRegister/loginRegister/Register"
-import SearchProperty from "./component/Home/Search/SearchBar";
 import ContactForm from "./component/Home/ContactUs/ContactForm";
 import Properties from "./component/Property/Properties";
 import PropertyDetail from "./component/Property/PropertyDetail";
@@ -37,7 +36,6 @@ import NewListing from "./component/Home/NewListing/NewListing";
 import { loadUser } from "./actions/userAction";
 import Wishlist from "./component/Home/Wishlist/Wishlist";
 import About from "./component/Home/About/AboutUs";
-import Aashutosh from "./component/AashutoshProp";
 import Search from "./component/Property/Search";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -66,12 +64,9 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/agent" component={Agents} />
         <Route exact path="/properties" component={Properties} />
-        <Route path="/properties/:keywalue" component={Properties} />
+        <Route path="/properties/:keyword" component={Properties} />
         <Route exact path="/logout" component={Login} />
-        <Route exact path="/search" component={Search} />
-        {/* <Route exact path="/search" component={SearchProperty} /> */}
         <Route exact path="/property/:id" component={PropertyDetail} />
-        <Route exact path="/aashutosh" component={Aashutosh} />
         <ProtectedRoute
           exact
           path="/password/update"

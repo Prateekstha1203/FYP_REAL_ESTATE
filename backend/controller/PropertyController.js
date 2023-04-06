@@ -61,7 +61,7 @@ exports.getAdminProperties = catchAsyncErrors(async (req, res, next) => {
 
 // get All Properties
 exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
-  const resultPerPage = 3;
+  const resultPerPage = 6;
   const propertiesCount = await Property.countDocuments();
 
   const feature = new ApiFeatures(Property.find(), req.query)

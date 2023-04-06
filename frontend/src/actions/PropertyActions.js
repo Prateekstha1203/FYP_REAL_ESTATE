@@ -88,7 +88,7 @@ export const getPropertyDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PROPERTY_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/properties/${id}`);
+    const { data } = await axios.get(`/property/${id}`);
 
     dispatch({
       type: PROPERTY_DETAILS_SUCCESS,

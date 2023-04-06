@@ -6,7 +6,6 @@ const {
   deleteProperty,
   getAdminProperties,
   // getNearbyAmenities,
-  getSingleProperty,
   getTopListings,
   getPropertyLocation,
   sendAgentEmail,
@@ -20,10 +19,6 @@ router.route("/newListing").get(getTopListings);
 router
   .route("/admin/properties")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminProperties);
-
-  router
-  .route("/properties/:id")
-  .get(getSingleProperty);
 
 router
   .route("/admin/property/new")

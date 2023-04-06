@@ -1,49 +1,31 @@
-ul.pagination{
-    display: flex;
-    align-items: center;
-    padding: 0;
+.searchBar {
+  border-radius: 20px;
 }
-.page-item{
-    background-color: rgba(255, 255, 255, 0.135);
-    list-style: none;
-    border: 1px solid rgba(0,0,0,0.178);
-    padding: 1vmax 1.5vmax;
-    transition: all 0.3s;
-    cursor: pointer;
-}
-.page-item:first-child{
-    border-radius: 5px 0 0 5px;
-} 
-.page-item:last-child{
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-
-} 
-.page-link{
-    font: 300 0.7vmax "Roboto";
-    color: rgb(80,80,80);
-    transition: all 0.3s;
-}
-.page-item:hover{
-    background-color: rgb(230,230,230);
-}
-.page-item:hover .page-link{
-    color: rgb(37, 37, 37);
-}
-.pageItemActive{
-    background-color: #197EF3;
-}
-.pageLinkActive{
-    color: white;
-}
-li.category-link{
-    list-style: none;
-    font-family: Roboto;
-    cursor: pointer;
-    border-top: 1px solid #999;
-    padding: 10px 10px;
+.feature {
+  display: flex;
+  justify-content: end;
 }
 
+.containerWidth {
+  max-width: 300px;
+}
+#search {
+  width: 250px;
+  font-size: 1.2rem;
+  padding: 0.7rem 0.5rem;
+}
+.label{
+  line-height: 2.5rem;
+}
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin-top: 0.5rem;
+}
+.categorylist {
+  font-size: 1.2rem;
+  margin-left: 1.2rem;
+}
 
 
 h2 {
@@ -55,62 +37,36 @@ h2 {
     margin: 3vmax auto;
     color: rgb(0, 0, 0, 0.7);
   }
-  
-  .sidebar__product {
+
+
+
+
+  .paginationClass{
+    width: 100%;
     display: flex;
-    flex: 1;
-  }
-  
-  .sidebar__products {
-    border: 1px solid #999;
-    margin: 1vmax;
-    flex: 0.177;
-  }
-  
-  .categoryBox {
-    box-sizing: inherit;
-  }
-  
-  .category-link {
-    cursor: pointer;
-  }
-  
-  .products {
-    display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    flex: 0.9;
+    margin-bottom: 2rem;
   }
-  
-  .pagination__box {
+  .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 6vmax;
+    min-width: 200px;
+    margin: 0;
+    padding: 15px 22px;
   }
-  
-  .page-item {
-    display: inline-block;
-    margin-right: 10px;
-    cursor: pointer;
+  .page-item{
+    margin: 0;
   }
-  
   .page-link {
-    display: inline-block;
-    padding: 5px 10px;
-    color: #666;
-    border: 1px solid #ccc;
-  }
-  
-  .pageItemActive .page-link {
-    background-color: #007bff;
-    color: #fff;
-    border: 1px solid #007bff;
-  }
-  
-  .pageLinkActive {
-    background-color: #007bff;
-    color: #fff;
-    border: 1px solid #007bff;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 0;
   }
   
