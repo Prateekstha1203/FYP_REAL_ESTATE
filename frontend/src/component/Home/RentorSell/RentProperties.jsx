@@ -5,9 +5,9 @@ import React from "react";
 import PropertyCard from "../../Common/CardComponent/PropertyCard";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Link } from "react-router-dom";
 import "./RentSale.css";
 import EastIcon from "@mui/icons-material/East";
-import { Link } from "react-router-dom";
 const RentalProperties = () => {
   const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ const RentalProperties = () => {
           <div className="container my-4">
             <div class="row mb-3 align-items-center">
               <div class="col-lg-6">
-                <div class=" heading">
+                <div class=" headings">
                   Properties For <span className="rentSell">RENT</span>
                 </div>
               </div>

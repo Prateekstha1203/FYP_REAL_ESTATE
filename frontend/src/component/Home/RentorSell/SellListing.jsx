@@ -50,7 +50,7 @@ const SaleProperties = () => {
           <div className="container my-4">
             <div class="row mb-3 align-items-center">
               <div class="col-lg-6">
-                <div class=" heading">
+                <div class=" headings">
                   Properties For <span className="rentSell">SALE</span>
                 </div>
               </div>

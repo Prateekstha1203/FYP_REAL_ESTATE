@@ -4,9 +4,13 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures.js");
 const cloudinary = require("cloudinary");
 const axios = require("axios");
-
 const AWS = require("aws-sdk");
-const { aws, adminEmail } = require("../config/.config");
+const {
+  aws,
+  adminEmail,
+  amentiesConfig,
+  mapboxConfig,
+} = require("../config/.config");
 
 AWS.config.update(aws);
 const { v4: uuidv4 } = require("uuid");
@@ -141,7 +145,6 @@ exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
 
   const properties = await feature.query;
 
-
   res.status(200).json({
     success: true,
     properties,
@@ -152,10 +155,10 @@ exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
 
 exports.getRentalProperties = async (req, res, next) => {
   try {
-    const rentalProperties = await Property.find({ propertyType: 'Rent' });
+    const rentalProperties = await Property.find({ propertyType: "Rent" });
     res.status(200).json({
       success: true,
-      data: rentalProperties
+      data: rentalProperties,
     });
   } catch (error) {
     next(error);
@@ -164,10 +167,10 @@ exports.getRentalProperties = async (req, res, next) => {
 
 exports.getSaleProperties = async (req, res, next) => {
   try {
-    const saleProperties = await Property.find({ propertyType: 'Sale' });
+    const saleProperties = await Property.find({ propertyType: "Sale" });
     res.status(200).json({
       success: true,
-      data: saleProperties
+      data: saleProperties,
     });
   } catch (error) {
     next(error);
@@ -237,10 +240,9 @@ exports.getPropertyLocation = async (req, res, next) => {
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
-
     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
       property.address
-    )}.json?access_token=pk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2w5ZHVicmM4MGJ3YTNvcDlhemhxMXh4NiJ9.pPca72n4BLDfidsxfvd9Ag`;
+    )}.json?access_token=sk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2xnODFxaDl3MHQxdTNxcWwxcXl3eTNwYSJ9.fmUTGgXQYoPXi3Ocwp8ClQ`;
 
     const geocodeResponse = await axios.get(geocodeUrl);
     const geocodeData = geocodeResponse.data;
@@ -254,16 +256,16 @@ exports.getPropertyLocation = async (req, res, next) => {
 
     const allAmenities = await Promise.all(
       AMENITY_CATEGORIES.map(async (category) => {
-        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyCETfYHnB3ZszmOzR7br1tWUSI7XpBwJk4`;
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyDDSbDmkmufM1u4uwfMKkPAunPDKSZ7LzM`;
 
         const response = await axios.get(url);
         const data = response.data;
-
+        console.log(data);
         if (!data.results || data.results.length === 0) {
           return null;
         }
         return {
-          allAmenities:data.results
+          allAmenities: data.results,
         };
       })
     );

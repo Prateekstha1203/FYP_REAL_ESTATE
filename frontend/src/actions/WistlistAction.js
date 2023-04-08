@@ -10,14 +10,54 @@ import {
 } from "../constans/WistlistConstans";
 import axios from "axios";
 
-export const addToWishlist = (propertyId) => (dispatch) => {
-  dispatch({ type: ADD_TO_WISHLIST, payload: propertyId });
+// Action for adding a property to the wishlist
+export const addToWishlist = (propertyId) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/addToWishlist/${propertyId}`);
+
+    if (response.data.success) {
+      dispatch({
+        type: 'ADD_TO_WISHLIST',
+        payload: response.data.wishlist,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-export const removeFromWishlist = (propertyId) => (dispatch) => {
-  dispatch({ type: REMOVE_FROM_WISHLIST, payload: propertyId });
+// Action for removing a property from the wishlist
+export const removeFromWishlist = (propertyId) => async (dispatch) => {
+  try {
+    const response = await axios.delete(`/removeFromWishlist/${propertyId}`);
+
+    if (response.data.success) {
+      dispatch({
+        type: 'REMOVE_FROM_WISHLIST',
+        payload: response.data.wishlist,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
+
+// export const getWishlist = async (userId) => {
+//   try {
+//     const response = await axios.get(`/wishlist`, {
+//       params: {
+//         user: userId,
+//       },
+//     });
+
+//     if (response.data.success) {
+//       return response.data.wishlist;
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 
 
@@ -36,15 +76,3 @@ export const getWishlist = () => async (dispatch) => {
   }
 };
 
-// export const addToCompare = (property) => {
-//   return {
-//     type: ADD_TO_COMPARE,
-//     payload: property,
-//   };
-// };
-
-// export const removeFromCompare = (propertyId) => {
-//   return {
-//     type: REMOVE_FROM_COMPARE,
-//     payload: propertyId,
-//   };

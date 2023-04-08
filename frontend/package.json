@@ -26,6 +26,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.21.4",
     "bootstrap": "^5.2.3",
+    "carousel": "^0.0.3",
     "chart.js": "^3.6.2",
     "country-state-city": "^3.0.1",
     "dotenv": "^16.0.3",
@@ -37,6 +38,7 @@
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.5",
     "react-external-link": "^2.0.1",
+    "react-fade-in": "^2.0.1",
     "react-google-places-autocomplete": "^3.4.0",
     "react-helmet": "^6.1.0",
     "react-icon": "^1.0.0",
@@ -55,6 +57,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "styled-components": "^5.3.9",
+    "swiper": "^8.2.2",
     "web-vitals": "^2.1.4",
     "webfontloader": "^1.6.28"
   },

@@ -7,8 +7,7 @@ import axios from "axios";
 import ForgotPassword from "../../loginRegister/forget_password/ForgetPassword";
 function Header() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
-  const isAgent = user && user.role === "agent";
-  console.log('isAgent:', isAgent);
+
   return (
     <header id="header">
       {isAuthenticated ? null : (
@@ -59,6 +58,7 @@ function Header() {
           </button>
           <div className="collapse navbar-collapse" id="main_nav">
             <ul className="navbar-nav ms-auto">
+              
               <li className="nav-item">
                 <Link to="/" className="nav-link active">
                   HOME
@@ -66,7 +66,7 @@ function Header() {
               </li>
               <li className="nav-item">
                 <Link to="/properties" className="nav-link ">
-                  PROPERTIES
+                 PROPERTIES
                 </Link>
               </li>
               <li className="nav-item">
@@ -84,17 +84,10 @@ function Header() {
                   AGENTS
                 </Link>
               </li>
-              {isAuthenticated && !isAgent && (
+              {!isAuthenticated ? null : (
                 <li className="nav-item">
-                  <Link to="/wishlist" className="nav-link">
+                  <Link to="/wishlist" className="nav-link ">
                     FAVOURITE
-                  </Link>
-                </li>
-              )}
-              {isAuthenticated && isAgent && (
-                <li className="nav-item">
-                  <Link to="/agent/property/new" className="nav-link">
-                    Add Property
                   </Link>
                 </li>
               )}

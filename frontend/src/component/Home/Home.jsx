@@ -11,7 +11,8 @@ import { clearErrors, getProperty } from "../../actions/PropertyActions";
 import RentalProperties from "./RentorSell/RentProperties";
 import Agents from "./Agent/Agents";
 import SaleProperties from "./RentorSell/SellListing";
-import Slider from "./Slider";
+import Slider from "./Slider/Slider";
+import NewListing from "./NewListing/NewListing";
 const Home = () => {
   const dispatch = useDispatch();
   const { properties, error, loading } = useSelector(
@@ -30,17 +31,7 @@ const Home = () => {
     <div>
       <Header />
 <Slider />
-      <h2 className="homeHeading">Featured Properties</h2>
-      <div className="container" id="container">
-        <div className="row">
-          {properties &&
-            properties.map((property) => (
-              <div className="col-md-4" key={property.id}>
-                <PropertyCard property={property} className="card" />
-              </div>
-            ))}
-        </div>
-      </div>
+      <NewListing />
       <RentalProperties  className="section-margin"/>
 
       <SaleProperties className="section-margin"/>
