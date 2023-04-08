@@ -1,54 +1,19 @@
-// import React from 'react'
-// import PropertyCard from '../../Common/CardComponent/PropertyCard'
-// import { useDispatch } from 'react-redux';
-// import { useSelector } from 'react-redux';
-// import { useEffect } from 'react';
-// import { useState } from 'react';
-// import Loading from '../../../more/Loader';
-// import { getWishlist } from '../../../actions/WistlistAction';
-
-// const Wishlist = () => {
-//   const dispatch = useDispatch();
-
-//   const { wishlist } = useSelector((state) => state.wishlist);
-
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   useEffect(() => {
-//     dispatch(getWishlist())
-//   }, [dispatch]);
-//   return (
-//     <>
-//       {isLoading ? (
-//         <Loading />
-//       ) : (
-//         <div>
-//           {wishlist && (
-//             <ul>
-//               {wishlist.wishlist.map((wishlist) => (
-//                 <li key={wishlist._id}>
-//                   <p> {wishlist.user}</p>
-//                 </li>
-//               ))}
-//             </ul>
-//           )}
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-
-// export default Wishlist
-
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Loading from '../../../more/Loader';
-import { getWishlist } from '../../../actions/WistlistAction';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../../../more/Loader";
+import {
+  getWishlist,
+  compareWishlistProperties,
+} from "../../../actions/WistlistAction";
+import PropertyCard from "../../Common/CardComponent/PropertyCard";
+// import CompareTable from "./CompareTable";
 
 const Wishlist = () => {
   const dispatch = useDispatch();
 
-  const { wishlist, loading } = useSelector((state) => state.wishlist);
+  const { wishlistProperties, loading } = useSelector(
+    (state) => state.wishlistProperties
+  );
 
   useEffect(() => {
     dispatch(getWishlist());
@@ -59,34 +24,24 @@ const Wishlist = () => {
   }
 
   return (
-    // <div>
-      
-    //   {wishlist ? (
-    //     <ul>
-    //       {wishlist.wishlist.map((wishlist) => (
-    //         <li key={wishlist._id}>
-    //           <p> {wishlist.propertyTitle}</p>
-    //         </li>
-    //       ))}
-    //     </ul>
-    //   ) : (
-    //     <p>Your wishlist is empty.</p>
-    //   )}
-    // </div>
     <div>
-    {wishlist.map((item) => (
-      <div key={item._id}>
-        <p>{item.user}</p>
-        <ul>
-          {item.properties.map((property) => (
-            <li key={property}>{property}</li>
+      {wishlistProperties && wishlistProperties.length > 0 ? (
+        <div className="row">
+          {wishlistProperties.map((wish) => (
+            <div className="col-md-3" key={wish.id}>
+              <PropertyCard property={wish}  user={wish.user}/>
+            </div>
           ))}
-        </ul>
-      </div>
-    ))}
-  </div>
+          <div className="col-md-12">
+            <button >Compare</button>
+          </div>
+        </div>
+      ) : (
+        <p>Wishlist is empty</p>
+      )}
+      {/* {showTable && <CompareTable />} */}
+    </div>
   );
-  
 };
 
 export default Wishlist;

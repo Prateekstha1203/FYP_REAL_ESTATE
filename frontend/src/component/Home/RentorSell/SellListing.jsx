@@ -1,23 +1,24 @@
 // NewListing component
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTopListings } from "../../../actions/PropertyActions";
+import { getSaleProperties } from "../../../actions/PropertyActions";
 import React from "react";
 import PropertyCard from "../../Common/CardComponent/PropertyCard";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import "./RentSale.css";
 import { Link } from "react-router-dom";
-const NewListing = () => {
+import EastIcon from "@mui/icons-material/East";
+const SaleProperties = () => {
   const dispatch = useDispatch();
 
-  const { loading, error, topListings: properties } = useSelector(
-    (state) => state.topListings
+  const { loading, error, saleProperties: properties } = useSelector(
+    (state) => state.saleProperties
   );
 
   useEffect(() => {
-    dispatch(getTopListings());
+    dispatch(getSaleProperties());
   }, [dispatch]);
-
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -37,6 +38,7 @@ const NewListing = () => {
       items: 1,
     },
   };
+
   return (
     <div>
       {loading ? (
@@ -45,20 +47,11 @@ const NewListing = () => {
         <h2>{error}</h2>
       ) : (
         <>
-          {/* <h2>Top Listings</h2>
-          <div className="row">
-            {properties &&
-              properties.map((property) => (
-                <div className="col-md-4" key={property.id}>
-                  <PropertyCard property={property} className="card" />
-                </div>
-              ))}
-          </div> */}
           <div className="container my-4">
             <div class="row mb-3 align-items-center">
               <div class="col-lg-6">
                 <div class=" headings">
-                  New Listing <span className="rentSell">PROPERTIES</span>
+                  Properties For <span className="rentSell">SALE</span>
                 </div>
               </div>
               <div class="col-lg-6 text-lg-end">
@@ -69,7 +62,6 @@ const NewListing = () => {
                 </Link>
               </div>
             </div>
-
             <div className="row">
               <Carousel
                 showDots={true}
@@ -77,7 +69,7 @@ const NewListing = () => {
               >
                 {properties &&
                   properties.map((property) => (
-                    <div className="pe-5">
+                    <div key={property.id} className="pe-5">
                       <PropertyCard property={property} className="card" />
                     </div>
                   ))}
@@ -90,11 +82,4 @@ const NewListing = () => {
   );
 };
 
-export default NewListing;
-{
-  /* <div className="topListing">
-  <div className="row">
-    <div className="col-md-"></div>
-  </div>
-</div>; */
-}
+export default SaleProperties;

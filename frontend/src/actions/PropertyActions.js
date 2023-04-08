@@ -25,13 +25,22 @@ import {
   SEND_EMAIL_REQUEST,
   SEND_EMAIL_SUCCESS,
   SEND_EMAIL_FAILURE,
+  GET_RENTAL_PROPERTIES_REQUEST,
+  GET_RENTAL_PROPERTIES_SUCCESS,
+  GET_RENTAL_PROPERTIES_FAIL,
+  GET_SALE_PROPERTIES_REQUEST,
+  GET_SALE_PROPERTIES_SUCCESS,
+  GET_SALE_PROPERTIES_FAIL,
+  FETCH_AGENT_PROPERTIES_REQUEST,
+  FETCH_AGENT_PROPERTIES_SUCCESS,
+  FETCH_AGENT_PROPERTIES_FAILURE,
 } from "../constans/PropertyConstans";
 
 export const getProperty = (
   keyword = "",
   currentPage = 1,
   category = "",
-  propertyType = "",
+  propertyType = ""
 ) => async (dispatch) => {
   try {
     dispatch({
@@ -89,7 +98,7 @@ export const getPropertyDetails = (id) => async (dispatch) => {
     dispatch({ type: PROPERTY_DETAILS_REQUEST });
 
     const { data } = await axios.get(`/property/${id}`);
-
+    console.log(data);
     dispatch({
       type: PROPERTY_DETAILS_SUCCESS,
       payload: data,
@@ -112,7 +121,7 @@ export const createProperty = (propertyData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `/admin/property/new`,
+      `/agent/property/new`,
       propertyData,
       config
     );
@@ -167,6 +176,24 @@ export const deleteProperty = (id) => async (dispatch) => {
   }
 };
 
+export const deleteAgentProperty = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_PROPERTY_REQUEST });
+
+    const { data } = await axios.delete(`/agent/property/${id}`);
+
+    dispatch({
+      type: DELETE_PROPERTY_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_PROPERTY_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 // Update Product
 export const updateProperty = (id, propertyData) => async (dispatch) => {
   try {
@@ -176,7 +203,11 @@ export const updateProperty = (id, propertyData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const { data } = await axios.put(`/admin/property/${id}`, propertyData, config);
+    const { data } = await axios.put(
+      `/agent/property/${id}`,
+      propertyData,
+      config
+    );
 
     dispatch({
       type: UPDATE_PROPERTY_SUCCESS,
@@ -197,10 +228,9 @@ export const clearErrors = () => async (dispatch) => {
   });
 };
 
-
-
-
-export const sendAgentEmail = (name, email, userMessage, propertyId) => async (dispatch) => {
+export const sendAgentEmail = (name, email, userMessage, propertyId) => async (
+  dispatch
+) => {
   try {
     dispatch({
       type: SEND_EMAIL_REQUEST,
@@ -216,7 +246,6 @@ export const sendAgentEmail = (name, email, userMessage, propertyId) => async (d
       type: SEND_EMAIL_SUCCESS,
       payload: data.message,
     });
-
   } catch (error) {
     dispatch({
       type: SEND_EMAIL_FAILURE,
@@ -226,4 +255,71 @@ export const sendAgentEmail = (name, email, userMessage, propertyId) => async (d
           : error.message,
     });
   }
+};
+
+export const getRentalProperties = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_RENTAL_PROPERTIES_REQUEST });
+    const { data } = await axios.get("/properties/rent");
+    dispatch({ type: GET_RENTAL_PROPERTIES_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_RENTAL_PROPERTIES_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getSaleProperties = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_SALE_PROPERTIES_REQUEST });
+    const { data } = await axios.get("/properties/sale");
+    dispatch({ type: GET_SALE_PROPERTIES_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_SALE_PROPERTIES_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// export const fetchAgentProperties = (agentId) => {
+//   return async (dispatch) => {
+//     dispatch({ type: FETCH_AGENT_PROPERTIES_REQUEST });
+//     try {
+//       const response = await fetch(`/agent/viewListing/${agentId}`);
+//       console.log(response)
+//       const properties = await response.json();
+//       dispatch({ type: FETCH_AGENT_PROPERTIES_SUCCESS, payload: properties });
+//     } catch (error) {
+//       dispatch({ type: FETCH_AGENT_PROPERTIES_FAILURE, payload: error.message });
+//     }
+//   };
+// };
+
+export const fetchAgentProperties = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: FETCH_AGENT_PROPERTIES_REQUEST });
+      const response = await axios.get(`/agent/viewlisting/${id}`);
+      console.log(response);
+      const properties = response.data;
+      console.log(properties);
+      dispatch({ type: FETCH_AGENT_PROPERTIES_SUCCESS, payload: properties });
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      dispatch({
+        type: FETCH_AGENT_PROPERTIES_FAILURE,
+        payload: error.message,
+      });
+      throw new Error("Unable to get agent properties");
+    }
+  };
 };

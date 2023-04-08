@@ -25,7 +25,7 @@ const PropertyCard = ({ property }) => {
   const handleAddToWishlist = () => {
     localStorage.setItem(`wishlist_${property._id}`, "true");
     setIsAddedToWishlist(true);
-    dispatch(addToWishlist(property));
+    dispatch(addToWishlist(property._id));
   };
 
   const handleRemoveFromWishlist = () => {

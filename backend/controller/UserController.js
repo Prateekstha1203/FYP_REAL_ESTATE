@@ -6,21 +6,12 @@ const sendMail = require("../utils/sendMail.js");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 
-
-
-
-const AWS = require('aws-sdk');
-const { aws, adminEmail } = require('../config/.config');
+const AWS = require("aws-sdk");
+const { aws, adminEmail } = require("../config/.config");
 
 AWS.config.update(aws);
-const { v4: uuidv4 } = require('uuid');
-const ses = new AWS.SES({ apiVersion: '2010-12-01' });
-
-
-
-
-
-
+const { v4: uuidv4 } = require("uuid");
+const ses = new AWS.SES({ apiVersion: "2010-12-01" });
 
 // Register user
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
@@ -45,9 +36,8 @@ exports.createUser = catchAsyncErrors(async (req, res, next) => {
       password,
       avatar: { public_id: myCloud.public_id, url: myCloud.secure_url },
     });
-    
-    sendToken(user, 201, res);
 
+    sendToken(user, 201, res);
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -206,14 +196,50 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Update User Profile
+// exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+//   const newUserData = {
+//     name: req.body.name,
+//     email: req.body.email,
+//     mobile:req.body.mobile,
+//   };
+
+//   if (req.body.avatar !== "") {
+//     const user = await User.findById(req.user.id);
+
+//     const imageId = user.avatar.public_id;
+
+//     await cloudinary.v2.uploader.destroy(imageId);
+
+//     const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+//       folder: "avatars",
+//       width: 150,
+//       crop: "scale",
+//     });
+//     newUserData.avatar = {
+//       public_id: myCloud.public_id,
+//       url: myCloud.secure_url,
+//     };
+//   }
+
+//   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+//     new: true,
+//     runValidators: true,
+//     useFindAndModify: false,
+//   });
+
+//   res.status(200).json({
+//     success: true,
+//   });
+// });
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+  console.log("running");
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
-    mobile:req.body.mobile,
+    mobile: req.body.mobile,
   };
 
-  if (req.body.avatar !== "") {
+  if (req.body.avatar) {
     const user = await User.findById(req.user.id);
 
     const imageId = user.avatar.public_id;
@@ -230,15 +256,23 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
       url: myCloud.secure_url,
     };
   }
+  console.log(newUserData, "new");
+  console.log(req.user);
 
-  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
-    new: true,
-    runValidators: true,
-    useFindAndModify: false,
-  });
+  User.f;
+  let data = await User.findOneAndUpdate(
+    { email: req.user.email },
+    newUserData,
+    {
+      new: true,
+      runValidator: true,
+      useFindAndModify: false,
+    }
+  );
 
   res.status(200).json({
     success: true,
+    data,
   });
 });
 
@@ -266,6 +300,8 @@ exports.getAgents = catchAsyncErrors(async (req, res, next) => {
     agents,
   });
 });
+
+
 
 // Get Single User Details ---Admin
 exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
@@ -320,7 +356,6 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 exports.sendContactEmail = async (req, res) => {
   const { name, email, message, subject } = req.body;
 
@@ -337,37 +372,33 @@ exports.sendContactEmail = async (req, res) => {
             <p>Email: ${email}</p>
             <p>Message:</p>
             <p>${message}</p>
-          `
-        }
+          `,
+        },
       },
       Subject: {
-        Data: `${
-          subject
-        }`
-      }
+        Data: `${subject}`,
+      },
     },
-    Source: 'prateekshrestha1203@gmail.com',
+    Source: "prateekshrestha1203@gmail.com",
     ReplyToAddresses: [adminEmail],
     ReturnPath: adminEmail,
     Tags: [
       {
-        Name: 'Type',
-        Value: 'Contact_Form'
+        Name: "Type",
+        Value: "Contact_Form",
       },
       {
-        Name: 'SubmissionId',
-        Value: uuidv4()
-      }
-    ]
+        Name: "SubmissionId",
+        Value: uuidv4(),
+      },
+    ],
   };
 
   try {
     await ses.sendEmail(params).promise();
-    res.status(200).json({ message: 'Email sent successfully' });
+    res.status(200).json({ message: "Email sent successfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Failed to send email' });
+    res.status(500).json({ message: "Failed to send email" });
   }
 };
-
-

@@ -4,9 +4,13 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures.js");
 const cloudinary = require("cloudinary");
 const axios = require("axios");
-
 const AWS = require("aws-sdk");
-const { aws, adminEmail } = require("../config/.config");
+const {
+  aws,
+  adminEmail,
+  amentiesConfig,
+  mapboxConfig,
+} = require("../config/.config");
 
 AWS.config.update(aws);
 const { v4: uuidv4 } = require("uuid");
@@ -48,51 +52,6 @@ exports.createProperty = catchAsyncErrors(async (req, res, next) => {
     console.log(err);
   }
 });
-
-// Get All Product (Admin)
-exports.getAdminProperties = catchAsyncErrors(async (req, res, next) => {
-  const properties = await Property.find();
-
-  res.status(200).json({
-    success: true,
-    properties,
-  });
-});
-
-// get All Properties
-exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
-  const resultPerPage = 6;
-  const propertiesCount = await Property.countDocuments();
-
-  const feature = new ApiFeatures(Property.find(), req.query)
-    .search()
-    .filter()
-    .sort()
-    .pagination(resultPerPage);
-
-  const properties = await feature.query;
-
-
-  res.status(200).json({
-    success: true,
-    properties,
-    propertiesCount,
-    resultPerPage,
-  });
-});
-
-// exports.getPropertyDetails = catchAsyncErrors(async (req, res, next) => {
-//   const property = await Property.findById(req.params.id);
-
-//   if (!property) {
-//     return next(new ErrorHandler("Property not found", 404));
-//   }
-
-//   res.status(200).json({
-//     success: true,
-//     property,
-//   });
-// });
 
 // Update Property ---Admin
 exports.updateProperty = catchAsyncErrors(async (req, res, next) => {
@@ -163,6 +122,71 @@ exports.deleteProperty = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// Get All Product (Admin)
+exports.getAdminProperties = catchAsyncErrors(async (req, res, next) => {
+  const properties = await Property.find();
+
+  res.status(200).json({
+    success: true,
+    properties,
+  });
+});
+
+// get All Properties
+exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
+  const resultPerPage = 6;
+  const propertiesCount = await Property.countDocuments();
+
+  const feature = new ApiFeatures(Property.find(), req.query)
+    .search()
+    .filter()
+    .sort()
+    .pagination(resultPerPage);
+
+  const properties = await feature.query;
+
+  res.status(200).json({
+    success: true,
+    properties,
+    propertiesCount,
+    resultPerPage,
+  });
+});
+
+exports.getRentalProperties = async (req, res, next) => {
+  try {
+    const rentalProperties = await Property.find({ propertyType: "Rent" });
+    res.status(200).json({
+      success: true,
+      data: rentalProperties,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getSaleProperties = async (req, res, next) => {
+  try {
+    const saleProperties = await Property.find({ propertyType: "Sale" });
+    res.status(200).json({
+      success: true,
+      data: saleProperties,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getAgentProperties = async (req, res) => {
+  try {
+    const properties = await Property.find({ user: req.params.id });
+    res.json(properties);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+};
+
 // single Product details
 exports.getSingleProperty = catchAsyncErrors(async (req, res, next) => {
   const property = await Property.findById(req.params.id);
@@ -216,10 +240,9 @@ exports.getPropertyLocation = async (req, res, next) => {
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
-
     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
       property.address
-    )}.json?access_token=pk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2w5ZHVicmM4MGJ3YTNvcDlhemhxMXh4NiJ9.pPca72n4BLDfidsxfvd9Ag`;
+    )}.json?access_token=sk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2xnODFxaDl3MHQxdTNxcWwxcXl3eTNwYSJ9.fmUTGgXQYoPXi3Ocwp8ClQ`;
 
     const geocodeResponse = await axios.get(geocodeUrl);
     const geocodeData = geocodeResponse.data;
@@ -233,16 +256,16 @@ exports.getPropertyLocation = async (req, res, next) => {
 
     const allAmenities = await Promise.all(
       AMENITY_CATEGORIES.map(async (category) => {
-        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyCETfYHnB3ZszmOzR7br1tWUSI7XpBwJk4`;
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyDDSbDmkmufM1u4uwfMKkPAunPDKSZ7LzM`;
 
         const response = await axios.get(url);
         const data = response.data;
-
+        console.log(data);
         if (!data.results || data.results.length === 0) {
           return null;
         }
         return {
-          allAmenities:data.results
+          allAmenities: data.results,
         };
       })
     );

@@ -7,6 +7,7 @@ import axios from "axios";
 import ForgotPassword from "../../loginRegister/forget_password/ForgetPassword";
 function Header() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+
   return (
     <header id="header">
       {isAuthenticated ? null : (

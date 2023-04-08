@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, createProperty } from "../../../actions/PropertyActions";
 import { Button } from "@material-ui/core";
 import MetaData from "../../../more/Metadata";
-import SideBar from "../SideBarAdmin/Sidebar";
 import { NEW_PROPERTY_RESET } from "../../../constans/PropertyConstans";
 import { ToastContainer, toast } from "react-toastify";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { GOOGLE_PLACES_API_KEY } from "../../../config";
-
+import AgentSidebar from "../SideBar/AgentSideBar";
+import "../SideBar/agentSidebar.css"
 const CreateProperty = ({ history }) => {
   const dispatch = useDispatch();
 
@@ -87,17 +87,17 @@ const CreateProperty = ({ history }) => {
     <Fragment>
       <MetaData title="Create Property" />
       <div className="dashboard">
-        <SideBar />
+        < AgentSidebar />
         <div className="container">
-          <h1 className="text-center py-3">Create Property</h1>
+          <h4 className="text-center py-3 text-dark display-4">Create Property</h4>
           <form
-            className="border p-5"
+            className="border p-2"
             encType="multipart/form-data"
             onSubmit={createPropertySubmitHandler}
           >
             <div class="row mt-3">
               <div className="form-group col-md-6">
-                <label for="inputPassword4">Property Title</label>
+                <label for="inputPassword4 ">Property Title</label>
                 <input
                   type="text"
                   placeholder="Product Title"

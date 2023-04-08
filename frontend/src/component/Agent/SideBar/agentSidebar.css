@@ -1,0 +1,41 @@
+.heading {
+  text-align: center !important;
+  margin: 1rem 0 !important;
+  color: #fff !important;
+}
+.title {
+  font-size: 1.2rem !important;
+  font-family: "Times New Roman", Times, serif !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  list-style: none!important;
+  text-decoration: none!important;
+}
+.listingType {
+  margin-bottom: 3rem !important;
+  padding: 0 !important;
+  color: #fff !important;
+}
+.dashboard {
+  font-size: 18px !important;
+  text-decoration: none !important;
+  color: #fff !important;
+}
+.sidebar {
+  background: #72448d !important;
+  height: 100vh;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.493);
+  font: 200 1rem "Roboto";
+  padding: 1.8rem 1.2rem;
+  transition: all 0.5s;
+}  
+label{
+  color: black;
+}
+
+
+

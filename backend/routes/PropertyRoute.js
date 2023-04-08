@@ -9,25 +9,36 @@ const {
   getTopListings,
   getPropertyLocation,
   sendAgentEmail,
+  getRentalProperties,
+  getSaleProperties,
+  getAgentProperties
 } = require("../controller/PropertyController");
-const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
+const { isAuthenticatedUser, authorizeRoles  } = require("../middleware/auth");
 const router = express.Router();
 
 router.route("/properties").get(getAllProperties);
+
+router.route("/properties/rent").get(getRentalProperties);
+router.route("/properties/sale").get(getSaleProperties);
 
 router.route("/newListing").get(getTopListings);
 router
   .route("/admin/properties")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminProperties);
 
-router
-  .route("/admin/property/new")
-  .post(isAuthenticatedUser, authorizeRoles("admin"), createProperty);
+
+  router.route("/agent/viewlisting/:id").get(isAuthenticatedUser,authorizeRoles("agent"), getAgentProperties);
+
 
 router
-  .route("/admin/property/:id")
-  .put(isAuthenticatedUser, authorizeRoles("admin"), updateProperty)
-  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProperty);
+  .route("/agent/property/new")
+  .post(isAuthenticatedUser, authorizeRoles("agent"), createProperty);
+
+router
+  .route("/agent/property/:id")
+  .put(isAuthenticatedUser, authorizeRoles("agent"), updateProperty)
+  .delete(isAuthenticatedUser, authorizeRoles("agent","admin"), deleteProperty);
+  
 router.route("/property/:id").get(getPropertyLocation).post(sendAgentEmail);
 
 module.exports = router;

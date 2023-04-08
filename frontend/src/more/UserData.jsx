@@ -6,15 +6,11 @@ import Backdrop from "@material-ui/core/Backdrop";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import Support from "@material-ui/icons/ReportProblem";
-import HeartIcon from "@material-ui/icons/FavoriteBorder";
 import HomeIcon from "@material-ui/icons/Home";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import AddIcon from '@mui/icons-material/Add';
 import { logout } from "../actions/userAction";
-import { useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 const UserData = ({ user }) => {
@@ -36,7 +32,6 @@ const UserData = ({ user }) => {
 
   const options = [
     { icon: <HomeIcon />, name: "Home", func: home },
-
     { icon: <PersonIcon />, name: "Profile", func: account },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
@@ -48,14 +43,17 @@ const UserData = ({ user }) => {
       func: dashboard,
     });
   }
-  if (user.role === "user") {
+  if (user.role === "agent") {
     options.unshift({
       icon: <DashboardIcon />,
       name: "Dashboard",
-      func: dashboard,
+      func: agentDashboard,
     });
   }
 
+  function agentDashboard() {
+    history.push("/agentDashboard");
+  }
   function dashboard() {
     history.push("/dashboard");
   }
@@ -73,7 +71,7 @@ const UserData = ({ user }) => {
 
   return (
     <>
-      <Backdrop open={open} style={{ zIndex: "10" }} />
+      <Backdrop open={open} style={{ zIndex: "12" }} />
       <Draggable bounds="parent">
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
@@ -104,7 +102,7 @@ const UserData = ({ user }) => {
           ))}
         </SpeedDial>
       </Draggable>
-      <ToastContainer
+      {/* <ToastContainer
         position="bottom-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -114,7 +112,7 @@ const UserData = ({ user }) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
     </>
   );
 };

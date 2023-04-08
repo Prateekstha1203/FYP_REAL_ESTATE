@@ -8,11 +8,11 @@ import Footer from "../../Common/footer/Footer";
 import { UPDATE_PROFILE_RESET } from "../../../constans/userContans";
 import MetaData from "../../../more/Metadata";
 import { toast, ToastContainer } from "react-toastify";
-
+import axios from "axios";
 const UpdateProfile = ({ history }) => {
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.user);
+  const { user ,setUser} = useSelector((state) => state.user);
   const { error, isUpdated, loading } = useSelector((state) => state.profile);
 
   const [name, setName] = useState("");
@@ -29,7 +29,9 @@ const UpdateProfile = ({ history }) => {
     myForm.set("name", name);
     myForm.set("email", email);
     myForm.set("mobile", mobile);
-    myForm.set("avatar", avatar);
+    if (avatar) {
+      myForm.set('avatar', avatar);
+    }
     dispatch(updateProfile(myForm));
   };
 
@@ -70,6 +72,24 @@ const UpdateProfile = ({ history }) => {
       });
     }
   }, [dispatch, error,  history, user, isUpdated]);
+
+  const loadProfile = async () => {
+    try {
+      let res = await axios.get(`/me`, {
+        headers: {
+          authorization: localStorage.getItem('token'),
+        },
+      });
+      console.log(res.data);
+      setUser(res.data.user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadProfile();
+  }, []);
   return (
     <Fragment>
       {loading ? (

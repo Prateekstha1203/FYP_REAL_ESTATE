@@ -7,21 +7,25 @@ import { login, clearErrors } from "../../../actions/userAction";
 import Loader from "../../../more/Loader";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 const Login = () => {
   const dispatch = useDispatch();
+
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
   const history = useHistory();
 
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.user
   );
 
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-
-  const loginSubmit = (e) => {
+  const loginSubmit = async (e) => {
     e.preventDefault();
+
     dispatch(login(loginEmail, loginPassword));
+    localStorage.setItem("loginEmail", loginEmail);
+    localStorage.setItem("loginPassword", loginPassword);
   };
 
   useEffect(() => {

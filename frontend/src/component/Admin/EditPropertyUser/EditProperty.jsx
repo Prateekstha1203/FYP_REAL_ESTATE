@@ -41,49 +41,7 @@ const UpdateProperty = ({ history, match }) => {
   const propertyId = match.params.id;
   const propertyCategories = ["Bungalow", "Apartment", "Villa"];
   const propertyTypeList = ["Rent", "Sale"];
-  // useEffect(() => {
-  //   if (property && property._id !== propertyId) {
-  //     dispatch(getPropertyDetails(propertyId));
-  //   } else {
-  //     setPropertyTitle(property.propertyTitle);
-  //     setPropertyType(property.propertyType);
-  //     setPrice(property.price);
-  //     setCategory(property.category);
-  //     setAddress(property.address);
-  //     setAreaSqFt(property.areaSqFt);
-  //     setBathrooms(property.bathrooms);
-  //     setBedrooms(property.bedrooms);
-  //     setBuildYear(property.buildYear);
-  //     setIsFurnished(property.isFurnished);
-  //     setParking(property.parking);
-  //     setPropertyFace(property.propertyFace)
-  //     setDescription(property.description)
-  //     setOldImages(property.images);
-  //   }
-  //   if (error) {
-  //     toast.error(error);
-  //     dispatch(clearErrors());
-  //   }
-
-  //   if (updateError) {
-  //     toast.error(updateError);
-  //     dispatch(clearErrors());
-  //   }
-
-  //   if (isUpdated) {
-  //     toast.success("Property Updated Successfully");
-  //     history.push("/admin/property");
-  //     dispatch({ type: UPDATE_PROPERTY_RESET });
-  //   }
-  // }, [
-  //   dispatch,
-  //   error,
-  //   history,
-  //   isUpdated,
-  //   propertyId,
-  //   property,
-  //   updateError,
-  // ]);
+  
   useEffect(() => {
     if (property && property._id !== propertyId) {
       dispatch(getPropertyDetails(propertyId));
@@ -115,7 +73,7 @@ const UpdateProperty = ({ history, match }) => {
   
     if (isUpdated) {
       toast.success("Property Updated Successfully");
-      history.push("/admin/property");
+      history.push("/agent/property");
       dispatch({ type: UPDATE_PROPERTY_RESET });
     }
   }, [  dispatch,  error,  isUpdated,  property,  propertyId,  updateError,  history,]);

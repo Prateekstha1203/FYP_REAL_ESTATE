@@ -1,21 +1,22 @@
-// NewListing component
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTopListings } from "../../../actions/PropertyActions";
+import { getRentalProperties } from "../../../actions/PropertyActions";
 import React from "react";
 import PropertyCard from "../../Common/CardComponent/PropertyCard";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
-const NewListing = () => {
+import "./RentSale.css";
+import EastIcon from "@mui/icons-material/East";
+const RentalProperties = () => {
   const dispatch = useDispatch();
 
-  const { loading, error, topListings: properties } = useSelector(
-    (state) => state.topListings
+  const { loading, error, rentalProperties: properties } = useSelector(
+    (state) => state.rentalProperties
   );
 
   useEffect(() => {
-    dispatch(getTopListings());
+    dispatch(getRentalProperties());
   }, [dispatch]);
 
   const responsive = {
@@ -38,27 +39,18 @@ const NewListing = () => {
     },
   };
   return (
-    <div>
+    <div className="rentGroup">
       {loading ? (
         <h2>Loading...</h2>
       ) : error ? (
         <h2>{error}</h2>
       ) : (
         <>
-          {/* <h2>Top Listings</h2>
-          <div className="row">
-            {properties &&
-              properties.map((property) => (
-                <div className="col-md-4" key={property.id}>
-                  <PropertyCard property={property} className="card" />
-                </div>
-              ))}
-          </div> */}
           <div className="container my-4">
             <div class="row mb-3 align-items-center">
               <div class="col-lg-6">
                 <div class=" headings">
-                  New Listing <span className="rentSell">PROPERTIES</span>
+                  Properties For <span className="rentSell">RENT</span>
                 </div>
               </div>
               <div class="col-lg-6 text-lg-end">
@@ -90,11 +82,4 @@ const NewListing = () => {
   );
 };
 
-export default NewListing;
-{
-  /* <div className="topListing">
-  <div className="row">
-    <div className="col-md-"></div>
-  </div>
-</div>; */
-}
+export default RentalProperties;

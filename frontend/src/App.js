@@ -9,15 +9,13 @@ import ProtectedRoute from "./route/ProtectedRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NewListingCard from "./component/Common/CardComponent/NewListingCard";
 
-
-
-import Login from "./component/loginRegister/loginRegister/Login"
-import Register from "./component/loginRegister/loginRegister/Register"
+import Login from "./component/loginRegister/loginRegister/Login";
+import Register from "./component/loginRegister/loginRegister/Register";
 import ContactForm from "./component/Home/ContactUs/ContactForm";
 import Properties from "./component/Property/Properties";
 import PropertyDetail from "./component/Property/PropertyDetail";
 
-import CreateProperty from "./component/Admin/CreateProperty/CreateProperty";
+import CreateProperty from "./component/Agent/CreateProperty/CreateProperty";
 import AllUsers from "../../frontend/src/component/Admin/allpropertyuser/AllUsers";
 import Dashboard from "./component/Admin/adminDashboard/Dashboard";
 import AllProperty from "./component/Admin/allpropertyuser/AllProperty";
@@ -36,7 +34,9 @@ import NewListing from "./component/Home/NewListing/NewListing";
 import { loadUser } from "./actions/userAction";
 import Wishlist from "./component/Home/Wishlist/Wishlist";
 import About from "./component/Home/About/AboutUs";
-import Search from "./component/Property/Search";
+import ViewListing from "./component/Agent/CreateProperty/ViewListing";
+
+import AgentDashboard from "./component/Agent/AgentDashboard/AgentDashboard";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -54,12 +54,13 @@ function App() {
     <Router>
       {isAuthenticated && <UserData user={user} />}
       <Switch>
-      <Route exact path="/card" component={NewListingCard} />
+        <Route exact path="/card" component={NewListingCard} />
         <Route exact path="/" component={Home} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/wishlist" component={Wishlist} />
         <Route exact path="/about" component={About} />
         <Route exact path="/newListing" component={NewListing} />
+
         <Route exact path="/contact" component={ContactForm} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/agent" component={Agents} />
@@ -73,24 +74,47 @@ function App() {
           component={UpdatePassword}
         />
         <ProtectedRoute exact path="/me" component={Profile} />
-        <ProtectedRoute exact path="/me/update/info" component={UpdateProfile} />
+        <ProtectedRoute
+          exact
+          path="/me/update/info"
+          component={UpdateProfile}
+        />
         <ProtectedRoute exact path="/me/update" component={UpdatePassword} />
         <Route exact path="/password/forgot" component={ForgotPassword} />
 
         <Route exact path="/password/reset/:token" component={ResetPassword} />
 
         <ProtectedRoute
+          isAgent={true}
+          exact
+          path="/agent/property/new"
+          component={CreateProperty}
+        />
+        <ProtectedRoute
+          isAgent={true}
+          exact
+          path="/agent/viewlisting/:id"
+          component={ViewListing}
+        />
+
+        <ProtectedRoute
+          isAgent={true}
+          exact
+          path="/agentDashboard"
+          component={AgentDashboard}
+        />
+        <ProtectedRoute
           isAdmin={true}
           exact
           path="/dashboard"
           component={Dashboard}
         />
-        <ProtectedRoute
-          isAdmin={true}
+        {/* <ProtectedRoute
+          isAgent={true}
           exact
-          path="/admin/property"
+          path="/agent/property"
           component={CreateProperty}
-        />
+        /> */}
         <ProtectedRoute
           isAdmin={true}
           exact

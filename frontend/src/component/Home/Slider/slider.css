@@ -1,0 +1,126 @@
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+   }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+   }
+}
+.swiper-container {
+    width: 100%;
+    height: 100vh;
+}
+.swiper-container .swiper-wrapper .swiper-slide {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.swiper-container .swiper-wrapper .swiper-slide p {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    color: #fff;
+    font-size: 3rem;
+    font-weight: bold;
+}
+.swiper-container .swiper-wrapper .swiper-slide-active p {
+    animation-name: fade-in;
+    animation-duration: 2s;
+    animation-delay: 2s;
+    animation-fill-mode: both;
+}
+
+
+button {
+    margin: 20px;
+  }
+  .custom-btn {
+    width: 170px;
+    height: 40px;
+    color: #fff;
+    margin-right: 1.5rem;
+    border-radius: 5px;
+    padding: 15px 35px;
+    font-family: "Lato", sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    border: none;
+  }
+  
+  .btn-3 {
+    background: #72448d;
+    background: linear-gradient(
+      0deg,
+      #72448d 0%,
+      #72448d 100%
+    );
+    line-height: 42px;
+    padding: 0;
+  }
+  .btn-3 span {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .btn-3:before,
+  .btn-3:after {
+    position: absolute;
+    content: "";
+    right: 0;
+    top: 0;
+     background: #72448d;
+    transition: all 0.3s ease;
+  }
+  .btn-3:before {
+    height: 0%;
+    width: 2px;
+  }
+  .btn-3:after {
+    width: 0%;
+    height: 2px;
+  }
+  .btn-3:hover{
+     background: transparent;
+    box-shadow: none;
+  }
+  .btn-3:hover:before {
+    height: 100%;
+  }
+  .btn-3:hover:after {
+    width: 100%;
+  }
+  .btn-3 span:hover{
+     color: #72448d;
+  }
+  .btn-3 span:before,
+  .btn-3 span:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 0;
+     background: #72448d;
+    transition: all 0.3s ease;
+  }
+  .btn-3 span:before {
+    width: 2px;
+    height: 0%;
+  }
+  .btn-3 span:after {
+    width: 0%;
+    height: 2px;
+  }
+  .btn-3 span:hover:before {
+    height: 100%;
+  }
+  .btn-3 span:hover:after {
+    width: 100%;
+  }
+  
