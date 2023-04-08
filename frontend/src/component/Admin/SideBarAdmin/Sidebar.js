@@ -1,5 +1,5 @@
 import React from "react";
-import "./Sidebar.css";
+// import "./Sidebar.css";
 import { Link } from "react-router-dom";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import AddIcon from "@material-ui/icons/Add";
@@ -42,14 +42,7 @@ const Sidebar = () => {
                   </Link>
                   <Link to="/admin/properties">
                     <p className="Dashboard__item">
-                      <PostAddIcon /> All Products
-                    </p>
-                  </Link>
-
-                  <Link to="/admin/property">
-                    <p>
-                      <AddIcon />
-                      Create Product
+                      <PostAddIcon /> All Properties
                     </p>
                   </Link>
 

@@ -8,10 +8,10 @@ import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { clearErrors, getProperty } from "../../actions/PropertyActions";
-
+import RentalProperties from "./RentorSell/RentProperties";
 import Agents from "./Agent/Agents";
-
-//  import Properties from "../User/Rent/Properties";
+import SaleProperties from "./RentorSell/SellListing";
+import Slider from "./Slider";
 const Home = () => {
   const dispatch = useDispatch();
   const { properties, error, loading } = useSelector(
@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div>
       <Header />
-
+<Slider />
       <h2 className="homeHeading">Featured Properties</h2>
       <div className="container" id="container">
         <div className="row">
@@ -41,6 +41,9 @@ const Home = () => {
             ))}
         </div>
       </div>
+      <RentalProperties  className="section-margin"/>
+
+      <SaleProperties className="section-margin"/>
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

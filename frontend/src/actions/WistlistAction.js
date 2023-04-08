@@ -18,16 +18,22 @@ export const removeFromWishlist = (propertyId) => (dispatch) => {
   dispatch({ type: REMOVE_FROM_WISHLIST, payload: propertyId });
 };
 
-export const getWishlist = () => async (dispatch) => {
-  try{dispatch({ type: FETCH_WISHLIST_PROPERTIES_REQUEST });
-  const res = await axios.get('/wishlist');
-    console.log("wishlist data:", res.data.wishlist);
-    dispatch({ type: FETCH_WISHLIST_PROPERTIES_SUCCESS, payload: res.data.wishlist });
 
-}catch (err) {
-  console.error(err);
-  dispatch({ type: FETCH_WISHLIST_PROPERTIES_FAILURE });
-}
+
+
+export const getWishlist = () => async (dispatch) => {
+  try {
+    dispatch({ type: FETCH_WISHLIST_PROPERTIES_REQUEST });
+    const res = await axios.get("/wishlist");
+    console.log(res.data.wishlist[0].properties)
+    dispatch({
+      type: FETCH_WISHLIST_PROPERTIES_SUCCESS,
+      payload: res.data.wishlist[0].properties,
+    });
+  } catch (err) {
+    console.error(err);
+    dispatch({ type: FETCH_WISHLIST_PROPERTIES_FAILURE });
+  }
 };
 
 // export const addToCompare = (property) => {

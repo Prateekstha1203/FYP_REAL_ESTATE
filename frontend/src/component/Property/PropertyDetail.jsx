@@ -31,7 +31,6 @@ const PropertyDetail = ({ match, history }) => {
     loading,
     error,
   } = useSelector((state) => state.propertyDetails);
-  const { isAuthenticated } = useSelector((state) => state.user);
   // const nearAmenities = JSON.parse(amenities)
   console.log(amenities);
   useEffect(() => {

@@ -49,51 +49,6 @@ exports.createProperty = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-// Get All Product (Admin)
-exports.getAdminProperties = catchAsyncErrors(async (req, res, next) => {
-  const properties = await Property.find();
-
-  res.status(200).json({
-    success: true,
-    properties,
-  });
-});
-
-// get All Properties
-exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
-  const resultPerPage = 6;
-  const propertiesCount = await Property.countDocuments();
-
-  const feature = new ApiFeatures(Property.find(), req.query)
-    .search()
-    .filter()
-    .sort()
-    .pagination(resultPerPage);
-
-  const properties = await feature.query;
-
-
-  res.status(200).json({
-    success: true,
-    properties,
-    propertiesCount,
-    resultPerPage,
-  });
-});
-
-// exports.getPropertyDetails = catchAsyncErrors(async (req, res, next) => {
-//   const property = await Property.findById(req.params.id);
-
-//   if (!property) {
-//     return next(new ErrorHandler("Property not found", 404));
-//   }
-
-//   res.status(200).json({
-//     success: true,
-//     property,
-//   });
-// });
-
 // Update Property ---Admin
 exports.updateProperty = catchAsyncErrors(async (req, res, next) => {
   let property = await Property.findById(req.params.id);
@@ -162,6 +117,72 @@ exports.deleteProperty = catchAsyncErrors(async (req, res, next) => {
     property,
   });
 });
+
+// Get All Product (Admin)
+exports.getAdminProperties = catchAsyncErrors(async (req, res, next) => {
+  const properties = await Property.find();
+
+  res.status(200).json({
+    success: true,
+    properties,
+  });
+});
+
+// get All Properties
+exports.getAllProperties = catchAsyncErrors(async (req, res, next) => {
+  const resultPerPage = 6;
+  const propertiesCount = await Property.countDocuments();
+
+  const feature = new ApiFeatures(Property.find(), req.query)
+    .search()
+    .filter()
+    .sort()
+    .pagination(resultPerPage);
+
+  const properties = await feature.query;
+
+
+  res.status(200).json({
+    success: true,
+    properties,
+    propertiesCount,
+    resultPerPage,
+  });
+});
+
+exports.getRentalProperties = async (req, res, next) => {
+  try {
+    const rentalProperties = await Property.find({ propertyType: 'Rent' });
+    res.status(200).json({
+      success: true,
+      data: rentalProperties
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getSaleProperties = async (req, res, next) => {
+  try {
+    const saleProperties = await Property.find({ propertyType: 'Sale' });
+    res.status(200).json({
+      success: true,
+      data: saleProperties
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getAgentProperties = async (req, res) => {
+  try {
+    const properties = await Property.find({ user: req.params.id });
+    res.json(properties);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+};
 
 // single Product details
 exports.getSingleProperty = catchAsyncErrors(async (req, res, next) => {

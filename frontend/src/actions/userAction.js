@@ -56,11 +56,17 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       config
     );
+
+    // add the user's token and information to localStorage
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
 };
+
 
 // Register
 export const register = (userData) => async (dispatch) => {
@@ -98,7 +104,8 @@ export const loadUser = () => async (dispatch) =>{
 export const  logout= () => async (dispatch) =>{
   try {        
     await axios.get(`/logout`);
-           
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');      
     dispatch({type: LOGOUT_SUCCESS});
   } catch (error) {  
       dispatch({type: LOGOUT_FAIL, payload: error.response.data.message});
@@ -110,7 +117,12 @@ export const updateProfile = (userData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
 
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        authorization: localStorage.getItem('token'),
+      },
+    };
 
     const { data } = await axios.put(`/me/update/info`, userData, config);
 
@@ -122,6 +134,10 @@ export const updateProfile = (userData) => async (dispatch) => {
     });
   }
 };
+
+
+
+
 
 // Update Password 
 export const updatePassword = (password) => async (dispatch) => {

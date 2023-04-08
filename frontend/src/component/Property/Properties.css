@@ -16,6 +16,7 @@
 }
 .label{
   line-height: 2.5rem;
+  color: black;
 }
 .checkbox {
   width: 20px;

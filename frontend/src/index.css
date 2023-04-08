@@ -12,3 +12,7 @@ code {
   font-family: 'Courier New',
     monospace;
 }
+
+.section-margin{
+  margin: 5rem 0;
+}

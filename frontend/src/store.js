@@ -8,6 +8,10 @@ import {
   propertiesReducer,
   topListingsReducer,
   sendAgentEmailReducer,
+  rentalPropertiesReducer,
+  salePropertiesReducer,
+  agentPropertiesReducer,
+  
 } from "./reducers/PropertyReducer";
 import {
   allUsersReducer,
@@ -18,7 +22,7 @@ import {
   agentReducer,
   sendContactEmailReducer,
 } from "./reducers/userReducer";
-import { wishlistReducer} from "./reducers/WistlistReducer";
+import { wishlistReducer,wishlistFetchReducer} from "./reducers/WistlistReducer";
 
 const reducer = combineReducers({
   properties: propertiesReducer,
@@ -35,6 +39,10 @@ const reducer = combineReducers({
   sendContactEmail: sendContactEmailReducer,
   topListings: topListingsReducer,
   sendAgentEmail:sendAgentEmailReducer,
+  rentalProperties:rentalPropertiesReducer,
+  saleProperties:salePropertiesReducer,
+  agentProperties:agentPropertiesReducer,
+  wishlistProperties:wishlistFetchReducer,
 });
 
 const initialState = {

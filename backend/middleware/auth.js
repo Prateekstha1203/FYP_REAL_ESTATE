@@ -27,3 +27,12 @@ exports.authorizeRoles = (...roles) =>{
         next();
     }
 }
+
+exports.ensureAgent = (req, res, next)=> {
+  if (req.user.role === 'agent') {
+    return next();
+  } else {
+    req.flash('error_msg', 'You are not authorized to access this resource');
+    res.redirect('/');
+  }
+}

@@ -31,6 +31,15 @@ import {
   SEND_EMAIL_REQUEST,
   SEND_EMAIL_SUCCESS,
   SEND_EMAIL_FAILURE,
+  GET_RENTAL_PROPERTIES_REQUEST,
+  GET_RENTAL_PROPERTIES_SUCCESS,
+  GET_RENTAL_PROPERTIES_FAIL,
+  GET_SALE_PROPERTIES_REQUEST,
+  GET_SALE_PROPERTIES_SUCCESS,
+  GET_SALE_PROPERTIES_FAIL,
+  FETCH_AGENT_PROPERTIES_REQUEST,
+  FETCH_AGENT_PROPERTIES_SUCCESS,
+  FETCH_AGENT_PROPERTIES_FAILURE,
 } from "../constans/PropertyConstans";
 
 export const propertiesReducer = (state = { properties: [] }, action) => {
@@ -234,6 +243,54 @@ export const sendAgentEmailReducer = (
       };
     case SEND_EMAIL_FAILURE:
       return { loading: false, success: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const rentalPropertiesReducer = (
+  state = { rentalProperties: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_RENTAL_PROPERTIES_REQUEST:
+      return { loading: true, rentalProperties: [] };
+    case GET_RENTAL_PROPERTIES_SUCCESS:
+      return { loading: false, rentalProperties: action.payload.data };
+    case GET_RENTAL_PROPERTIES_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const salePropertiesReducer = (
+  state = { saleProperties: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_SALE_PROPERTIES_REQUEST:
+      return { loading: true, saleProperties: [] };
+    case GET_SALE_PROPERTIES_SUCCESS:
+      return { loading: false, saleProperties: action.payload.data };
+    case GET_SALE_PROPERTIES_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const agentPropertiesReducer = (
+  state = { agentProperties: [], loading: false, error: null },
+  action
+) => {
+  switch (action.type) {
+    case FETCH_AGENT_PROPERTIES_REQUEST:
+      return { ...state, loading: true, error: null };
+    case FETCH_AGENT_PROPERTIES_SUCCESS:
+      return { ...state, loading: false, agentProperties: action.payload };
+    case FETCH_AGENT_PROPERTIES_FAILURE:
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
