@@ -37,9 +37,9 @@ import {
   GET_SALE_PROPERTIES_REQUEST,
   GET_SALE_PROPERTIES_SUCCESS,
   GET_SALE_PROPERTIES_FAIL,
-  FETCH_AGENT_PROPERTIES_REQUEST,
-  FETCH_AGENT_PROPERTIES_SUCCESS,
-  FETCH_AGENT_PROPERTIES_FAILURE,
+  GET_AGENT_PROPERTIES_REQUEST,
+  GET_AGENT_PROPERTIES_SUCCESS,
+  GET_AGENT_PROPERTIES_FAIL,
 } from "../constans/PropertyConstans";
 
 export const propertiesReducer = (state = { properties: [] }, action) => {
@@ -80,7 +80,18 @@ export const propertiesReducer = (state = { properties: [] }, action) => {
       return state;
   }
 };
-
+export const getAgentPropertiesReducer = (state = { agentProperties: [] }, action) => {
+  switch (action.type) {
+    case GET_AGENT_PROPERTIES_REQUEST:
+      return { loading: true, agentProperties: [] };
+    case GET_AGENT_PROPERTIES_SUCCESS:
+      return { loading: false, agentProperties: action.payload };
+    case GET_AGENT_PROPERTIES_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 export const propertyDetailsReducer = (state = { property: {} }, action) => {
   switch (action.type) {
     case PROPERTY_DETAILS_REQUEST:
@@ -280,18 +291,18 @@ export const salePropertiesReducer = (
   }
 };
 
-export const agentPropertiesReducer = (
-  state = { agentProperties: [], loading: false, error: null },
-  action
-) => {
-  switch (action.type) {
-    case FETCH_AGENT_PROPERTIES_REQUEST:
-      return { ...state, loading: true, error: null };
-    case FETCH_AGENT_PROPERTIES_SUCCESS:
-      return { ...state, loading: false, agentProperties: action.payload };
-    case FETCH_AGENT_PROPERTIES_FAILURE:
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
+// export const agentPropertiesReducer = (
+//   state = { agentProperties: [], loading: false, error: null },
+//   action
+// ) => {
+//   switch (action.type) {
+//     case FETCH_AGENT_PROPERTIES_REQUEST:
+//       return { ...state, loading: true, error: null };
+//     case FETCH_AGENT_PROPERTIES_SUCCESS:
+//       return { ...state, loading: false, agentProperties: action.payload };
+//     case FETCH_AGENT_PROPERTIES_FAILURE:
+//       return { ...state, loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };

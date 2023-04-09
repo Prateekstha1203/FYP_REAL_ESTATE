@@ -1,0 +1,54 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.title{
+  font-family: 'Courgette', cursive;
+  font-size: 2rem;
+}
+.table{
+  margin: 1rem 0;
+}
+.pagination__link {
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  margin: 0 3px;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  display: inline-block; 
+}
+
+.pagination__link:hover:not(.pagination__link--disabled) {
+  background-color: #eee;
+}
+
+.pagination__link--disabled {
+  color: #ccc;
+  pointer-events: none;
+}
+
+.pagination__link--active {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff; /* added */
+}
+a{
+  margin: 0.5rem;
+}
+@media only screen and (max-width: 600px) {
+  .pagination {
+    flex-wrap: wrap;
+  }
+
+  .pagination__link {
+    margin: 5px;
+  }
+  
+  /* added */
+  .page-item {
+    margin-right: 5px;
+  }
+}
+

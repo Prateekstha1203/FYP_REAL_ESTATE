@@ -7,6 +7,7 @@ import {
   FETCH_WISHLIST_PROPERTIES_REQUEST,
   FETCH_WISHLIST_PROPERTIES_SUCCESS,
   FETCH_WISHLIST_PROPERTIES_FAILURE,
+  COMPARE_WISHLIST_PROPERTIES
 } from "../constans/WistlistConstans";
 import axios from "axios";
 
@@ -76,3 +77,7 @@ export const getWishlist = () => async (dispatch) => {
   }
 };
 
+
+export const compareWishlistProperties = (selectedProperties) => (dispatch) => {
+  dispatch({ type: COMPARE_WISHLIST_PROPERTIES, payload: selectedProperties });
+};

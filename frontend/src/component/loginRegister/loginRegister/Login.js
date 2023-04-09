@@ -34,12 +34,7 @@ const Login = () => {
       dispatch(clearErrors());
     }
     const token = localStorage.getItem("token");
-    if (token) {
-      // set the token in the headers
-      // setAuthToken(token);
-      // authenticate the user
-      // dispatch(loadUser());
-    }
+   
     if (isAuthenticated) {
       history.push("/");
       toast.success("Successfully login to home page.");

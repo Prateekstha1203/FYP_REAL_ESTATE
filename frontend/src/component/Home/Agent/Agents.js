@@ -3,34 +3,37 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAgents } from "../../../actions/userAction";
 import React from "react";
 import Loading from "../../../more/Loader";
-import Team from "./Team";
+
 import "./Team.css";
 import Wishlist from "../Wishlist/Wishlist";
 import flower from "../../../assets/GREYFLOWER.png";
-import TwitterIcon from '@mui/icons-material/Twitter';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import InstagramIcon from '@mui/icons-material/Instagram';
-
+import TwitterIcon from "@mui/icons-material/Twitter";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import Header from "../../Common/navbar/Header";
+import Footer from "../../Common/footer/Footer";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import { useLocation } from "react-router-dom";
 const Agents = () => {
   const dispatch = useDispatch();
 
   const { agents } = useSelector((state) => state.agents);
 
   const [isLoading, setIsLoading] = useState(true);
-
+  const location = useLocation();
+  const showHeader = location.pathname === "/agent";
   useEffect(() => {
     dispatch(fetchAgents())
       .then(() => setIsLoading(false))
       .catch((err) => console.log(err));
   }, [dispatch]);
-
   return (
     <>
       {isLoading ? (
         <Loading />
       ) : (
         <div className="agentClass">
+         {showHeader && <Header />}
           <div class="container">
             <div class="row justify-content-center text-center mb-5">
               <div class="col-lg-6 mb-3">
@@ -85,28 +88,33 @@ const Agents = () => {
                           <li class="list-inline-item">
                             <a href="#">
                               <span class="icon-twitter">
-                                <TwitterIcon style={{fontSize:"40px"}}/>
+                                <TwitterIcon style={{ fontSize: "40px" }} />
                               </span>
                             </a>
                           </li>
                           <li class="list-inline-item">
                             <a href="#">
-                              <span className="d-flex align-items-center" style={{ width: "100%" }}>
-                                <FacebookOutlinedIcon style={{fontSize:"40px"}}/>
+                              <span
+                                className="d-flex align-items-center"
+                                style={{ width: "100%" }}
+                              >
+                                <FacebookOutlinedIcon
+                                  style={{ fontSize: "40px" }}
+                                />
                               </span>
                             </a>
                           </li>
                           <li class="list-inline-item">
                             <a href="#">
                               <span class="icon-github">
-                                <GitHubIcon style={{fontSize:"40px"}}/>
+                                <GitHubIcon style={{ fontSize: "40px" }} />
                               </span>
                             </a>
                           </li>
                           <li class="list-inline-item">
                             <a href="#">
                               <span class="icon-instagram">
-                                <InstagramIcon style={{fontSize:"40px"}} />
+                                <InstagramIcon style={{ fontSize: "40px" }} />
                               </span>
                             </a>
                           </li>
@@ -117,11 +125,9 @@ const Agents = () => {
                 ))}
             </div>
           </div>
+          <Footer />
         </div>
       )}
-      {/* <div class="section section-5 bg-light"></div>
-        </div>
-      )} */}
     </>
   );
 };

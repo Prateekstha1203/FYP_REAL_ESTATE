@@ -2,11 +2,13 @@ import React from "react";
 import "./header.css";
 import Logo from "../fortune.png";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import ForgotPassword from "../../loginRegister/forget_password/ForgetPassword";
+
 function Header() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const location = useLocation();
 
   return (
     <header id="header">
@@ -60,33 +62,33 @@ function Header() {
             <ul className="navbar-nav ms-auto">
               
               <li className="nav-item">
-                <Link to="/" className="nav-link active">
+                <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
                   HOME
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/properties" className="nav-link ">
+                <Link to="/properties" className={`nav-link ${location.pathname === '/properties' ? 'active' : ''}`}>
                  PROPERTIES
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/about" className="nav-link ">
+                <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>
                   ABOUT US
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/contact" className="nav-link ">
+                <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>
                   CONTACT US
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/agent" className="nav-link ">
+                <Link to="/agent" className={`nav-link ${location.pathname === '/agent' ? 'active' : ''}`}>
                   AGENTS
                 </Link>
               </li>
               {!isAuthenticated ? null : (
                 <li className="nav-item">
-                  <Link to="/wishlist" className="nav-link ">
+                  <Link to="/wishlist" className={`nav-link ${location.pathname === '/wishlist' ? 'active' : ''}`}>
                     FAVOURITE
                   </Link>
                 </li>

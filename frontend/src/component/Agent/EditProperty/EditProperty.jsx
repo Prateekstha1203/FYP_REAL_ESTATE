@@ -8,7 +8,7 @@ import {
 } from "../../../actions/PropertyActions";
 import { Button } from "@material-ui/core";
 import MetaData from "../../../more/Metadata";
-import SideBar from "../SideBarAdmin/Sidebar";
+import AgentSidebar from "../SideBar/AgentSideBar";
 import { UPDATE_PROPERTY_RESET } from "../../../constans/PropertyConstans";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -73,7 +73,7 @@ const UpdateProperty = ({ history, match }) => {
   
     if (isUpdated) {
       toast.success("Property Updated Successfully");
-      history.push("/agent/property");
+      history.push("/agentDashboard");
       dispatch({ type: UPDATE_PROPERTY_RESET });
     }
   }, [  dispatch,  error,  isUpdated,  property,  propertyId,  updateError,  history,]);
@@ -127,7 +127,7 @@ const UpdateProperty = ({ history, match }) => {
     <Fragment>
       <MetaData title="Edit Property" />
       <div className="dashboard">
-        <SideBar />
+        <AgentSidebar  />
         <div className="newProduct">
           <form
             className="border p-5"
@@ -321,7 +321,7 @@ const UpdateProperty = ({ history, match }) => {
           </form>
         </div>
       </div>
-      <ToastContainer
+      {/* <ToastContainer
         position="bottom-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -331,7 +331,7 @@ const UpdateProperty = ({ history, match }) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
     </Fragment>
   );
 };

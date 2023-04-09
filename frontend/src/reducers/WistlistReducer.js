@@ -5,6 +5,7 @@ import {
   FETCH_WISHLIST_PROPERTIES_FAILURE,
   FETCH_WISHLIST_PROPERTIES_REQUEST,
   FETCH_WISHLIST_PROPERTIES_SUCCESS,
+  COMPARE_WISHLIST_PROPERTIES,
 } from "../constans/WistlistConstans";
 
 export const wishlistReducer = (state = { wishlist: [] }, action) => {
@@ -35,7 +36,6 @@ export const wishlistReducer = (state = { wishlist: [] }, action) => {
   }
 };
 
-
 export const wishlistFetchReducer = (
   state = { wishlistProperties: [] },
   action
@@ -58,6 +58,8 @@ export const wishlistFetchReducer = (
         loading: false,
         error: action.payload,
       };
+    case COMPARE_WISHLIST_PROPERTIES:
+      return { ...state };
     default:
       return state;
   }

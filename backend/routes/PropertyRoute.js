@@ -31,11 +31,11 @@ router
 
 
 router
-  .route("/agent/property/new")
+  .route("/property/new")
   .post(isAuthenticatedUser, authorizeRoles("agent"), createProperty);
 
 router
-  .route("/agent/property/:id")
+  .route("/property/:id")
   .put(isAuthenticatedUser, authorizeRoles("agent"), updateProperty)
   .delete(isAuthenticatedUser, authorizeRoles("agent","admin"), deleteProperty);
   

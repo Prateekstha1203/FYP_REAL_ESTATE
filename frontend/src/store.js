@@ -10,8 +10,7 @@ import {
   sendAgentEmailReducer,
   rentalPropertiesReducer,
   salePropertiesReducer,
-  agentPropertiesReducer,
-  
+  getAgentPropertiesReducer
 } from "./reducers/PropertyReducer";
 import {
   allUsersReducer,
@@ -41,7 +40,7 @@ const reducer = combineReducers({
   sendAgentEmail:sendAgentEmailReducer,
   rentalProperties:rentalPropertiesReducer,
   saleProperties:salePropertiesReducer,
-  agentProperties:agentPropertiesReducer,
+  agentProperties:getAgentPropertiesReducer,
   wishlistProperties:wishlistFetchReducer,
 });
 

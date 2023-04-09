@@ -1,18 +1,17 @@
 const nodeMailer = require("nodemailer");
 
 const sendMail = async (options) => {
-    const transporter = nodeMailer.createTransport({
-      host: process.env.SMPT_HOST,
-      port: process.env.SMPT_PORT,
-      service: process.env.SMPT_SERVICE,
-      auth: {
-        user: process.env.SMPT_MAIL,
-        pass: process.env.SMPT_PASSWORD,
-      },
-    });
+  const transporter = nodeMailer.createTransport({
+
+   service: "hotmail",
+    auth: {
+        user: 'fortunerealestate1649@outlook.com',
+        pass: 'Fortune@123'
+    }
+});
   
     const mailOptions = {
-      from: process.env.SMPT_MAIL,
+      from: ' "Fortune Real Estate"<Fortunerealestate1649@outlook.com>',
       to: options.email,
       subject: options.subject,
       text: options.message,

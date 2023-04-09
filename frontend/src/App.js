@@ -19,7 +19,7 @@ import CreateProperty from "./component/Agent/CreateProperty/CreateProperty";
 import AllUsers from "../../frontend/src/component/Admin/allpropertyuser/AllUsers";
 import Dashboard from "./component/Admin/adminDashboard/Dashboard";
 import AllProperty from "./component/Admin/allpropertyuser/AllProperty";
-import EditProperty from "./component/Admin/EditPropertyUser/EditProperty";
+import UpdateProperty from "./component/Agent/EditProperty/EditProperty";
 
 import Agents from "./component/Home/Agent/Agents";
 import UserData from "./more/UserData";
@@ -87,7 +87,7 @@ function App() {
         <ProtectedRoute
           isAgent={true}
           exact
-          path="/agent/property/new"
+          path="/agent/property"
           component={CreateProperty}
         />
         <ProtectedRoute
@@ -109,12 +109,6 @@ function App() {
           path="/dashboard"
           component={Dashboard}
         />
-        {/* <ProtectedRoute
-          isAgent={true}
-          exact
-          path="/agent/property"
-          component={CreateProperty}
-        /> */}
         <ProtectedRoute
           isAdmin={true}
           exact
@@ -122,10 +116,10 @@ function App() {
           component={AllProperty}
         />
         <ProtectedRoute
-          isAdmin={true}
+          isAgent={true}
           exact
           path="/edit/property/:id"
-          component={EditProperty}
+          component={UpdateProperty}
         />
         <ProtectedRoute
           isAdmin={true}
@@ -139,12 +133,6 @@ function App() {
           path="/admin/user/:id"
           component={UpdateUser}
         />
-        {/* <ProtectedRoute
-            isAdmin={true}
-            exact
-            path="/admin/reviews"
-            component={AllReviews}
-          /> */}
       </Switch>
     </Router>
   );

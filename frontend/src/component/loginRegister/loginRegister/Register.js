@@ -2,7 +2,7 @@ import React from "react";
 import "./login.css";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast ,ToastContainer} from "react-toastify";
 import Loader from "../../../more/Loader";
 import { clearErrors, register } from "../../../actions/userAction";
 import { Link } from "react-router-dom";
@@ -255,6 +255,17 @@ const Register = ({ history, location }) => {
               </div>
             </div>
           </section>
+          <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </>
       )}
     </>

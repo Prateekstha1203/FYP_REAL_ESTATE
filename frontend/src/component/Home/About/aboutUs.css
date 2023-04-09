@@ -12,7 +12,7 @@
     background-size: 100% 100%;
     background-blend-mode: difference;
   }
-.abKarma {
+.abFortune{
   font-weight: 700;
   font-size: 46px;
 }
@@ -34,8 +34,8 @@
 .under {
   width: 71px;
   height: 5px;
-  background: #f3d562;
-  margin-left: 790px;
+  background: violet;
+  margin-left: 590px;
 }
 .dig,
 .down,
@@ -43,7 +43,7 @@
   font-size: 34px;
 }
 .how_Work {
-  width: 700px;
+  width: 500px;
   height: 70vh;
   border-radius: 15px 110px 15px 15px;
 }

@@ -4,9 +4,8 @@ import Loader from "../../../more/Loader";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, forgotPassword } from "../../../actions/userAction";
-
+import { toast, ToastContainer } from "react-toastify";
 import MetaData from "../../../more/Metadata";
-import { ToastContainer, toast } from "react-toastify";
 const ForgotPassword = () => {
   const dispatch = useDispatch();
 
@@ -71,6 +70,17 @@ const ForgotPassword = () => {
               </form>
             </div>
           </div>
+          <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </Fragment>
       )}
     </Fragment>

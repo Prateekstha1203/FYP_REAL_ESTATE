@@ -1,11 +1,12 @@
 import React from "react";
- import "./aboutUs.css";
+import "./aboutUs.css";
 import work from "../../../assets/img/apartments/a5.png";
 import avatar1 from "../../../assets/img/apartments/a6.png";
 import Header from "../../Common/navbar/Header";
 import Agents from "../Agent/Agents";
 import Footer from "../../Common/footer/Footer";
 const About = () => {
+  const showHeader = false;
   return (
     <>
       <div>
@@ -17,51 +18,55 @@ const About = () => {
               <div className="home col-12 mb-5 d-flex align-items-center justify-content-center bg-dark">
                 <div className="row text-white text-center">
                   <div className="col-12 ">
-                    <h1 className="abKarma">About Karma</h1>
+                    <h1 className="abFortune"></h1>
                   </div>
                   <div className="col-12">
                     <span className="motto">
-                      Karma is helping you to construct with happiness
+                      Fortune is providing fortune to you all
                     </span>
-                  </div>
-                  <div className="col-12  mt-5">
-                    <button className="learn">LEARN MORE</button>
                   </div>
                 </div>
               </div>
               <div className="col-12">
                 <div className="row text-center">
                   <div className="col-12">
-                    <h2 className="motto2 mt-5">
-                      We're focused on precision and
-                    </h2>
-                    <h2 className="motto2">productivity</h2>
+                    <div className=" row">
+                      <h2 className=" motto2 col-4 mt-5">Where Dreams Come</h2>
+                    </div>
+                    <div className=" row">
+                      <h2 className="motto2 col-4">Home</h2>
+                    </div>
+
                     <div className="col-12 d-flex justify-content-between">
                       <div className="under "></div>
                     </div>
                     <div className="col-12 mt-5">
                       <span>
-                        Our mission is to be the world’s most trusted field
-                        management solution for construction
+                        What matters is our brokerage or personal brand sets
+                        itself apart from the rest of the noise.
                       </span>
                     </div>
                     <div className="col-12 mb-5">
-                      <span>teams on projects of any scale.</span>
+                      <span>Let us Guide you Home.</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="col-12">
-                <div className="bestService bg-dark row">
+                <div className="extraOrdinary bg-dark row">
                   <div className="col-12 text-white text-center mt-5">
-                    <h2>Karma have the</h2>
-                    <h2>Best Services for you.</h2>
+                    <h2 className="text-white" style={{ width: "500px" }}>
+                      Extraordinary Reach
+                    </h2>
+                    <h2 className="text-white" style={{ width: "500px" }}>
+                      Extraordinary Results.
+                    </h2>
                   </div>
                   <div className="col-4 text-white mt-5 text-center">
                     <span>
-                      <i class="dig fa-solid fa-person-digging"></i>
+                      <i class="fa-solid fa-search"></i>
                     </span>
-                    <h4 className="worker mt-5">Professional Workers</h4>
+                    <h4 className="worker mt-5">Property Search</h4>
                     <span>
                       A professional is a member of a profession or any
                     </span>
@@ -70,9 +75,9 @@ const About = () => {
                   </div>
                   <div className="col-4 text-white mt-5 text-center">
                     <span>
-                      <i class="down fa-solid fa-down-long"></i>
+                      <i class="dig fa-solid fa-list"></i>
                     </span>
-                    <h4 className="worker mt-5">Offer Low Price</h4>
+                    <h4 className="worker mt-5">Map Integration</h4>
                     <span>
                       Lowest price means the least possible amount that
                     </span>
@@ -81,7 +86,7 @@ const About = () => {
                   </div>
                   <div className="col-4 text-white mt-5 text-center">
                     <span>
-                      <i class="fast fa-solid fa-gauge-simple-high"></i>
+                      <i class="dig fa-solid fa-map"></i>{" "}
                     </span>
                     <h4 className="worker mt-5">Quick Quality Work</h4>
                     <span>Amount of Work Performed. The volume of work </span>
@@ -102,10 +107,10 @@ const About = () => {
                   <div className="col-6">
                     <div className="row pt-5">
                       <div className="col-12 text-white">
-                        <h1 className="abKarma mt-5">Let's See How</h1>
+                        <h1 className="abFortunemt-5">Let's See How</h1>
                         <h1 className="abKarma">We Work</h1>
                         <h6>
-                          Karma offers project completion with authenticity,
+                          Fortune offers project completion with authenticity,
                           creativity and
                         </h6>
                         <h6>
@@ -167,7 +172,7 @@ const About = () => {
               <div className="col-12">
                 <div className="row">
                   <div className="col-12 text-center mt-5 mb-5">
-                    <Agents/>
+                  <Agents  />
                   </div>
                 </div>
               </div>

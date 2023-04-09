@@ -18,7 +18,7 @@ const AgentSidebar = ({ id }) => {
                     <i class="dashboardIcon ms-4 me-3 fa-solid fa-house"></i>
                     <span className="title">Dashboard</span>
                   </NavLink>
-                  <NavLink className="listingType  " to="/agent/property/new">
+                  <NavLink className="listingType  " to="/agent/property">
                     <i class="dashboardIcon ms-4 me-3 fa-solid fa-calendar"></i>
                     <span className="title">Create Listing</span>
                   </NavLink>
@@ -28,13 +28,6 @@ const AgentSidebar = ({ id }) => {
                   >
                     <i className="dashboardIcon ms-4 me-4"></i>
                     <span className="title">View Listing</span>
-                  </NavLink>
-                  <NavLink
-                    className="listingType"
-                    to="/agent/property/editlisting"
-                  >
-                    <i class="dashboardIcon ms-4 me-3 fa-solid fa-gear"></i>
-                    <span className="title">Edit Listing</span>
                   </NavLink>
                   <NavLink className="listingType  mb-3" to="/logout">
                     <i class="dashboardIcon ms-4 me-3 fa-solid fa-arrow-right-from-bracket"></i>

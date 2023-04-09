@@ -107,7 +107,7 @@ const CreateProperty = ({ history }) => {
                   onChange={(e) => setPropertyTitle(e.target.value)}
                 />
               </div>
-              <div class="form-group col-md-6">
+              {/* <div class="form-group col-md-6">
                 <label for="inputPassword4">Address</label>
                 
                  <GooglePlacesAutocomplete
@@ -122,26 +122,23 @@ const CreateProperty = ({ history }) => {
                     placeholder: "Search for address..",
                     onChange: ({ value }) => {
                       console.log("address onchange => ", value.description);
-                      //setAd({ ...ad, address: value.description });
                       setAddress(value.description)
                     },
                   }}
-                  // onChange=({value}) =>{ setAddress({address: value.description})}
                   />
               
-              </div>
-              {/* <div className="mb-3 form-control">
-               
-                  selectProps={{
-                    //defaultInputValue: ad?.address,
-                    placeholder: "Search for address..",
-                    onChange: ({ value }) => {
-                      // console.log("address onchange => ", value.description);
-                      //setAd({ ...ad, address: value.description });
-                    },
-                  }}
-                
               </div> */}
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Address</label>
+                <input
+                  placeholder="Property Address"
+                  type="text"
+                  class="form-control"
+                  required
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                ></input>
+              </div>
 
               <div class="form-group col-md-6 mt-4">
                 <label for="inputAddress">Property Type</label>
