@@ -5,15 +5,44 @@
   color: transparent;
   background-clip: text;
   text-align: center;
-  padding: 2rem 0;
+  padding: 1.2rem 0;
 }
-.itemsWishlist{
-    position: relative;
+ .wishlistContent{
+  position: relative;
 }
+/* .itemsWishlist{
+    position: absolute;
+}  */
+
+
 .wishlistCheckbox {
     margin-right: 8px; /* optional */
     transform: scale(0.4); /* adjust scale to decrease or increase size */
     position: absolute;
     top: 0;
-    right:10;
+    right:-160px;
   }
+
+  .compare {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    background-color: #72448d;
+    border: 2px solid #72448d ;
+    border-radius: 1.3rem;
+    color: #fff;
+    position: absolute;
+    top: 22px;
+    right: 0;
+  }
+/* .wishlistText{
+  font-size: 1.2rem;
+  font-weight: 400;
+  display: flex;
+  background-image: linear-gradient(to left, #50359d, #9e6ad2);
+  color: transparent;
+  background-clip: text;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+} */

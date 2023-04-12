@@ -1,176 +1,323 @@
-import React, { useEffect } from "react";
+import React, { useEffect ,useState} from "react";
 import Sidebar from "../SideBarAdmin/Sidebar";
 import "./dashboard.css";
 import { Typography } from "@material-ui/core";
-import {Link} from "react-router-dom";
-import { Doughnut} from "react-chartjs-2";
+import { Link } from "react-router-dom";
+import { Doughnut, Bar } from "react-chartjs-2";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../../../more/Metadata.js";
 import Loading from "../../../more/Loader.js";
 import { getAdminProperty } from "../../../actions/PropertyActions.js";
 import { getAllUsers } from "../../../actions/userAction.js";
+import PersonIcon from "@mui/icons-material/Person";
+import HomeIcon from "@mui/icons-material/Home";
+import { Group } from "@mui/icons-material";
+import { AttachMoney, Payment } from "@material-ui/icons";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  tooltip,
+  Legend,
+  Tooltip,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
 
-// const Dashboard = () => {
-
-//   const dispatch = useDispatch();
-
-//   const { properties,loading } = useSelector((state) => state.properties);
-
-
-//   const { users } = useSelector((state) => state.allUsers);
-
-     
-//   properties &&
-//   properties.forEach((listing) => {
-//       // if (listing === 0) {
-//       //   // outOfStock += 1;
-//       // }
-//     });
-
-//     useEffect(() => {
-//         dispatch(getAdminProperty());
-//         dispatch(getAllUsers());
-//       }, [dispatch]);    
-
-//   //   const lineState = {
-//   //       labels: ["Initial Amount", "Amount Earned"],
-//   //       datasets: [
-//   //         {
-//   //           label: "TOTAL AMOUNT",
-//   //           backgroundColor: ["#3BB77E"],
-//   //           hoverBackgroundColor: ["#3BB77E"],
-//   //           data: [0, totalAmount],
-//   //         },
-//   //       ],
-//   //     };
-
-//   //    const doughnutState = {
-//   //   labels: ["Out of Stock", "InStock"],
-//   //   datasets: [
-//   //     {
-//   //       backgroundColor: ["#00A6B4", "#6800B4"],
-//   //       hoverBackgroundColor: ["#4B5000", "#35014F"],
-//   //       data: [outOfStock, products.length - outOfStock],
-//   //     },
-//   //   ],
-//   // };
-
-//     return (
-//        <>
-//        {loading ?
-//        <Loading />
-//        :(
-//         <div className="dashboard">
-//         <MetaData title="Dashboard" />
-//         <Sidebar />
-  
-//         <div className="dashboardContainer">
-//           <Typography component="h1">Dashboard</Typography>
-   
-//           <div className="dashboardSummary">
-//             {/* <div>
-//               <p>
-//                 Total Amount <br /> ${totalAmount}
-//               </p>
-//             </div> */}
-//             <div className="dashboardSummaryBox2">
-//               <Link to="/admin/products">
-//                 <p>Properties</p>
-//                 <p>{properties && properties.length}</p>
-//               </Link>
-//               {/* <Link to="/admin/orders">
-//                 <p>Orders</p>
-//                 <p>{orders && orders.length}</p>
-//               </Link> */}
-//               <Link to="/admin/users">
-//                 <p>Users</p>
-//                 <p>{users && users.length}</p>
-//               </Link>
-//             </div>
-//           </div>
-  
-//           {/* <div className="lineChart">
-//             <Line data={lineState} />
-//           </div>
-  
-//           <div className="doughnutChart">
-//             <Doughnut data={doughnutState} />
-//           </div>  */}
-//         </div>
-//       </div>
-//        )
-//        }
-//        </>
-//     );
-//   };
-
-
+ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { properties, loading } = useSelector((state) => state.properties);
+  
   const { users } = useSelector((state) => state.allUsers);
-
+  const [showSidebar, setShowSidebar] = useState(true);
   const userCount = users.filter((user) => user.role === "user").length;
   const agentCount = users.filter((user) => user.role === "agent").length;
+  const sortedUsers = users.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  const filteredUsers = sortedUsers.filter(
+    (user) => user.role !== "admin" && ["user", "agent"].includes(user.role)
+  );
 
   useEffect(() => {
     dispatch(getAdminProperty());
     dispatch(getAllUsers());
   }, [dispatch]);
 
+  const category1 = properties.filter(
+    (property) => property.category === "Banglow"
+  ).length;
+  const category2 = properties.filter(
+    (property) => property.category === "Apartment"
+  ).length;
+  const category3 = properties.filter(
+    (property) => property.category === "Villa"
+  ).length;
 
-  const rentProperties = properties.filter((property) => property.propertyType === "Rent").length;
-  const saleProperties = properties.filter((property) => property.propertyType === "Sale").length;
-console.log(rentProperties)
-console.log(saleProperties);  
-  const doughnutState = {
+  const rentProperties = properties.filter(
+    (property) => property.propertyType === "Rent"
+  ).length;
+  const saleProperties = properties.filter(
+    (property) => property.propertyType === "Sale"
+  ).length;
+
+  const data = {
     labels: ["Rent", "Sale"],
     datasets: [
       {
-        backgroundColor: ["#00A6B4", "#6800B4"],
-        hoverBackgroundColor: ["#4B5000", "#35014F"],
+        label: "Properties",
         data: [rentProperties, saleProperties],
+        backgroundColor: ["#FF6384", "#36A2EB"], // custom colors
+        borderColor: ["#FF6384", "#36A2EB"], // matching border colors
+        borderWidth: 1,
       },
     ],
   };
-  
+  // Create the bar chart data
+  const barChartData = {
+    labels: ["Bungalow", "Apartment", "Villa"],
+    datasets: [
+      {
+        label: "Number of Properties",
+        data: [category1, category2, category3],
+        backgroundColor: ["#3BB77E", "#FFA700", "#E3475B"],
+        hoverBackgroundColor: ["#3BB77E", "#FFA700", "#E3475B"],
+      },
+    ],
+  };
+
+  // Create the bar chart options
+  const barChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      yAxes: [
+        {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 0.5,
+          },
+        },
+      ],
+    },
+  };
+  const options = {};
+
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
-        <div className="dashboard">
-          <MetaData title="Dashboard" />
-          <Sidebar />
-
-          <div className="dashboardContainer">
-            <Typography component="h1">Dashboard</Typography>
-
-            <div className="dashboardSummary">
-              <div className="dashboardSummaryBox1">
-                <p>Users</p>
-                <p>{userCount}</p>
+        <div className="container-fluid d-flex p-0">
+          {showSidebar && (
+            <div className="col-2">
+              <Sidebar />
+            </div>
+          )}
+          <div class="wrapper container">
+            <div className="container-fluid">
+              {/* Page Heading */}
+              <div className="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
+                <a
+                  href="#"
+                  className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onClick={() => {
+                    setShowSidebar(false);
+                    window.print();
+                  }}
+                >
+                  <i className="fas fa-download fa-sm text-white-50" /> Generate
+                  Report
+                </a>
               </div>
-              <div className="dashboardSummaryBox2">
-                <p>Agents</p>
-                <p>{agentCount}</p>
+              {/* Content Row */}
+              <div className="row">
+                {/* Earnings (Monthly) Card Example */}
+                <div className="col-xl-3 col-md-6 mb-4">
+                  <div className="card border-left-primary shadow h-100 py-2">
+                    <div className="card-body">
+                      <div className="row no-gutters align-items-center">
+                        <div className="col-9">
+                          <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Users (All)
+                          </div>
+                          <div className="h5 mb-0 font-weight-bold text-gray-800">
+                            {users && users.length}
+                          </div>
+                        </div>
+                        <div className="col-3">
+                          <PersonIcon style={{ fontSize: 40, color: "blue" }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Earnings (Monthly) Card Example */}
+                <div className="col-xl-3 col-md-6 mb-4">
+                  <div className="card border-left-success shadow h-100 py-2">
+                    <div className="card-body">
+                      <div className="row no-gutters align-items-center">
+                        <div className="col mr-2">
+                          <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Total Agent
+                          </div>
+                          <div className="h5 mb-0 font-weight-bold text-gray-800">
+                            {agentCount}
+                          </div>
+                        </div>
+
+                        <div className="col-3">
+                          <Group fontSize="large" color="success" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Earnings (Monthly) Card Example */}
+                <div className="col-xl-3 col-md-6 mb-4">
+                  <div className="card border-left-info shadow h-100 py-2">
+                    <div className="card-body">
+                      <div className="row no-gutters align-items-center">
+                        <div className="col-9">
+                          <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Total Property
+                          </div>
+                          <div className="row no-gutters align-items-center">
+                            <div className="col-auto">
+                              <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                {properties && properties.length}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-3">
+                          <HomeIcon fontSize="large"  style={{ color: '#17a2b8' }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Pending Requests Card Example */}
+                <div className="col-xl-3 col-md-6 mb-4">
+                  <div className="card border-left-warning shadow h-100 py-2">
+                    <div className="card-body">
+                      <div className="row no-gutters align-items-center">
+                        <div className="col-9">
+                          <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Rent/Sale
+                          </div>
+                          <div className="h5 mb-0 font-weight-bold text-gray-800">
+                            {rentProperties} / {saleProperties}
+                          </div>
+                        </div>
+                        <div className="col-3">
+                          <AttachMoney
+                            fontSize="large"
+                            style={{ color: "#FFC107" }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="dashboardSummaryBox3">
-                <p>Properties</p>
-                <p>{properties && properties.length}</p>
+              {/* Content Row */}
+              <div className="row">
+                <div className="col-md-9">
+                  <div className="row">
+                    <div className="col-6 ">
+                      <div className="card shadow mb-4">
+                        {/* Card Header - Dropdown */}
+                        <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                          <h6 className="m-0 font-weight-bold text-primary">
+                            Property Category
+                          </h6>
+                        </div>
+                        {/* Card Body */}
+                        <div className="card-body">
+                          <div className="chart-area">
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              style={{
+                                width: "300px",
+                                height: "300px",
+                                marginLeft: "1.7rem",
+                              }}
+                            >
+                              <Bar
+                                data={barChartData}
+                                options={barChartOptions}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-6 p-0">
+                      <div className="card shadow mb-4">
+                        {/* Card Header - Dropdown */}
+                        <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                          <h6 className="m-0 font-weight-bold text-primary">
+                            Property Type (Rent / Sell)
+                          </h6>
+                        </div>
+                        {/* Card Body */}
+                        <div className="card-body">
+                          <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{
+                              width: "300px",
+                              height: "300px",
+                              marginLeft: "1.7rem",
+                            }}
+                          >
+                            <Doughnut data={data} options={options} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-3 ">
+                  <div className="card shadow mb-4">
+                    {/* Card Header - Dropdown */}
+                    <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 className="m-0 font-weight-bold text-primary">
+                        New Users
+                      </h6>
+                    </div>
+                    <div className="card-body">
+                      {filteredUsers.map((user) => (
+                        <div
+                          key={user.id}
+                          className="d-flex align-items-center border-bottom py-3"
+                        >
+                          <img
+                            className="rounded-circle flex-shrink-0"
+                            src={user.avatar.url}
+                            alt={user.name}
+                            style={{ width: 40, height: 40 }}
+                          />
+                          <div className="w-100 ms-3">
+                            <h6 className="mb-0">{user.name}</h6>
+                            <small>{user.mobile}</small>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
-
-            <div className="doughnutChart">
-            {/* <Doughnut data={doughnutState} /> */}
-          </div>  
-
           </div>
         </div>
       )}
     </>
   );
 };
-export default Dashboard
+
+export default Dashboard;

@@ -73,7 +73,7 @@ const AgentProperty = ({ history }) => {
           <SideBar />
         </div>
         <div className="propertyContent col-9">
-          <h1 className="title text-center py-5">VIEW LISTING</h1>
+          <h1 className="viewTitle text-center py-5">VIEW LISTING</h1>
           <input
             type="text"
             placeholder="Search by Category or Title"

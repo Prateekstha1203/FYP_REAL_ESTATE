@@ -19,7 +19,7 @@ const UpdateProfile = ({ history }) => {
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [avatar, setAvatar] = useState();
-  const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+  const [avatarPreview, setAvatarPreview] = useState("/profile.png");
 
   const updateProfileSubmit = (e) => {
     e.preventDefault();
@@ -53,7 +53,7 @@ const UpdateProfile = ({ history }) => {
       setName(user.name);
       setEmail(user.email);
       setMobile(user.mobile);
-      setAvatarPreview(user.avatar.url);
+      // setAvatarPreview(user.avatar.url);
     }
 
     if (error) {
@@ -200,6 +200,17 @@ const UpdateProfile = ({ history }) => {
             </div>
           </div>
           <Footer />
+          <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </Fragment>
       )}
     </Fragment>

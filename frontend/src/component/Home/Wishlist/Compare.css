@@ -1,0 +1,23 @@
+.first-row{
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.first-row th{
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+  
+  td:first-child {
+    background-color: #72448d;
+  }
+  .compareheading{
+    font-size: 40px;
+  font-weight: 600;
+  background-image: linear-gradient(to left, #50359d, #9e6ad2);
+  color: transparent;
+  background-clip: text;
+  text-align: center;
+  padding: 1.2rem 0;
+  }

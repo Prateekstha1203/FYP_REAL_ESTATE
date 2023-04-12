@@ -19,6 +19,11 @@ span {
   letter-spacing: 0.03rem;
 }
 
+.describe{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 @media (min-width: 768px) {
   .mainDiv {
     min-width: 710px;

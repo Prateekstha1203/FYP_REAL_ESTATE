@@ -65,6 +65,7 @@ const Register = ({ history, location }) => {
 
     if (isAuthenticated) {
       history.push("/");
+      toast.success("Registered successfully")
     }
   }, [dispatch, error,  history, isAuthenticated, redirect]);
 
@@ -232,7 +233,7 @@ const Register = ({ history, location }) => {
                               />
                             </div>
                             <div className="d-flex justify-content-end align-items-center mb-2 forget">
-                              <Link to="/login" className="account  text-blue text-decoration-none fs-8">Already have an account</Link>
+                              <Link to="/login" className="account  text-black mt-4 text-decoration-none fs-8">Already have an account</Link>
                             </div>
                           </div>
 

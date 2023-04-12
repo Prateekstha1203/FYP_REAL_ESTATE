@@ -6,7 +6,6 @@ const AgentSidebar = ({ id }) => {
   return (
     <>
       <div>
-        <sidebar>
           <div className="container-fluid">
             <div className="row">
               <div className="sidebar col-12">
@@ -37,7 +36,6 @@ const AgentSidebar = ({ id }) => {
               </div>
             </div>
           </div>
-        </sidebar>
       </div>
     </>
   );

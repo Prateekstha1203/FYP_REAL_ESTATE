@@ -6,7 +6,7 @@ h1 {
   font-size: 2.5rem;
   font-weight: 800;
   text-align: center;
-  font-family: "Courgette", cursive;
+  /* font-family: "Courgette", cursive; */
 }
 .section .heading {
   font-weight: 500;

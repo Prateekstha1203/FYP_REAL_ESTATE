@@ -74,7 +74,7 @@ const AllProperties = ({ history }) => {
           <SideBar />
         </div>
         <div className="propertyContent col-9">
-          <h1 className="title text-center py-5">ALL PROPERTY</h1>
+          <h1 className=" text-center py-5">ALL PROPERTY</h1>
           <input
             type="text"
             placeholder="Search by Category or Title"
@@ -104,9 +104,9 @@ const AllProperties = ({ history }) => {
                     <td>{listing.category}</td>
                     <td>{listing.propertyType}</td>
                     <td>
-                      <Link to={`/edit/property/${listing._id}`}>
+                      {/* <Link to={`/edit/property/${listing._id}`}>
                         <EditIcon variant="primary">Edit</EditIcon>
-                      </Link>
+                      </Link> */}
                       <Button
                         variant="danger"
                         onClick={() => deletePropertyHandler(listing._id)}
@@ -131,9 +131,9 @@ const AllProperties = ({ history }) => {
           />
         </div>
       </div>
+      
     </Fragment>
   );
 };
 
 export default AllProperties;
-

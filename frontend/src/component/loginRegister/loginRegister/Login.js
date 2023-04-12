@@ -34,7 +34,7 @@ const Login = () => {
       dispatch(clearErrors());
     }
     const token = localStorage.getItem("token");
-   
+
     if (isAuthenticated) {
       history.push("/");
       toast.success("Successfully login to home page.");
@@ -89,6 +89,7 @@ const Login = () => {
                       <form onSubmit={loginSubmit}>
                         <div className="inputArea">
                           <div className="form-row">
+                            <h1 className="loginHeading">Login</h1>
                             <div className="col">
                               <div className="input-group">
                                 <input
@@ -134,13 +135,15 @@ const Login = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="form-row mb-0">
-                            <div className="col">
-                              <div className="d-flex justify-content-end align-items-center  forget">
-                                <Link to="/password/forgot">
-                                  Forget Password ?
-                                </Link>
-                              </div>
+                          <div className="form-row mb-1 d-flex align-items-center justify-content-between">
+                            <div >
+                              <Link to="/register"className="loginAttribute">Create an account</Link>
+                            </div>
+
+                            <div >
+                              <Link to="/password/forgot" className="loginAttribute">
+                                Forget Password ?
+                              </Link>
                             </div>
                           </div>
 

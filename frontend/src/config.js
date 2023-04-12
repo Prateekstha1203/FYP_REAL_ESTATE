@@ -19,4 +19,4 @@ const awsConfig = {
 };
 
 export const AWSSES = new SES(awsConfig);
-export const GOOGLE_PLACES_API_KEY = 'AIzaSyCETfYHnB3ZszmOzR7br1tWUSI7XpBwJk4';
+export const GOOGLE_PLACES_API_KEY = 'AIzaSyA8_IPJ-cEm7Dd7arvPNTSJVN-Ft-pM5dQ';

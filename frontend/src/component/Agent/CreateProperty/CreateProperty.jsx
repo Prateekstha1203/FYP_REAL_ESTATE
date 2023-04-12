@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { GOOGLE_PLACES_API_KEY } from "../../../config";
 import AgentSidebar from "../SideBar/AgentSideBar";
-import "../SideBar/agentSidebar.css"
+import "../SideBar/agentSidebar.css";
 const CreateProperty = ({ history }) => {
   const dispatch = useDispatch();
 
@@ -78,8 +78,16 @@ const CreateProperty = ({ history }) => {
     setImagesPreview([]);
 
     files.forEach((file) => {
-      setImagesPreview((old) => [...old, URL.createObjectURL(file)]);
-      setImages((old) => [...old, file]);
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((old) => [...old, reader.result]);
+          setImages((old) => [...old, reader.result]);
+        }
+      };
+
+      reader.readAsDataURL(file);
     });
   };
 
@@ -87,9 +95,12 @@ const CreateProperty = ({ history }) => {
     <Fragment>
       <MetaData title="Create Property" />
       <div className="dashboard">
-        < AgentSidebar />
+        <AgentSidebar />
+        
         <div className="container">
-          <h4 className="text-center py-3 text-dark display-4">Create Property</h4>
+          <h4 className="text-center py-3 text-dark display-4">
+            Create Property
+          </h4>
           <form
             className="border p-2"
             encType="multipart/form-data"
@@ -107,27 +118,6 @@ const CreateProperty = ({ history }) => {
                   onChange={(e) => setPropertyTitle(e.target.value)}
                 />
               </div>
-              {/* <div class="form-group col-md-6">
-                <label for="inputPassword4">Address</label>
-                
-                 <GooglePlacesAutocomplete
-                 apiKey={GOOGLE_PLACES_API_KEY}
-                 apiOptions={{ region: "au" }}
-                  placeholder="Property Address"
-                  type="text"
-                  class="form-control"
-                  required
-                  selectProps={{
-                
-                    placeholder: "Search for address..",
-                    onChange: ({ value }) => {
-                      console.log("address onchange => ", value.description);
-                      setAddress(value.description)
-                    },
-                  }}
-                  />
-              
-              </div> */}
               <div class="form-group col-md-6">
                 <label for="inputPassword4">Address</label>
                 <input

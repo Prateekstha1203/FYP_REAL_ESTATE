@@ -3,8 +3,7 @@
   justify-content: center;
   margin-top: 10px;
 }
-.title{
-  font-family: 'Courgette', cursive;
+.viewTitle{
   font-size: 2rem;
 }
 .table{

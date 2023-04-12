@@ -31,21 +31,21 @@ const UserData = ({ user }) => {
   const dispatch = useDispatch();
 
   const options = [
-    { icon: <HomeIcon />, name: "Home", func: home },
-    { icon: <PersonIcon />, name: "Profile", func: account },
-    { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
+    { icon: <HomeIcon className="speedDialIcon"/>, name: "Home", func: home },
+    { icon: <PersonIcon className="speedDialIcon"/>, name: "Profile", func: account },
+    { icon: <ExitToAppIcon className="speedDialIcon"/>, name: "Logout", func: logoutUser },
   ];
 
   if (user.role === "admin") {
     options.unshift({
-      icon: <DashboardIcon />,
+      icon: <DashboardIcon className="speedDialIcon"/>,
       name: "Dashboard",
       func: dashboard,
     });
   }
   if (user.role === "agent") {
     options.unshift({
-      icon: <DashboardIcon />,
+      icon: <DashboardIcon className="speedDialIcon"/>,
       name: "Dashboard",
       func: agentDashboard,
     });
@@ -81,7 +81,7 @@ const UserData = ({ user }) => {
           className="speedDial"
           icon={
             <img
-              className="speedDialIcon"
+              className="speedDialImage"
               src={user.avatar.url ? user.avatar.url : "/profile.png"}
               alt="Profile"
               style={{
@@ -102,7 +102,7 @@ const UserData = ({ user }) => {
           ))}
         </SpeedDial>
       </Draggable>
-      {/* <ToastContainer
+      <ToastContainer
         position="bottom-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -112,7 +112,7 @@ const UserData = ({ user }) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      /> */}
+      />
     </>
   );
 };

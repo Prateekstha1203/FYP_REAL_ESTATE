@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import SideBar from "../SideBarAdmin/Sidebar";
 import { getAllUsers, clearErrors, deleteUser } from "../../../actions/userAction";
 import { DELETE_USER_RESET } from "../../../constans/userContans";
 import { ToastContainer, toast } from 'react-toastify';
-
+import ReactPaginate from "react-paginate";
 
 const AllUsers = ({ history }) => {
 
@@ -28,6 +28,29 @@ const AllUsers = ({ history }) => {
   const deleteUserHandler = (id) => {
     dispatch(deleteUser(id));
   };
+
+  const userPerPage = 5;
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const filteredUser = users.filter(
+    (user) =>
+    user.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const pageCount = Math.ceil(filteredUser.length / userPerPage);
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+
+
+
+
+
 
   useEffect(() => {
     if (error) {
@@ -48,94 +71,74 @@ const AllUsers = ({ history }) => {
 
     dispatch(getAllUsers());
   }, [dispatch, error, deleteError, history, isDeleted, message]);
-
-  const columns = [
-    { field: "id", headerName: "User ID", minWidth: 180, flex: 0.8 },
-
-    {
-      field: "email",
-      headerName: "Email",
-      minWidth: 100,
-      flex: 0.5,
-    },
-    {
-      field: "name",
-      headerName: "Name",
-      minWidth: 150,
-      flex: 0.5,
-    },
-
-    {
-      field: "role",
-      headerName: "Role",
-      type: "number",
-      minWidth: 150,
-      flex: 0.3,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "role") === ("admin")
-          ? "greenColor"
-          : "redColor";
-      },
-    },
-
-    {
-      field: "actions",
-      flex: 0.3,
-      headerName: "Actions",
-      minWidth: 150,
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <Fragment>
-            <Link to={`/admin/user/${params.getValue(params.id, "id")}`}>
-              <EditIcon />
-            </Link>
-
-            <Button
-              onClick={() =>
-                deleteUserHandler(params.getValue(params.id, "id"))
-              }
-            >
-              <DeleteIcon />
-            </Button>
-          </Fragment>
-        );
-      },
-    },
-  ];
-
-  const rows = [];
-
-  users &&
-    users.forEach((item) => {
-      rows.push({
-        id: item._id,
-        role: item.role,
-        email: item.email,
-        name: item.name,
-      });
-    });
+  
 
   return (
     <Fragment>
       <MetaData title={`ALL USERS - Admin`} />
-
-      <div className="dashboard">
-        <SideBar />
-        <div className="productListContainer">
-          <h1 id="productListHeading">ALL USERS</h1>
-
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            disableSelectionOnClick
-            className="productListTable"
-            autoHeight
+      <div className="row">
+        <div className="SlideBar col-2">
+          <SideBar />
+        </div>
+        <div className="propertyContent col-9">
+          <div className="allProperty fs-1 text-center py-2">ALL USERS</div>
+          <input
+            type="text"
+            placeholder="Search by user name "
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <table className="table table-striped table-bordered table-hover table-responsive">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUser
+                .slice(
+                  currentPage * userPerPage,
+                  (currentPage + 1) * userPerPage
+                )
+                .map((user) => (
+                  <tr key={user._id}>
+                    <td>{user._id}</td>
+                    <td>{user.email}</td>
+                    <td>{user.name}</td>
+                    <td>{user.role}</td>
+                    <td>
+                      <Link to={`/admin/user/${user._id}`}>
+                        <EditIcon variant="primary">Edit</EditIcon>
+                      </Link>
+                      <Button
+                        variant="danger"
+                        onClick={() => deleteUserHandler(user._id)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <ReactPaginate
+            previousLabel={"← Previous"}
+            nextLabel={"Next →"}
+            pageCount={pageCount}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            previousLinkClassName={"pagination__link"}
+            nextLinkClassName={"pagination__link"}
+            disabledClassName={"pagination__link--disabled"}
+            activeClassName={"pagination__link--active"}
           />
         </div>
       </div>
+     
       <ToastContainer 
         position="bottom-center"
         autoClose={5000}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Carousel from "react-material-ui-carousel";
 import { clearErrors, getPropertyDetails } from "../../actions/PropertyActions";
 import { ToastContainer, toast } from "react-toastify";
 import MetaData from "../../more/Metadata";
@@ -8,18 +7,13 @@ import Loading from "../../more/Loader";
 import { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRupeeSign, faBedEmpty } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+
 import "./propertyDetail.css";
 import Agent from "../../component/Home/Agent/agent.png";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { sendAgentEmail } from "../../actions/PropertyActions";
 
-{
-  /* <FontAwesomeIcon icon={faBedFront} />
-<FontAwesomeIcon icon={faBath} /> 
-<FontAwesomeIcon icon={faEnvelope} />*/
-}
+
 const PropertyDetail = ({ match, history }) => {
   const dispatch = useDispatch();
 
@@ -31,15 +25,18 @@ const PropertyDetail = ({ match, history }) => {
     loading,
     error,
   } = useSelector((state) => state.propertyDetails);
-  // const nearAmenities = JSON.parse(amenities)
-  console.log(amenities);
+
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
     dispatch(getPropertyDetails(match.params.id));
+
+    
   }, [dispatch, match.params.id, error]);
+
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -59,7 +56,7 @@ const PropertyDetail = ({ match, history }) => {
 
     const { name, email, userMessage } = formData;
     const propertyId = match.params.id;
-    console.log(name,email,userMessage,propertyId);
+    console.log(name, email, userMessage, propertyId);
     dispatch(sendAgentEmail(name, email, userMessage, propertyId));
   };
 
@@ -96,7 +93,10 @@ const PropertyDetail = ({ match, history }) => {
               <div className="d-flex flex-column align-items-start gap-4 d-lg-flex flex-lg-row">
                 <div className="mainDiv ">
                   <div className="mb-8">
-                    <img src="https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"></img>
+                    {property.images &&
+                      property.images.map((item, i) => (
+                        <img className="CarouselImage" key={i} src={item.url} />
+                      ))}
                   </div>
                   <div className=" details ">
                     <div className="d-flex gap-3 text-purple my-3">
@@ -115,16 +115,17 @@ const PropertyDetail = ({ match, history }) => {
                         <span>Area SqFt</span>
                       </div>
                     </div>
-                    <div className="desc">
+                    <div className="describe">
                       <p>Description: {property.description}</p>
-                      <p>longitude:{longitude}</p>
-                      <p>latitude:{latitude}</p>
+                      <span>longitude:{longitude}</span>
+                      <span>latitude:{latitude}</span>
+                      <span>Nearest Amenites</span>
                       {amenities && (
                         <ul>
                           {amenities.map((amenity, index) => (
                             <li key={index}>
                               {amenity.category} - {amenity.name} -{" "}
-                              {amenity.distance}
+                              {amenity.distance} meters
                             </li>
                           ))}
                         </ul>
@@ -138,7 +139,7 @@ const PropertyDetail = ({ match, history }) => {
                       <img src={Agent}></img>
                     </div>
                     <div>
-                      <h5 className="font-weight-bold">Prateek shrestha</h5>
+                      <h5 className="font-weight-bold">Prateek Shrestha</h5>
                       <Link to="" className="text-primary custom-text-sm">
                         View Listing
                       </Link>

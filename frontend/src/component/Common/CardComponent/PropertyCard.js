@@ -58,8 +58,8 @@ const PropertyCard = ({ property }) => {
         <div className="imageDiv">
           <img
             class="card-img-top"
-            // src={property.images[0].url}
-            src="https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+            src={property.images[0].url}
+            //src="https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
             // alt={property.propertyTitle}
           ></img>
           <div className="wishlist">

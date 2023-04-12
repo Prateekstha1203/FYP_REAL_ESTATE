@@ -199,11 +199,12 @@ exports.getSingleProperty = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+
 exports.getTopListings = catchAsyncErrors(async (req, res, next) => {
   const resultPerPage = 4;
 
   const apiFeature = new ApiFeatures(
-    Property.find().sort("-createdAt").limit(resultPerPage),
+    Property.find().sort({createAt: -1}).limit(resultPerPage),
     req.query
   );
 
@@ -214,6 +215,7 @@ exports.getTopListings = catchAsyncErrors(async (req, res, next) => {
     topListings,
   });
 });
+
 
 exports.getPropertyLocation = async (req, res, next) => {
   const propertyId = req.params.id;
@@ -242,7 +244,7 @@ exports.getPropertyLocation = async (req, res, next) => {
     }
     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
       property.address
-    )}.json?access_token=sk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2xnODFxaDl3MHQxdTNxcWwxcXl3eTNwYSJ9.fmUTGgXQYoPXi3Ocwp8ClQ`;
+    )}.json?access_token=pk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2w5ZHVicmM4MGJ3YTNvcDlhemhxMXh4NiJ9.pPca72n4BLDfidsxfvd9Ag`;
 
     const geocodeResponse = await axios.get(geocodeUrl);
     const geocodeData = geocodeResponse.data;
@@ -254,24 +256,23 @@ exports.getPropertyLocation = async (req, res, next) => {
     const longitude = geocodeData.features[0].center[0];
     const latitude = geocodeData.features[0].center[1];
 
-    const allAmenities = await Promise.all(
-      AMENITY_CATEGORIES.map(async (category) => {
-        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyDDSbDmkmufM1u4uwfMKkPAunPDKSZ7LzM`;
+    // const allAmenities = await Promise.all(
+    //   AMENITY_CATEGORIES.map(async (category) => {
+    //     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=`;
 
-        const response = await axios.get(url);
-        const data = response.data;
-        console.log(data);
-        if (!data.results || data.results.length === 0) {
-          return null;
-        }
-        return {
-          allAmenities: data.results,
-        };
-      })
-    );
+    //     const response = await axios.get(url);
+    //     const data = response.data;
+    //     if (!data.results || data.results.length === 0) {
+    //       return null;
+    //     }
+    //     return {
+    //       allAmenities: data.results,
+    //     };
+    //   })
+    // );
     const amenities = await Promise.all(
       AMENITY_CATEGORIES.map(async (category) => {
-        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyCETfYHnB3ZszmOzR7br1tWUSI7XpBwJk4`;
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=`;
 
         const response = await axios.get(url);
         const data = response.data;
@@ -314,11 +315,9 @@ exports.getPropertyLocation = async (req, res, next) => {
 
     const validAmenities = amenities.filter((amenity) => amenity !== null);
     res.json({
-      amenities: validAmenities,
       longitude: longitude,
       latitude: latitude,
       property,
-      allAmenities: allAmenities,
     });
   } catch (error) {
     next(error);

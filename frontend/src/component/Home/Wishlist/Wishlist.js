@@ -21,7 +21,7 @@ const Wishlist = () => {
   );
 
   const [selectedProperties, setSelectedProperties] = useState([]);
-  const [isCompareDisabled, setIsCompareDisabled] = useState(true);
+  // const [isCompareDisabled, setIsCompareDisabled] = useState(true);
   const [showCompareTable, setShowCompareTable] = useState(false);
 
   const handleCompare = () => {
@@ -56,9 +56,9 @@ const Wishlist = () => {
     dispatch(getWishlist());
   }, [dispatch]);
 
-  useEffect(() => {
-    setIsCompareDisabled(selectedProperties.length < 2);
-  }, [selectedProperties]);
+  // useEffect(() => {
+  //   setIsCompareDisabled(selectedProperties.length < 2);
+  // }, [selectedProperties]);
 
   if (loading) {
     return <Loading />;
@@ -67,20 +67,20 @@ const Wishlist = () => {
   return (
     <Fragment>
       <Header />
-      <div className="container my-4">
-        <div>
+      <div className="container my-2">
+        <div className="wishlistContent">
           <div className="wishlistheading ">Wishlist Properties</div>
+          {/* <div className="wishlistText">Click on the checkBox to compare property</div> */}
+          <button onClick={handleCompare} className="compare">
+            Compare
+          </button>
         </div>
         {wishlistProperties && wishlistProperties.length > 0 ? (
           <div className="row">
-            <div className="col-md-12">
-              <button onClick={handleCompare} disabled={isCompareDisabled}>
-                Compare
-              </button>
-            </div>
+            <div className="col-md-12"></div>
             <Carousel showDots={true} responsive={responsive}>
               {wishlistProperties.map((wish) => (
-                <div classname="itemsWishlist" key={wish.id}>
+                <div className="itemsWishlist" key={wish.id}>
                   <PropertyCard property={wish} user={wish.user} />
                   <input
                     type="checkbox"
@@ -89,9 +89,9 @@ const Wishlist = () => {
                     onChange={(e) => {
                       const isChecked = e.target.checked;
                       const selectedCount = selectedProperties.length;
-                      if (isChecked && selectedCount >= 4) {
+                      if (isChecked && selectedCount >= 3) {
                         toast.error(
-                          "You can only select up to four properties"
+                          "You can only select up to three properties"
                         );
                       } else {
                         setSelectedProperties((prevState) => {
@@ -116,6 +116,17 @@ const Wishlist = () => {
         )}
       </div>
       <Footer />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Fragment>
   );
 };

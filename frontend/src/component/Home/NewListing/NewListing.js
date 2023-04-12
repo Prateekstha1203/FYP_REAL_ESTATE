@@ -44,16 +44,8 @@ const NewListing = () => {
       ) : error ? (
         <h2>{error}</h2>
       ) : (
-        <>
-          {/* <h2>Top Listings</h2>
-          <div className="row">
-            {properties &&
-              properties.map((property) => (
-                <div className="col-md-4" key={property.id}>
-                  <PropertyCard property={property} className="card" />
-                </div>
-              ))}
-          </div> */}
+        
+         
           <div className="container my-4">
             <div class="row mb-3 align-items-center">
               <div class="col-lg-6">
@@ -84,17 +76,11 @@ const NewListing = () => {
               </Carousel>
             </div>
           </div>
-        </>
+        
       )}
     </div>
   );
 };
 
 export default NewListing;
-{
-  /* <div className="topListing">
-  <div className="row">
-    <div className="col-md-"></div>
-  </div>
-</div>; */
-}
+

@@ -35,6 +35,10 @@ const Home = () => {
       <RentalProperties  className="section-margin"/>
 
       <SaleProperties className="section-margin"/>
+      
+      {/* <Properties /> */}
+
+      <Footer />
       <ToastContainer
         position="bottom-center"
         autoClose={5000}
@@ -47,9 +51,6 @@ const Home = () => {
         pauseOnHover
       />
 
-      {/* <Properties /> */}
-
-      <Footer />
     </div>
   );
 };
