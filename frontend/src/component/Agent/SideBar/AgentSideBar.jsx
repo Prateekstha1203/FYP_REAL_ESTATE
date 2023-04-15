@@ -25,7 +25,7 @@ const AgentSidebar = ({ id }) => {
                     className="listingType"
                     to={`/agent/viewlisting/${id}`}
                   >
-                    <i className="dashboardIcon ms-4 me-4"></i>
+                    <i className="dashboardIcon ms-4 me-4 fas fa-list-alt"></i>
                     <span className="title">View Listing</span>
                   </NavLink>
                   <NavLink className="listingType  mb-3" to="/logout">

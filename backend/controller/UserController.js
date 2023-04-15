@@ -92,10 +92,10 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    return next(new ErrorHandler("Enter valid email address", 404));
+    return next(new ErrorHandler("User not found with this email", 404));
   }
 
-  // Get ResetPassword Token
+  // Get ResetPassword 
 
   const resetToken = user.getResetToken();
 
@@ -103,16 +103,15 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     validateBeforeSave: false,
   });
 
-  const resetPasswordUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/password/reset/${resetToken}`;
+  const resetPasswordUrl = `
+    http://localhost:3000/password/reset/${resetToken}`;
 
-  const message = `Your password Resettoken is :- \n\n ${resetPasswordUrl}`;
+  const message = `Your password reset token is :- \n\n ${resetPasswordUrl}`;
 
   try {
     await sendMail({
       email: user.email,
-      subject: `Real estate web app password recovery`,
+      subject: `Real Estate Password Recovery`,
       message,
     });
 

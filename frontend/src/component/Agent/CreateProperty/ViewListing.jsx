@@ -16,19 +16,18 @@ import { ToastContainer, toast } from "react-toastify";
 import { DELETE_PROPERTY_RESET } from "../../../constans/PropertyConstans";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
+import Loading from "../../../more/Loader";
+import MetaData from "../../../more/Metadata";
 
 const AgentProperty = ({ history }) => {
   const dispatch = useDispatch();
-  const { properties, error } = useSelector(
-    (state) => state.properties
-  );
+  const { properties, error ,loading} = useSelector((state) => state.properties);
   const { error: deleteError, isDeleted } = useSelector(
     (state) => state.deleteProperty
   );
 
   const deletePropertyHandler = (id) => {
     dispatch(deleteProperty(id));
-
   };
 
   const propertiesPerPage = 5;
@@ -39,7 +38,7 @@ const AgentProperty = ({ history }) => {
   const filteredProperties = properties.filter(
     (listing) =>
       listing.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      listing.propertyTitle.toLowerCase().includes(searchTerm.toLowerCase())
+      listing.propertyType.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const pageCount = Math.ceil(filteredProperties.length / propertiesPerPage);
@@ -68,81 +67,91 @@ const AgentProperty = ({ history }) => {
 
   return (
     <Fragment>
-      <div className="row">
-        <div className="SlideBar col-2">
-          <SideBar />
-        </div>
-        <div className="propertyContent col-9">
-          <h1 className="viewTitle text-center py-5">VIEW LISTING</h1>
-          <input
-            type="text"
-            placeholder="Search by Category or Title"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <table className="table table-striped table-bordered table-hover table-responsive">
-            <thead>
-              <tr>
-                <th>Property ID</th>
-                <th>Property Title</th>
-                <th>Property Category</th>
-                <th>Property Type</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredProperties
-                .slice(
-                  currentPage * propertiesPerPage,
-                  (currentPage + 1) * propertiesPerPage
-                )
-                .map((listing) => (
-                  <tr key={listing._id}>
-                    <td>{listing._id}</td>
-                    <td>{listing.propertyTitle}</td>
-                    <td>{listing.category}</td>
-                    <td>{listing.propertyType}</td>
-                    <td>
-                      <Link to={`/edit/property/${listing._id}`}>
-                        <EditIcon variant="primary">Edit</EditIcon>
-                      </Link>
-                      <Button
-                        variant="danger"
-                        onClick={() => deletePropertyHandler(listing._id)}
-                      >
-                        Delete
-                      </Button>
-                    </td>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div>
+          <MetaData title="Create Property" />
+          <div className="container-fluid d-flex p-0">
+            <div className="SlideBar col-2">
+              <SideBar />
+            </div>
+            <div className="container col-10">
+              <h1 className="viewTitle text-center py-5">VIEW LISTING</h1>
+              <input
+                type="text"
+                placeholder="Search by Category or Type"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <table className="table table-striped table-bordered table-hover table-responsive">
+                <thead>
+                  <tr>
+                    <th>Property ID</th>
+                    <th>Property Title</th>
+                    <th>Property Category</th>
+                    <th>Property Type</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-            </tbody>
-          </table>
-          <ReactPaginate
-            previousLabel={"← Previous"}
-            nextLabel={"Next →"}
-            pageCount={pageCount}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            previousLinkClassName={"pagination__link"}
-            nextLinkClassName={"pagination__link"}
-            disabledClassName={"pagination__link--disabled"}
-            activeClassName={"pagination__link--active"}
-          />
-          <ToastContainer
-            position="bottom-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
+                </thead>
+                <tbody>
+                  {filteredProperties
+                    .slice(
+                      currentPage * propertiesPerPage,
+                      (currentPage + 1) * propertiesPerPage
+                    )
+                    .map((listing) => (
+                      <tr key={listing._id}>
+                        <td>{listing._id}</td>
+                        <td>{listing.propertyTitle}</td>
+                        <td>{listing.category}</td>
+                        <td>{listing.propertyType}</td>
+                        <td>
+                          <Link to={`/edit/property/${listing._id}`}>
+                            <EditIcon variant="primary">Edit</EditIcon>
+                          </Link>
+                          <Button
+                            variant="danger"
+                            onClick={() => deletePropertyHandler(listing._id)}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+              <ReactPaginate
+                previousLabel={"← Previous"}
+                nextLabel={"Next →"}
+                pageCount={pageCount}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                previousLinkClassName={"pagination__link"}
+                nextLinkClassName={"pagination__link"}
+                disabledClassName={"pagination__link--disabled"}
+                activeClassName={"pagination__link--active"}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Fragment>
   );
 };
 
 export default AgentProperty;
+
+
+

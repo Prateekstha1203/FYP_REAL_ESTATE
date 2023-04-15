@@ -15,7 +15,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 const Wishlist = () => {
   const dispatch = useDispatch();
-
+  const [showToast, setShowToast] = useState(false);
   const { wishlistProperties, loading } = useSelector(
     (state) => state.wishlistProperties
   );
@@ -27,7 +27,12 @@ const Wishlist = () => {
   const handleCompare = () => {
     console.log(selectedProperties);
     if (selectedProperties.length < 2) {
-      toast.error("Please select at least two properties to compare");
+      if (!showToast) {
+        setShowToast(true);
+        toast.error("Please select at least two properties to compare", {
+          onClose: () => setShowToast(false),
+        });
+      }
     } else {
       setShowCompareTable(true);
       dispatch(compareWishlistProperties(selectedProperties));

@@ -40,7 +40,7 @@ const AllProperties = ({ history }) => {
   const filteredProperties = properties.filter(
     (listing) =>
       listing.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      listing.propertyTitle.toLowerCase().includes(searchTerm.toLowerCase())
+      listing.propertyType.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const pageCount = Math.ceil(filteredProperties.length / propertiesPerPage);
@@ -77,7 +77,7 @@ const AllProperties = ({ history }) => {
           <h1 className=" text-center py-5">ALL PROPERTY</h1>
           <input
             type="text"
-            placeholder="Search by Category or Title"
+            placeholder="Search by Category or Type"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

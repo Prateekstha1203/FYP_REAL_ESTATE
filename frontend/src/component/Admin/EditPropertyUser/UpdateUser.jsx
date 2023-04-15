@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button } from "@material-ui/core";
 import MetaData from "../../../more/Metadata";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import PersonIcon from "@material-ui/icons/Person";
@@ -12,6 +11,7 @@ import {
   updateUser,
   clearErrors,
 } from "../../../actions/userAction";
+import { Form, Button ,Container} from "react-bootstrap";
 import Loading from "../../../more/Loader";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -82,59 +82,117 @@ const UpdateUser = ({ history, match }) => {
   return (
     <Fragment>
       <MetaData title="Update User" />
-      <div className="dashboard">
-        <SideBar />
-        <div className="newProductContainer">
+      <div className="dashboard row">
+        <div className="SlideBar col-2">
+          <SideBar />
+        </div>
+        <div className="newProductContainer col-9">
           {userLoading ? (
             <Loading />
           ) : (
-            <form
-              className="createProductForm"
-              onSubmit={handleUpdateUserSubmit}
+            // <div className="newProductContainer">
+            //   <h1>Update User</h1>
+
+            //   <Form
+            //     className="createProductForm"
+            //     onSubmit={handleUpdateUserSubmit}
+            //   >
+            //     <Form.Group controlId="name">
+            //       <PersonIcon />
+            //       <Form.Control
+            //         type="text"
+            //         placeholder="Name"
+            //         required
+            //         value={name}
+            //         onChange={(e) => setName(e.target.value)}
+            //       />
+            //     </Form.Group>
+
+            //     <Form.Group controlId="email">
+            //       <MailOutlineIcon />
+            //       <Form.Control
+            //         type="email"
+            //         placeholder="Email"
+            //         required
+            //         value={email}
+            //         onChange={(e) => setEmail(e.target.value)}
+            //       />
+            //     </Form.Group>
+
+            //     <Form.Group controlId="role">
+            //       <VerifiedUserIcon />
+            //       <Form.Control
+            //         as="select"
+            //         value={role}
+            //         onChange={(e) => setRole(e.target.value)}
+            //         required
+            //       >
+            //         <option value="">Choose Role</option>
+            //         <option value="admin">admin</option>
+            //         <option value="agent">agent</option>
+            //         <option value="user">user</option>
+            //       </Form.Control>
+            //     </Form.Group>
+
+            //     <Button
+            //       id="createProductBtn"
+            //       type="submit"
+            //       disabled={role === "" ? true : false}
+            //     >
+            //       Update
+            //     </Button>
+            //   </Form>
+            // </div>
+            <Container
+              fluid
+              className="d-flex justify-content-center align-items-center updatePasswordContainer"
             >
-              <h1>Update User</h1>
+              <div className="updatePasswordBox">
+                <h2 className="updatePasswordHeading text-center">
+                  Change User Role
+                </h2>
 
-              <div>
-                <PersonIcon />
-                <input
-                  type="text"
-                  placeholder="Name"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div>
-                <MailOutlineIcon />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+                <Form
+                  className="updatePasswordForm"
+                  onSubmit={handleUpdateUserSubmit}
+                >
+                  <Form.Group className="formgroup">
+                    <PersonIcon />
+                    <Form.Control
+                      type="text"
+                      placeholder="Name"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </Form.Group>
 
-              <div>
-                <VerifiedUserIcon />
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
-                  <option value="">Choose Role</option>
-                  <option value="admin">admin</option>
-                  <option value="agent">agent</option>
-                  <option value="user">user</option>
-                </select>
-              </div>
+                  <Form.Group className="formgroup">
+                    <VerifiedUserIcon/>
+                    <Form.Control
+                      as="select"
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                      required
+                      style={{ paddingLeft: '3.2rem' }}
+                    >
+                      <option value="">Choose Role</option>
+                      <option value="admin">admin</option>
+                      <option value="agent">agent</option>
+                      <option value="user">user</option>
+                    </Form.Control>
+                  </Form.Group>
 
-              <Button
-                id="createProductBtn"
-                type="submit"
-                disabled={
-                  updateLoading ? true : false || role === "" ? true : false
-                }
-              >
-                Update
-              </Button>
-            </form>
+                  <Button
+                    className="updatePasswordBtn"
+                    type="submit"
+                    disabled={role === "" ? true : false}
+                  >
+                    Update
+                  </Button>
+                </Form>
+              </div>
+            </Container>
           )}
         </div>
       </div>

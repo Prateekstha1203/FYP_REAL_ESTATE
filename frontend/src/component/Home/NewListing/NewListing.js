@@ -65,7 +65,7 @@ const NewListing = () => {
             <div className="row">
               <Carousel
                 showDots={true}
-                responsive={responsive}
+                 responsive={responsive}
               >
                 {properties &&
                   properties.map((property) => (

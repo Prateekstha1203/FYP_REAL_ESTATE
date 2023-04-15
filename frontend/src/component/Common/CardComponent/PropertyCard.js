@@ -17,7 +17,7 @@ import {
 
 const PropertyCard = ({ property }) => {
   const dispatch = useDispatch();
-
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const [isAddedToWishlist, setIsAddedToWishlist] = useState(
     localStorage.getItem(`wishlist_${property._id}`) === "true"
   );
@@ -60,20 +60,24 @@ const PropertyCard = ({ property }) => {
             class="card-img-top"
             src={property.images[0].url}
             //src="https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
-            // alt={property.propertyTitle}
+             alt={property.propertyTitle}
           ></img>
           <div className="wishlist">
-            {isAddedToWishlist ? (
-              <button
-                className="wishlistBtn"
-                onClick={handleRemoveFromWishlist}
-              >
-                Remove from wishlist
-              </button>
-            ) : (
-              <button className="wishlistBtn" onClick={handleAddToWishlist}>
-                Add to wishlist
-              </button>
+            {!isAuthenticated ? null : (
+              <>
+                {isAddedToWishlist ? (
+                  <button
+                    className="wishlistBtn"
+                    onClick={handleRemoveFromWishlist}
+                  >
+                    Remove from wishlist
+                  </button>
+                ) : (
+                  <button className="wishlistBtn" onClick={handleAddToWishlist}>
+                    Add to wishlist
+                  </button>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -89,8 +93,7 @@ const PropertyCard = ({ property }) => {
                 <path d="M0 16L3 5V1a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4l3 11v5a1 1 0 0 1-1 1v2h-1v-2H2v2H1v-2a1 1 0 0 1-1-1v-5zM19 5h1V1H4v4h1V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h2V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1zm0 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V6h-2v2a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6H3.76L1.04 16h21.92L20.24 6H19zM1 17v4h22v-4H1zM6 4v4h4V4H6zm8 0v4h4V4h-4z"></path>
               </svg>
               <p>
-                <span class="bedroom">3</span> Bedrooms
-                
+                <span class="bedroom">{property.bedrooms}</span> Bedrooms
               </p>
             </div>
             <div class="bathroom-container">
@@ -105,7 +108,7 @@ const PropertyCard = ({ property }) => {
                 ></path>
               </svg>
               <p>
-                <span class="bathroom">2</span> Bathrooms
+                <span class="bathroom">{property.bathrooms}</span> Bathrooms
               </p>
             </div>
           </div>

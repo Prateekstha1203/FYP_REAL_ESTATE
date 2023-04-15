@@ -2,7 +2,11 @@ import React, { Fragment, useState, useEffect } from "react";
 import "./UpdateProfile.css";
 import Loader from "../../../more/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, updateProfile, loadUser } from "../../../actions/userAction";
+import {
+  clearErrors,
+  updateProfile,
+  loadUser,
+} from "../../../actions/userAction";
 import Header from "../../Common/navbar/Header";
 import Footer from "../../Common/footer/Footer";
 import { UPDATE_PROFILE_RESET } from "../../../constans/userContans";
@@ -12,14 +16,14 @@ import axios from "axios";
 const UpdateProfile = ({ history }) => {
   const dispatch = useDispatch();
 
-  const { user ,setUser} = useSelector((state) => state.user);
+  const { user, setUser } = useSelector((state) => state.user);
   const { error, isUpdated, loading } = useSelector((state) => state.profile);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [avatar, setAvatar] = useState();
-  const [avatarPreview, setAvatarPreview] = useState("/profile.png");
+  // const [avatarPreview, setAvatarPreview] = useState("/profile.png");
 
   const updateProfileSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +34,7 @@ const UpdateProfile = ({ history }) => {
     myForm.set("email", email);
     myForm.set("mobile", mobile);
     if (avatar) {
-      myForm.set('avatar', avatar);
+      myForm.set("avatar", avatar);
     }
     dispatch(updateProfile(myForm));
   };
@@ -40,7 +44,7 @@ const UpdateProfile = ({ history }) => {
 
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setAvatarPreview(reader.result);
+        // setAvatarPreview(reader.result);
         setAvatar(reader.result);
       }
     };
@@ -53,7 +57,12 @@ const UpdateProfile = ({ history }) => {
       setName(user.name);
       setEmail(user.email);
       setMobile(user.mobile);
-      // setAvatarPreview(user.avatar.url);
+
+      // if (user.avatar && user.avatar.url) {
+      //   setAvatarPreview(user.avatar.url);
+      // } else {
+      //   setAvatarPreview("/profile.png");
+      // }
     }
 
     if (error) {
@@ -71,13 +80,13 @@ const UpdateProfile = ({ history }) => {
         type: UPDATE_PROFILE_RESET,
       });
     }
-  }, [dispatch, error,  history, user, isUpdated]);
+  }, [dispatch, error, history, user, isUpdated]);
 
   const loadProfile = async () => {
     try {
       let res = await axios.get(`/me`, {
         headers: {
-          authorization: localStorage.getItem('token'),
+          authorization: localStorage.getItem("token"),
         },
       });
       console.log(res.data);
@@ -95,123 +104,113 @@ const UpdateProfile = ({ history }) => {
       {loading ? (
         <Loader />
       ) : (
-        <Fragment>
-          <Header />
-          <MetaData title="Update Profile" />
-          <div className="container mt-5">
-            <div className="row justify-content-center align-items-center">
-              <div className="col-md-5">
-                <div className="card">
-                  <h2 className="card-header bg-secondary text-white text-center">Update Profile</h2>
-                  <div className="card-body">
-                    <form
-                      className="updateProfileForm"
-                      encType="multipart/form-data"
-                      onSubmit={updateProfileSubmit}
+        <div className="container mt-5">
+          <div className="row justify-content-center align-items-center">
+            <div className="col-md-5">
+              <div className="card">
+                <h2 className="card-header bg-secondary text-white text-center">
+                  Update Profile
+                </h2>
+                <div className="card-body">
+                  <form
+                    className="updateProfileForm"
+                    encType="multipart/form-data"
+                    onSubmit={updateProfileSubmit}
+                  >
+                    <div className="row mb-3">
+                      <div className="col-md-3">
+                        <div className="form-group">
+                          <label className="col-form-label h4">Name</label>
+                        </div>
+                      </div>
+                      <div className="col-md-9">
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            placeholder="Name"
+                            required
+                            name="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <div className="col-md-3">
+                        <div className="form-group">
+                          <label className="col-form-label h4">Email</label>
+                        </div>
+                      </div>
+                      <div className="col-md-9">
+                        <div className="form-group">
+                          <input
+                            type="email"
+                            className="form-control"
+                            id="email"
+                            placeholder="Email"
+                            required
+                            name="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <div className="col-md-3">
+                        <div className="form-group">
+                          <label className="col-form-label h4">Contact</label>
+                        </div>
+                      </div>
+                      <div className="col-md-9">
+                        <div className="form-group">
+                          <input
+                            type="number"
+                            className="form-control"
+                            id="mobile"
+                            placeholder="Contact No"
+                            required
+                            name="mobile"
+                            value={mobile}
+                            onChange={(e) => setMobile(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    {/* <div className="row mb-3">
+                      <div className="col-md-3">
+                        <div id="updateProfileImage" className="form-group">
+                          <img src={avatarPreview} alt="Avatar Preview" />
+                        </div>
+                      </div>
+                      <div className="col-md-9">
+                        <div className="form-group">
+                          <input
+                            type="file"
+                            className="form-control-file"
+                            id="avatar"
+                            accept="image/*"
+                            onChange={updateProfileDataChange}
+                          />
+                        </div>
+                      </div> 
+                    </div> */}
+                    <button
+                      type="submit"
+                      value="Update"
+                      className="btn btn-secondary"
                     >
-                      <div className="row mb-3">
-                        <div className="col-md-3">
-                          <div className="form-group">
-                            <label className="col-form-label h4">Name</label>
-                          </div>
-                        </div>
-                        <div className="col-md-9">
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="name"
-                              placeholder="Name"
-                              required
-                              name="name"
-                              value={name}
-                              onChange={(e) => setName(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row mb-3">
-                        <div className="col-md-3">
-                          <div className="form-group">
-                            <label className="col-form-label h4">Email</label>
-                          </div>
-                        </div>
-                        <div className="col-md-9">
-                          <div className="form-group">
-                            <input
-                              type="email"
-                              className="form-control"
-                              id="email"
-                              placeholder="Email"
-                              required
-                              name="email"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row mb-3">
-                        <div className="col-md-3">
-                          <div className="form-group">
-                            <label className="col-form-label h4">Contact</label>
-                          </div>
-                        </div>
-                        <div className="col-md-9">
-                          <div className="form-group">
-                            <input
-                              type="number"
-                              className="form-control"
-                              id="mobile"
-                              placeholder="Contact No"
-                              required
-                              name="mobile"
-                              value={mobile}
-                              onChange={(e) => setMobile(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row mb-3">
-                        <div className="col-md-3">
-                          <div id="updateProfileImage" className="form-group">
-                            <img src={avatarPreview} alt="Avatar Preview" />
-                          </div>
-                        </div>
-                        <div className="col-md-9">
-                          <div className="form-group">
-                            <input
-                              type="file"
-                              className="form-control-file"
-                              id="avatar"
-                              accept="image/*"
-                              onChange={updateProfileDataChange}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <button type="submit" value="Update" className="btn btn-secondary">
-                        Update
-                      </button>
-                    </form>
-                  </div>
+                      Update
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-          <Footer />
-          <ToastContainer
-            position="bottom-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-        </Fragment>
+        </div>
       )}
     </Fragment>
   );

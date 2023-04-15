@@ -11,6 +11,7 @@ import MetaData from "../../../more/Metadata";
 import AgentSidebar from "../SideBar/AgentSideBar";
 import { UPDATE_PROPERTY_RESET } from "../../../constans/PropertyConstans";
 import { ToastContainer, toast } from "react-toastify";
+import Loading from "../../../more/Loader";
 
 const UpdateProperty = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const UpdateProperty = ({ history, match }) => {
   const propertyId = match.params.id;
   const propertyCategories = ["Bungalow", "Apartment", "Villa"];
   const propertyTypeList = ["Rent", "Sale"];
-  
+
   useEffect(() => {
     if (property && property._id !== propertyId) {
       dispatch(getPropertyDetails(propertyId));
@@ -65,19 +66,19 @@ const UpdateProperty = ({ history, match }) => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  
+
     if (updateError) {
       toast.error(updateError);
       dispatch(clearErrors());
     }
-  
+
     if (isUpdated) {
       toast.success("Property Updated Successfully");
       history.push("/agentDashboard");
       dispatch({ type: UPDATE_PROPERTY_RESET });
     }
-  }, [  dispatch,  error,  isUpdated,  property,  propertyId,  updateError,  history,]);
-  
+  }, [dispatch, error, isUpdated, property, propertyId, updateError, history]);
+
   const updatePropertySubmitHandler = (e) => {
     e.preventDefault();
 
@@ -125,203 +126,212 @@ const UpdateProperty = ({ history, match }) => {
 
   return (
     <Fragment>
-      <MetaData title="Edit Property" />
-      <div className="dashboard">
-        <AgentSidebar  />
-        <div className="newProduct">
-          <form
-            className="border p-5"
-            encType="multipart/form-data"
-            onSubmit={updatePropertySubmitHandler}
-          >
-            <div class="row mt-3">
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">Property Title</label>
-                <input
-                  type="string"
-                  placeholder="Property Title"
-                  class="form-control"
-                  required
-                  value={propertyTitle}
-                  onChange={(e) => setPropertyTitle(e.target.value)}
-                />
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">Address</label>
-                <input
-                  placeholder="Property Address"
-                  type="string"
-                  class="form-control"
-                  required
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                ></input>
-              </div>
-              <div class="form-group col-md-6 mt-4">
-                <label for="inputAddress">Property Type</label>
-                <select
-                  onChange={(e) => setPropertyType(e.target.value)}
-                  className="ms-3"
-                  value={propertyType}
-                >
-                  <option value="">Choose Property Type</option>
-                  {propertyTypeList.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div class="form-group col-md-6 mt-4">
-                <label for="inputAddress">Property Category</label>
-                <select
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="ms-3" value={category}
-                >
-                  <option value="">Choose Property Ctegory</option>
-                  {propertyCategories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-              </div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div>
+          <MetaData title="Edit Property" />
+          <div className="dashboard container-fluid d-flex p-0">
+            <div className="SlideBar col-2">
+              <AgentSidebar />
             </div>
-            <div class="row mt-4">
-              <div class="form-group col-md-4">
-                <label for="inputCity">Bathrooms</label>
-                <input
-                  type="number"
-                  placeholder="bathroom"
-                  required
-                  class="form-control"
-                  value={bathrooms}
-                  onChange={(e) => setBathrooms(e.target.value)}
-                />
-              </div>
-              <div class="form-group col-md-4">
-                <label for="inputState">Bedrooms</label>
-                <input
-                  type="number"
-                  placeholder="bedroom"
-                  class="form-control"
-                  required
-                  value={bedrooms}
-                  onChange={(e) => setBedrooms(e.target.value)}
-                />
-              </div>
-              <div class="form-group col-md-4 ">
-                <label for="inputZip">Price</label>
-                <input
-                  type="number"
-                  placeholder="Property Price"
-                  class="form-control"
-                  required
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </div>
-            </div>
-            <div class="row mt-4">
-              <div class="form-group col-md-3">
-                <label for="inputCity">Area </label>
-                <input
-                  type="number"
-                  placeholder="AreaSqFt"
-                  class="form-control"
-                  required
-                  value={areaSqFt}
-                  onChange={(e) => setAreaSqFt(e.target.value)}
-                />
-              </div>
-              <div class="form-group col-md-3">
-                <label for="inputState">Parking</label>
-                <input
-                  type="string"
-                  placeholder="parking"
-                  class="form-control"
-                  required
-                  value={parking}
-                  onChange={(e) => setParking(e.target.value)}
-                />
-              </div>
-              <div class="form-group col-md-3 ">
-                <label for="inputZip">Furnished</label>
-                <input
-                  type="string"
-                  placeholder="Furnished"
-                  class="form-control"
-                  required
-                  value={isFurnished}
-                  onChange={(e) => setIsFurnished(e.target.value)}
-                />
-              </div>
-              <div class="form-group col-md-3 ">
-                <label for="inputZip">Build Year</label>
-                <input
-                  type="string"
-                  placeholder="Build Year"
-                  class="form-control"
-                  required
-                  value={buildYear}
-                  onChange={(e) => setBuildYear(e.target.value)}
-                />
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">Property Description</label>
-                <textarea
-                  placeholder="Property Description"
-                  value={description}
-                  class="form-control"
-                  onChange={(e) => setDescription(e.target.value)}
-                  cols="30"
-                  rows="1"
-                ></textarea>
-              </div>
-              <div class="form-group col-md-3">
-                <label for="inputPassword4">Property Face</label>
-                <input
-                  type="string"
-                  placeholder="Property Face"
-                  class="form-control"
-                  required
-                  value={propertyFace}
-              onChange={(e) => setPropertyFace(e.target.value)}
-                />
-              </div>
-              <div class="form-group col-md-3  mt-4 fw-bold display-1">
-                <div id="createProductFormFile">
-                  <input
-                    type="file"
-                    name="avatar"
-                    class="form-control"
-                    accept="image/*"
-                    onChange={updatePropertyImagesChange}
-                    multiple
-                    value={images}
-                  />
+            <div className="container col-10">
+              <h2 className="editProperty"> Edit Property </h2>
+              <form
+                className="border p-5"
+                encType="multipart/form-data"
+                onSubmit={updatePropertySubmitHandler}
+              >
+                <div class="row mt-3">
+                  <div class="form-group col-md-6">
+                    <label for="inputPassword4">Property Title</label>
+                    <input
+                      type="string"
+                      placeholder="Property Title"
+                      class="form-control"
+                      required
+                      value={propertyTitle}
+                      onChange={(e) => setPropertyTitle(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inputPassword4">Address</label>
+                    <input
+                      placeholder="Property Address"
+                      type="string"
+                      class="form-control"
+                      required
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                    ></input>
+                  </div>
+                  <div class="form-group col-md-6 mt-4">
+                    <label for="inputAddress">Property Type</label>
+                    <select
+                      onChange={(e) => setPropertyType(e.target.value)}
+                      className="ms-3"
+                      value={propertyType}
+                    >
+                      <option value="">Choose Property Type</option>
+                      {propertyTypeList.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6 mt-4">
+                    <label for="inputAddress">Property Category</label>
+                    <select
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="ms-3"
+                      value={category}
+                    >
+                      <option value="">Choose Property Ctegory</option>
+                      {propertyCategories.map((category) => (
+                        <option key={category} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
+                <div class="row mt-4">
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Bathrooms</label>
+                    <input
+                      type="number"
+                      placeholder="bathroom"
+                      required
+                      class="form-control"
+                      value={bathrooms}
+                      onChange={(e) => setBathrooms(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputState">Bedrooms</label>
+                    <input
+                      type="number"
+                      placeholder="bedroom"
+                      class="form-control"
+                      required
+                      value={bedrooms}
+                      onChange={(e) => setBedrooms(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group col-md-4 ">
+                    <label for="inputZip">Price</label>
+                    <input
+                      type="number"
+                      placeholder="Property Price"
+                      class="form-control"
+                      required
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="form-group col-md-3">
+                    <label for="inputCity">Area </label>
+                    <input
+                      type="number"
+                      placeholder="AreaSqFt"
+                      class="form-control"
+                      required
+                      value={areaSqFt}
+                      onChange={(e) => setAreaSqFt(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="inputState">Parking</label>
+                    <input
+                      type="string"
+                      placeholder="parking"
+                      class="form-control"
+                      required
+                      value={parking}
+                      onChange={(e) => setParking(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group col-md-3 ">
+                    <label for="inputZip">Furnished</label>
+                    <input
+                      type="string"
+                      placeholder="Furnished"
+                      class="form-control"
+                      required
+                      value={isFurnished}
+                      onChange={(e) => setIsFurnished(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group col-md-3 ">
+                    <label for="inputZip">Build Year</label>
+                    <input
+                      type="string"
+                      placeholder="Build Year"
+                      class="form-control"
+                      required
+                      value={buildYear}
+                      onChange={(e) => setBuildYear(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="form-group col-md-6">
+                    <label for="inputPassword4">Property Description</label>
+                    <textarea
+                      placeholder="Property Description"
+                      value={description}
+                      class="form-control"
+                      onChange={(e) => setDescription(e.target.value)}
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="inputPassword4">Property Face</label>
+                    <input
+                      type="string"
+                      placeholder="Property Face"
+                      class="form-control"
+                      required
+                      value={propertyFace}
+                      onChange={(e) => setPropertyFace(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group col-md-3  mt-4 fw-bold display-1">
+                    <div id="createProductFormFile">
+                      <input
+                        type="file"
+                        name="avatar"
+                        class="form-control"
+                        accept="image/*"
+                        onChange={updatePropertyImagesChange}
+                        multiple
+                      />
+                    </div>
 
-                <div id="createProductFormImage">
-                  {imagesPreview.map((image, index) => (
-                    <img key={index} src={image} alt="Property Preview" />
-                  ))}
+                    <div id="createProductFormImage">
+                      {imagesPreview.map((image, index) => (
+                        <img key={index} src={image} alt="Property Preview" />
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+                <Button
+                  id="createProductBtn"
+                  type="submit"
+                  disabled={loading ? true : false}
+                >
+                  Create
+                </Button>
+              </form>
             </div>
-            <Button
-              id="createProductBtn"
-              type="submit"
-              disabled={loading ? true : false}
-            >
-              Create
-            </Button>
-          </form>
+          </div>
         </div>
-      </div>
-      {/* <ToastContainer
+      )}
+      <ToastContainer
         position="bottom-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -331,7 +341,7 @@ const UpdateProperty = ({ history, match }) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      /> */}
+      />
     </Fragment>
   );
 };

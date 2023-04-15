@@ -1,4 +1,4 @@
-import React, { useEffect ,useState} from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../SideBarAdmin/Sidebar";
 import "./dashboard.css";
 import { Typography } from "@material-ui/core";
@@ -30,7 +30,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { properties, loading } = useSelector((state) => state.properties);
-  
+
   const { users } = useSelector((state) => state.allUsers);
   const [showSidebar, setShowSidebar] = useState(true);
   const userCount = users.filter((user) => user.role === "user").length;
@@ -124,10 +124,11 @@ const Dashboard = () => {
                 <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
                 <a
                   href="#"
-                  className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onClick={() => {
+                  className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                  onClick={() => {
                     setShowSidebar(false);
-                    window.print();
-                  }}
+                    setTimeout(() => window.print(), 100);
+                }}
                 >
                   <i className="fas fa-download fa-sm text-white-50" /> Generate
                   Report
@@ -135,8 +136,7 @@ const Dashboard = () => {
               </div>
               {/* Content Row */}
               <div className="row">
-                {/* Earnings (Monthly) Card Example */}
-                <div className="col-xl-3 col-md-6 mb-4">
+                <div className="col-6 col-md-3  mb-4">
                   <div className="card border-left-primary shadow h-100 py-2">
                     <div className="card-body">
                       <div className="row no-gutters align-items-center">
@@ -155,8 +155,8 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* Earnings (Monthly) Card Example */}
-                <div className="col-xl-3 col-md-6 mb-4">
+
+                <div className="col-6 col-md-3 mb-4">
                   <div className="card border-left-success shadow h-100 py-2">
                     <div className="card-body">
                       <div className="row no-gutters align-items-center">
@@ -176,8 +176,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* Earnings (Monthly) Card Example */}
-                <div className="col-xl-3 col-md-6 mb-4">
+                <div className="col-6 col-md-3 mb-4">
                   <div className="card border-left-info shadow h-100 py-2">
                     <div className="card-body">
                       <div className="row no-gutters align-items-center">
@@ -194,14 +193,16 @@ const Dashboard = () => {
                           </div>
                         </div>
                         <div className="col-3">
-                          <HomeIcon fontSize="large"  style={{ color: '#17a2b8' }} />
+                          <HomeIcon
+                            fontSize="large"
+                            style={{ color: "#17a2b8" }}
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                {/* Pending Requests Card Example */}
-                <div className="col-xl-3 col-md-6 mb-4">
+                <div className="col-6  col-md-3 mb-4">
                   <div className="card border-left-warning shadow h-100 py-2">
                     <div className="card-body">
                       <div className="row no-gutters align-items-center">

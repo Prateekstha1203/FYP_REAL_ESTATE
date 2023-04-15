@@ -5,7 +5,7 @@ const propertySchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter Listing Name."],
     trim: true,
-    maxLength: [30, "Product name not exceed than 30 characters."],
+    maxLength: [50, "Product name not exceed than 50 characters."],
   },
   propertyType: {
     type: String,

@@ -272,7 +272,7 @@ exports.getPropertyLocation = async (req, res, next) => {
     // );
     const amenities = await Promise.all(
       AMENITY_CATEGORIES.map(async (category) => {
-        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=`;
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyDDSbDmkmufM1u4uwfMKkPAunPDKSZ7LzM`;
 
         const response = await axios.get(url);
         const data = response.data;
@@ -315,6 +315,7 @@ exports.getPropertyLocation = async (req, res, next) => {
 
     const validAmenities = amenities.filter((amenity) => amenity !== null);
     res.json({
+      amenities:amenities,
       longitude: longitude,
       latitude: latitude,
       property,
