@@ -70,6 +70,11 @@ function App() {
         <Route exact path="/property/:id" component={PropertyDetail} />
         <ProtectedRoute
           exact
+          path="/me/update/info"
+          component={UpdateProfile}
+        />
+        <ProtectedRoute
+          exact
           path="/password/update"
           component={UpdatePassword}
         />

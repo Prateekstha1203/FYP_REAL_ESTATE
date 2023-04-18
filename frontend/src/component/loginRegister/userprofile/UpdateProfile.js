@@ -23,7 +23,7 @@ const UpdateProfile = ({ history }) => {
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [avatar, setAvatar] = useState();
-  // const [avatarPreview, setAvatarPreview] = useState("/profile.png");
+  const [avatarPreview, setAvatarPreview] = useState("/profile.png");
 
   const updateProfileSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ const UpdateProfile = ({ history }) => {
 
     reader.onload = () => {
       if (reader.readyState === 2) {
-        // setAvatarPreview(reader.result);
+        setAvatarPreview(reader.result);
         setAvatar(reader.result);
       }
     };
@@ -58,14 +58,15 @@ const UpdateProfile = ({ history }) => {
       setEmail(user.email);
       setMobile(user.mobile);
 
-      // if (user.avatar && user.avatar.url) {
-      //   setAvatarPreview(user.avatar.url);
-      // } else {
-      //   setAvatarPreview("/profile.png");
-      // }
+      if (user.avatar && user.avatar.url) {
+        setAvatarPreview(user.avatar.url);
+      } else {
+        setAvatarPreview("/profile.png");
+      }
     }
 
     if (error) {
+      console.log(error)
       toast.error(error);
       dispatch(clearErrors());
     }
@@ -180,7 +181,7 @@ const UpdateProfile = ({ history }) => {
                         </div>
                       </div>
                     </div>
-                    {/* <div className="row mb-3">
+                    <div className="row mb-3">
                       <div className="col-md-3">
                         <div id="updateProfileImage" className="form-group">
                           <img src={avatarPreview} alt="Avatar Preview" />
@@ -197,7 +198,7 @@ const UpdateProfile = ({ history }) => {
                           />
                         </div>
                       </div> 
-                    </div> */}
+                    </div>
                     <button
                       type="submit"
                       value="Update"
