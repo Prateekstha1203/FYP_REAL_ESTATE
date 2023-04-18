@@ -1,9 +1,4 @@
 import {
-  ADD_TO_WISHLIST,
-  REMOVE_FROM_WISHLIST,
-  GET_WISHLIST,
-  ADD_TO_COMPARE,
-  REMOVE_FROM_COMPARE,
   FETCH_WISHLIST_PROPERTIES_REQUEST,
   FETCH_WISHLIST_PROPERTIES_SUCCESS,
   FETCH_WISHLIST_PROPERTIES_FAILURE,
@@ -11,7 +6,6 @@ import {
 } from "../constans/WistlistConstans";
 import axios from "axios";
 
-// Action for adding a property to the wishlist
 export const addToWishlist = (propertyId) => async (dispatch) => {
   try {
     const response = await axios.post(`/addToWishlist/${propertyId}`);
@@ -27,7 +21,6 @@ export const addToWishlist = (propertyId) => async (dispatch) => {
   }
 };
 
-// Action for removing a property from the wishlist
 export const removeFromWishlist = (propertyId) => async (dispatch) => {
   try {
     const response = await axios.delete(`/removeFromWishlist/${propertyId}`);
@@ -42,25 +35,6 @@ export const removeFromWishlist = (propertyId) => async (dispatch) => {
     console.error(error);
   }
 };
-
-
-// export const getWishlist = async (userId) => {
-//   try {
-//     const response = await axios.get(`/wishlist`, {
-//       params: {
-//         user: userId,
-//       },
-//     });
-
-//     if (response.data.success) {
-//       return response.data.wishlist;
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
-
 
 export const getWishlist = () => async (dispatch) => {
   try {

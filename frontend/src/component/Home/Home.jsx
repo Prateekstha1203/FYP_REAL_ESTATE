@@ -9,7 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { clearErrors, getProperty } from "../../actions/PropertyActions";
 import RentalProperties from "./RentorSell/RentProperties";
-import Agents from "./Agent/Agents";
 import SaleProperties from "./RentorSell/SellListing";
 import Slider from "./Slider/Slider";
 import NewListing from "./NewListing/NewListing";
@@ -35,9 +34,6 @@ const Home = () => {
       <RentalProperties  className="section-margin"/>
 
       <SaleProperties className="section-margin"/>
-      
-      {/* <Properties /> */}
-
       <Footer />
       <ToastContainer
         position="bottom-center"

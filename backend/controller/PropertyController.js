@@ -1,20 +1,54 @@
-const Property = require("../models/PropertyModel.js");
 const ErrorHandler = require("../utils/ErrorHandler.js");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures.js");
 const cloudinary = require("cloudinary");
+
+const Property = require("../models/PropertyModel.js");
 const axios = require("axios");
 const AWS = require("aws-sdk");
 const {
-  aws,
-  adminEmail,
-  amentiesConfig,
-  mapboxConfig,
+  aws
 } = require("../config/.config");
 
 AWS.config.update(aws);
 const { v4: uuidv4 } = require("uuid");
 const ses = new AWS.SES({ apiVersion: "2010-12-01" });
+
+exports.sendAgentEmail = async (req, res) => {
+  const { name, email, message, propertyId } = req.body;
+
+  try {
+    // Get the agent email from the property schema
+    const property = await Property.findById(propertyId).populate("user");
+    const agentEmail = property.user.email;
+    console.log(agentEmail);
+    // Construct the email message
+    const params = {
+      Destination: {
+        ToAddresses: [agentEmail],
+      },
+      Message: {
+        Body: {
+          Text: {
+            Data: message,
+          },
+        },
+        Subject: {
+          Data: `Message from :${name} Email: (${email})`,
+        },
+      },
+      Source: "Prateekshrestha1649@gmail.com",
+    };
+
+    // Send the email
+    const result = await ses.sendEmail(params).promise();
+
+    res.status(200).json({ message: "Email sent successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to send email." });
+  }
+};
 
 exports.createProperty = catchAsyncErrors(async (req, res, next) => {
   try {
@@ -217,6 +251,113 @@ exports.getTopListings = catchAsyncErrors(async (req, res, next) => {
 });
 
 
+// exports.getPropertyLocation = async (req, res, next) => {
+//   const propertyId = req.params.id;
+//   const AMENITY_CATEGORIES = ["hospital", "park", "restaurant", "super market"];
+//   function haversine(lat1, lon1, lat2, lon2) {
+//     const toRadians = (degrees) => (degrees * Math.PI) / 180;
+//     const R = 6371; // Earth's radius in kilometers
+//     const φ1 = toRadians(lat1);
+//     const φ2 = toRadians(lat2);
+//     const Δφ = toRadians(lat2 - lat1);
+//     const Δλ = toRadians(lon2 - lon1);
+
+//     const a =
+//       Math.sin(Δφ / 2) ** 2 +
+//       Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
+//       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+//     return R * c;
+//   }
+//   try {
+//     const property = await Property.findById(propertyId);
+
+//     if (!property) {
+//       return res.status(404).json({ message: "Property not found" });
+//     }
+//     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+//       property.address
+//     )}.json?access_token=pk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2w5ZHVicmM4MGJ3YTNvcDlhemhxMXh4NiJ9.pPca72n4BLDfidsxfvd9Ag`;
+
+//     const geocodeResponse = await axios.get(geocodeUrl);
+//     const geocodeData = geocodeResponse.data;
+
+//     if (!geocodeData.features || geocodeData.features.length === 0) {
+//       return res.status(404).json({ message: "Address not found" });
+//     }
+
+//     const longitude = geocodeData.features[0].center[0];
+//     const latitude = geocodeData.features[0].center[1];
+
+//     const allAmenities = await Promise.all(
+//       AMENITY_CATEGORIES.map(async (category) => {
+//         const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=`;
+
+//         const response = await axios.get(url);
+//         const data = response.data;
+//         if (!data.results || data.results.length === 0) {
+//           return null;
+//         }
+//         return {
+//           allAmenities: data.results,
+//         };
+//       })
+//     );
+//     const amenities = await Promise.all(
+//       AMENITY_CATEGORIES.map(async (category) => {
+//         const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyDDSbDmkmufM1u4uwfMKkPAunPDKSZ7LzM`;
+
+//         const response = await axios.get(url);
+//         const data = response.data;
+
+//         if (!data.results || data.results.length === 0) {
+//           return null;
+//         }
+
+//         const amenities = data.results.map((result) => ({
+//           name: result.name,
+//           distance: (
+//             haversine(
+//               latitude,
+//               longitude,
+//               result.geometry.location.lat,
+//               result.geometry.location.lng
+//             ) * 1000
+//           ).toFixed(2),
+//           location: {
+//             latitude: result.geometry.location.lat,
+//             longitude: result.geometry.location.lng,
+//           },
+//         }));
+
+//         const closestAmenity = amenities.reduce((prev, curr) => {
+//           const prevDistance = prev.distance;
+//           const currDistance = curr.distance;
+
+//           return prevDistance < currDistance ? prev : curr;
+//         });
+
+//         return {
+//           category: category,
+//           name: closestAmenity.name,
+//           distance: closestAmenity.distance,
+//           location: closestAmenity.location,
+//         };
+//       })
+//     );
+
+//     const validAmenities = amenities.filter((amenity) => amenity !== null);
+//     res.json({
+//       amenities:amenities,
+//       longitude: longitude,
+//       latitude: latitude,
+//       property,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+
 exports.getPropertyLocation = async (req, res, next) => {
   const propertyId = req.params.id;
   const AMENITY_CATEGORIES = ["hospital", "park", "restaurant", "super market"];
@@ -227,7 +368,6 @@ exports.getPropertyLocation = async (req, res, next) => {
     const φ2 = toRadians(lat2);
     const Δφ = toRadians(lat2 - lat1);
     const Δλ = toRadians(lon2 - lon1);
-
     const a =
       Math.sin(Δφ / 2) ** 2 +
       Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
@@ -242,6 +382,7 @@ exports.getPropertyLocation = async (req, res, next) => {
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
+
     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
       property.address
     )}.json?access_token=pk.eyJ1IjoicHJhdGVlazE2NDkiLCJhIjoiY2w5ZHVicmM4MGJ3YTNvcDlhemhxMXh4NiJ9.pPca72n4BLDfidsxfvd9Ag`;
@@ -255,24 +396,24 @@ exports.getPropertyLocation = async (req, res, next) => {
 
     const longitude = geocodeData.features[0].center[0];
     const latitude = geocodeData.features[0].center[1];
+    const allAmenities = await Promise.all(
+      AMENITY_CATEGORIES.map(async (category) => {
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyAY-Rz04sTTq8N5a9LvJJKXuAZqhtCpIY4`;
+//AIzaSyAY-Rz04sTTq8N5a9LvJJKXuAZqhtCpIY4
+        const response = await axios.get(url);
+        const data = response.data;
 
-    // const allAmenities = await Promise.all(
-    //   AMENITY_CATEGORIES.map(async (category) => {
-    //     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=`;
-
-    //     const response = await axios.get(url);
-    //     const data = response.data;
-    //     if (!data.results || data.results.length === 0) {
-    //       return null;
-    //     }
-    //     return {
-    //       allAmenities: data.results,
-    //     };
-    //   })
-    // );
+        if (!data.results || data.results.length === 0) {
+          return null;
+        }
+        return {
+          allAmenities:data.results
+        };
+      })
+    );
     const amenities = await Promise.all(
       AMENITY_CATEGORIES.map(async (category) => {
-        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyDDSbDmkmufM1u4uwfMKkPAunPDKSZ7LzM`;
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${category}&key=AIzaSyAY-Rz04sTTq8N5a9LvJJKXuAZqhtCpIY4`;
 
         const response = await axios.get(url);
         const data = response.data;
@@ -280,7 +421,6 @@ exports.getPropertyLocation = async (req, res, next) => {
         if (!data.results || data.results.length === 0) {
           return null;
         }
-
         const amenities = data.results.map((result) => ({
           name: result.name,
           distance: (
@@ -312,51 +452,15 @@ exports.getPropertyLocation = async (req, res, next) => {
         };
       })
     );
-
     const validAmenities = amenities.filter((amenity) => amenity !== null);
     res.json({
-      amenities:amenities,
+      amenities: validAmenities,
       longitude: longitude,
       latitude: latitude,
       property,
+      allAmenities: allAmenities,
     });
   } catch (error) {
     next(error);
-  }
-};
-
-exports.sendAgentEmail = async (req, res) => {
-  const { name, email, message, propertyId } = req.body;
-
-  try {
-    // Get the agent email from the property schema
-    const property = await Property.findById(propertyId).populate("user");
-    const agentEmail = property.user.email;
-    console.log(agentEmail);
-    // Construct the email message
-    const params = {
-      Destination: {
-        ToAddresses: [agentEmail],
-      },
-      Message: {
-        Body: {
-          Text: {
-            Data: message,
-          },
-        },
-        Subject: {
-          Data: `Message from :${name} Email: (${email})`,
-        },
-      },
-      Source: "Prateekshrestha1649@gmail.com",
-    };
-
-    // Send the email
-    const result = await ses.sendEmail(params).promise();
-
-    res.status(200).json({ message: "Email sent successfully." });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to send email." });
   }
 };

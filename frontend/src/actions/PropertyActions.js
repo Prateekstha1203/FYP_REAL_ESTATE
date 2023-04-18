@@ -98,7 +98,6 @@ export const getPropertyDetails = (id) => async (dispatch) => {
     dispatch({ type: PROPERTY_DETAILS_REQUEST });
 
     const { data } = await axios.get(`/property/${id}`);
-    console.log(data);
     dispatch({
       type: PROPERTY_DETAILS_SUCCESS,
       payload: data,
@@ -120,12 +119,8 @@ export const createProperty = (propertyData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const { data } = await axios.post(
-      `/property/new`,
-      propertyData,
-      config
-    );
-console.log(data)
+    const { data } = await axios.post(`/property/new`, propertyData, config);
+    console.log(data);
     dispatch({
       type: NEW_PROPERTY_SUCCESS,
       payload: data,
@@ -138,12 +133,11 @@ console.log(data)
   }
 };
 export const getAgentProperties = (id) => async (dispatch) => {
-  console.log(id);
   try {
     dispatch({ type: GET_AGENT_PROPERTIES_REQUEST });
 
     const { data } = await axios.get(`/agent/viewlisting/${id}`);
-console.log(data)
+    console.log(data.properties);
     dispatch({
       type: GET_AGENT_PROPERTIES_SUCCESS,
       payload: data.properties,
@@ -224,11 +218,7 @@ export const updateProperty = (id, propertyData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const { data } = await axios.put(
-      `/property/${id}`,
-      propertyData,
-      config
-    );
+    const { data } = await axios.put(`/property/${id}`, propertyData, config);
 
     dispatch({
       type: UPDATE_PROPERTY_SUCCESS,

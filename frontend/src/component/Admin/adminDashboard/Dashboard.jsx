@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../SideBarAdmin/Sidebar";
 import "./dashboard.css";
-import { Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import { Doughnut, Bar } from "react-chartjs-2";
 import { useSelector, useDispatch } from "react-redux";
-import MetaData from "../../../more/Metadata.js";
 import Loading from "../../../more/Loader.js";
 import { getAdminProperty } from "../../../actions/PropertyActions.js";
 import { getAllUsers } from "../../../actions/userAction.js";

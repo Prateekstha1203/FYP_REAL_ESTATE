@@ -44,8 +44,6 @@ const NewListing = () => {
       ) : error ? (
         <h2>{error}</h2>
       ) : (
-        
-         
           <div className="container my-4">
             <div class="row mb-3 align-items-center">
               <div class="col-lg-6">
