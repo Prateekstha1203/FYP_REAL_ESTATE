@@ -21,11 +21,12 @@ import MetaData from "../../../more/Metadata";
 
 const AgentProperty = ({ history }) => {
   const dispatch = useDispatch();
-  const { properties, error ,loading} = useSelector((state) => state.properties);
   const { error: deleteError, isDeleted } = useSelector(
     (state) => state.deleteProperty
   );
-
+  const { agentProperties, error, loading } = useSelector(
+    (state) => state.agentProperties
+  );
   const deletePropertyHandler = (id) => {
     dispatch(deleteProperty(id));
   };
@@ -35,35 +36,35 @@ const AgentProperty = ({ history }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
 
-  const filteredProperties = properties.filter(
-    (listing) =>
-      listing.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      listing.propertyType.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredProperties = agentProperties.filter(
+  //   (listing) =>
+  //     listing.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     listing.propertyType.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
-  const pageCount = Math.ceil(filteredProperties.length / propertiesPerPage);
+  // const pageCount = Math.ceil(filteredProperties.length / propertiesPerPage);
 
-  const handlePageClick = ({ selected }) => {
-    setCurrentPage(selected);
-  };
+  // const handlePageClick = ({ selected }) => {
+  //   setCurrentPage(selected);
+  // };
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-    if (deleteError) {
-      toast.error(deleteError);
-      dispatch(clearErrors());
-    }
+  // useEffect(() => {
+  //   if (error) {
+  //     toast.error(error);
+  //     dispatch(clearErrors());
+  //   }
+  //   if (deleteError) {
+  //     toast.error(deleteError);
+  //     dispatch(clearErrors());
+  //   }
 
-    if (isDeleted) {
-      toast.success("Property Deleted Successfully");
-      history.push("/agentDashboard");
-      dispatch({ type: DELETE_PROPERTY_RESET });
-    }
-    dispatch(getAgentProperties);
-  }, [dispatch, error, isDeleted, history]);
+  //   if (isDeleted) {
+  //     toast.success("Property Deleted Successfully");
+  //     history.push("/agentDashboard");
+  //     dispatch({ type: DELETE_PROPERTY_RESET });
+  //   }
+  //   dispatch(getAgentProperties);
+  // }, [dispatch, error, isDeleted, history]);
 
   return (
     <Fragment>
@@ -94,7 +95,7 @@ const AgentProperty = ({ history }) => {
                     <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody>
+                {/* <tbody>
                   {filteredProperties
                     .slice(
                       currentPage * propertiesPerPage,
@@ -119,13 +120,16 @@ const AgentProperty = ({ history }) => {
                         </td>
                       </tr>
                     ))}
+                </tbody> */}
+                <tbody>
+
                 </tbody>
               </table>
               <ReactPaginate
                 previousLabel={"← Previous"}
                 nextLabel={"Next →"}
-                pageCount={pageCount}
-                onPageChange={handlePageClick}
+                // pageCount={pageCount}
+                // onPageChange={handlePageClick}
                 containerClassName={"pagination"}
                 previousLinkClassName={"pagination__link"}
                 nextLinkClassName={"pagination__link"}
@@ -152,6 +156,3 @@ const AgentProperty = ({ history }) => {
 };
 
 export default AgentProperty;
-
-
-

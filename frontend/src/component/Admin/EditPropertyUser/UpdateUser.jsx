@@ -11,7 +11,7 @@ import {
   updateUser,
   clearErrors,
 } from "../../../actions/userAction";
-import { Form, Button ,Container} from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 import Loading from "../../../more/Loader";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -23,7 +23,7 @@ const UpdateUser = ({ history, match }) => {
     error: userDetailsError,
     user: userDetails,
   } = useSelector((state) => state.userDetails);
-
+  console.log(userDetails._id);
   const { loading: updateLoading, error: updateError, isUpdated } = useSelector(
     (state) => state.profile
   );
@@ -115,13 +115,13 @@ const UpdateUser = ({ history, match }) => {
                   </Form.Group>
 
                   <Form.Group className="formgroup">
-                    <VerifiedUserIcon/>
+                    <VerifiedUserIcon />
                     <Form.Control
                       as="select"
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
                       required
-                      style={{ paddingLeft: '3.2rem' }}
+                      style={{ paddingLeft: "3.2rem" }}
                     >
                       <option value="">Choose Role</option>
                       <option value="admin">admin</option>

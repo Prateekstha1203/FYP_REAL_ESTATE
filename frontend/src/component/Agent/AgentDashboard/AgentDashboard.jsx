@@ -26,10 +26,13 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 const admin = () => {
   const dispatch = useDispatch();
   const { properties, loading } = useSelector((state) => state.properties);
+  
+
   const [showSidebar, setShowSidebar] = useState(true);
   useEffect(() => {
     dispatch(getAgentProperties());
   }, [dispatch]);
+  
   const category1 = properties.filter(
     (property) => property.category === "Banglow"
   ).length;
@@ -98,7 +101,7 @@ const admin = () => {
           <div className="container-fluid d-flex p-0">
             {showSidebar && (
               <div className="col-2">
-                <AgentSidebar />
+                <AgentSidebar  />
               </div>
             )}
             <div class="wrapper container">
