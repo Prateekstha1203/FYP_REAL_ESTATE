@@ -71,10 +71,10 @@ const PropertyDetail = ({ match, history }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const { name, email, userMessage } = formData;
+    const { name, email, message } = formData;
     const propertyId = match.params.id;
-    console.log(name, email, userMessage, propertyId);
-    dispatch(sendAgentEmail(name, email, userMessage, propertyId));
+    console.log(name, email, message, propertyId);
+    dispatch(sendAgentEmail(name, email, message, propertyId));
   };
 
   return (
@@ -207,7 +207,7 @@ const PropertyDetail = ({ match, history }) => {
                     <textarea
                       name="message"
                       placeholder="Message"
-                      value={formData.userMessage}
+                      value={formData.message}
                       onChange={handleInputChange}
                     />
                     <div className="d-flex gap-x-2">

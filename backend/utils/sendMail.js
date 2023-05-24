@@ -5,13 +5,13 @@ const sendMail = async (options) => {
 
    service: "hotmail",
     auth: {
-        user: 'fortunerealestate1649@outlook.com',
+        user: 'fortunerealestate1234@outlook.com',
         pass: 'Fortune@123'
     }
 });
   
     const mailOptions = {
-      from: ' "Fortune Real Estate"<Fortunerealestate1649@outlook.com>',
+      from: ' "Fortune Real Estate"<Fortunerealestate1234@outlook.com>',
       to: options.email,
       subject: options.subject,
       text: options.message,

@@ -13,7 +13,7 @@ router.route("/newListing").get(getTopListings);
 router
   .route("/admin/properties")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminProperties);
-router.route("/agent/viewlisting/:id").get(isAuthenticatedUser,authorizeRoles("agent"), getAgentProperties);
+router.route("/agent/viewlisting/:id").get(isAuthenticatedUser, getAgentProperties);
 router
   .route("/property/new")
   .post(isAuthenticatedUser, authorizeRoles("agent"), createProperty);

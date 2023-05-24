@@ -132,15 +132,37 @@ export const createProperty = (propertyData) => async (dispatch) => {
     });
   }
 };
+// export const getAgentProperties = (id) => async (dispatch) => {
+//   try {
+//     dispatch({ type: GET_AGENT_PROPERTIES_REQUEST });
+
+//     const { data } = await axios.get(`/agent/viewlisting/${id}`);
+//     console.log(data.properties);
+//     dispatch({
+//       type: GET_AGENT_PROPERTIES_SUCCESS,
+//       payload: data.properties,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: GET_AGENT_PROPERTIES_FAIL,
+//       payload:
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     });
+//   }
+// };
+
+
 export const getAgentProperties = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_AGENT_PROPERTIES_REQUEST });
 
     const { data } = await axios.get(`/agent/viewlisting/${id}`);
-    console.log(data.properties);
+    console.log(data.agent_properties);
     dispatch({
       type: GET_AGENT_PROPERTIES_SUCCESS,
-      payload: data.properties,
+      payload: data.agent_properties,
     });
   } catch (error) {
     dispatch({
@@ -152,6 +174,7 @@ export const getAgentProperties = (id) => async (dispatch) => {
     });
   }
 };
+
 
 // Get Admin Products -----Admin
 export const getAdminProperty = () => async (dispatch) => {
@@ -239,19 +262,30 @@ export const clearErrors = () => async (dispatch) => {
   });
 };
 
-export const sendAgentEmail = (name, email, userMessage, propertyId) => async (
+export const sendAgentEmail = (name, email, message, propertyId) => async (
   dispatch
 ) => {
   try {
     dispatch({
       type: SEND_EMAIL_REQUEST,
     });
+    // Fetch property details
+    const { data: propertyData } = await axios.get(`/property/${propertyId}`);
 
+    // Extract the necessary property details
+    const propertyDetails = {
+      title: propertyData.property.propertyTitle,
+      propertyType: propertyData.property.propertyType,
+      category: propertyData.property.category,
+      // description: propertyData.property.description,
+      // Add more details as needed
+    };
     const { data } = await axios.post("/property/:id", {
       name,
       email,
-      userMessage,
+      message,
       propertyId,
+      propertyDetails,
     });
     dispatch({
       type: SEND_EMAIL_SUCCESS,
@@ -320,9 +354,9 @@ export const getSaleProperties = () => async (dispatch) => {
 //       dispatch({ type: FETCH_AGENT_PROPERTIES_REQUEST });
 //       const response = await axios.get(`/agent/viewlisting/${id}`);
 //       console.log(response);
-//       const properties = response.data;
+//       const agentProperties = response.data;
 //       console.log(properties);
-//       dispatch({ type: FETCH_AGENT_PROPERTIES_SUCCESS, payload: properties });
+//       dispatch({ type: FETCH_AGENT_PROPERTIES_SUCCESS, payload: agentProperties });
 //       return response.data;
 //     } catch (error) {
 //       console.error(error);

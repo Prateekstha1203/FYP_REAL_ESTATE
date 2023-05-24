@@ -14,14 +14,57 @@ AWS.config.update(aws);
 const { v4: uuidv4 } = require("uuid");
 const ses = new AWS.SES({ apiVersion: "2010-12-01" });
 
+// exports.sendAgentEmail = async (req, res) => {
+//   const { name, email, message, propertyId } = req.body;
+
+//   try {
+//     // Get the agent email from the property schema
+//     const property = await Property.findById(propertyId).populate("user");
+//     const agentEmail = property.user.email;
+//     console.log(agentEmail);
+//     // Construct the email message
+//     const params = {
+//       Destination: {
+//         ToAddresses: [agentEmail],
+//       },
+//       Message: {
+//         Body: {
+//           Text: {
+//             Data: message,
+//           },
+//         },
+//         Subject: {
+//           Data: `Message from :${name} Email: (${email})`,
+//         },
+//       },
+//       Source: "Prateekshrestha1649@gmail.com",
+//     };
+
+//     // Send the email
+//     const result = await ses.sendEmail(params).promise();
+
+//     res.status(200).json({ message: "Email sent successfully." });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Failed to send email." });
+//   }
+// };
+
 exports.sendAgentEmail = async (req, res) => {
-  const { name, email, message, propertyId } = req.body;
+  const { name, email, message, propertyId, propertyDetails } = req.body;
 
   try {
     // Get the agent email from the property schema
+    // const property = await Property.findById(propertyId).populate("user");
+    // const agentEmail = property.user.email;
+    // console.log(agentEmail);
     const property = await Property.findById(propertyId).populate("user");
+
+    if (!property) {
+      return res.status(404).json({ message: "Property not found." });
+    }
+
     const agentEmail = property.user.email;
-    console.log(agentEmail);
     // Construct the email message
     const params = {
       Destination: {
@@ -30,11 +73,20 @@ exports.sendAgentEmail = async (req, res) => {
       Message: {
         Body: {
           Text: {
-            Data: message,
+            Data: `
+              Message from: ${name}
+              Email: (${email})
+              Title: ${propertyDetails.title}
+              Category: ${propertyDetails.category}
+              Property Type : ${propertyDetails.propertyType}
+
+              Message: ${message}
+              
+            `,
           },
         },
         Subject: {
-          Data: `Message from :${name} Email: (${email})`,
+          Data: `Message from: ${name} Email: (${email})`,
         },
       },
       Source: "Prateekshrestha1649@gmail.com",
@@ -49,6 +101,7 @@ exports.sendAgentEmail = async (req, res) => {
     res.status(500).json({ message: "Failed to send email." });
   }
 };
+
 
 exports.createProperty = catchAsyncErrors(async (req, res, next) => {
   try {
@@ -211,15 +264,28 @@ exports.getSaleProperties = async (req, res, next) => {
   }
 };
 
+// exports.getAgentProperties = async (req, res) => {
+//   try {
+//     const agentProperties = await Property.find({ user: req.params.id });
+//     res.json(agentProperties);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Server Error");
+//   }
+// };
+
 exports.getAgentProperties = async (req, res) => {
   try {
-    const properties = await Property.find({ user: req.params.id });
-    res.json(properties);
+    const agentProperties = await Property.find({ user: req.params.id });
+    res.json({ agent_properties: agentProperties });
   } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");
   }
 };
+
+
+
 
 // single Product details
 exports.getSingleProperty = catchAsyncErrors(async (req, res, next) => {

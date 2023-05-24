@@ -80,6 +80,19 @@ export const propertiesReducer = (state = { properties: [] }, action) => {
       return state;
   }
 };
+// export const getAgentPropertiesReducer = (state = { agentProperties: [] }, action) => {
+//   switch (action.type) {
+//     case GET_AGENT_PROPERTIES_REQUEST:
+//       return { loading: true, agentProperties: [] };
+//     case GET_AGENT_PROPERTIES_SUCCESS:
+//       return { loading: false, agentProperties: action.payload };
+//     case GET_AGENT_PROPERTIES_FAIL:
+//       return { loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };
+
 export const getAgentPropertiesReducer = (state = { agentProperties: [] }, action) => {
   switch (action.type) {
     case GET_AGENT_PROPERTIES_REQUEST:
@@ -92,6 +105,7 @@ export const getAgentPropertiesReducer = (state = { agentProperties: [] }, actio
       return state;
   }
 };
+
 export const propertyDetailsReducer = (state = { property: {} }, action) => {
   switch (action.type) {
     case PROPERTY_DETAILS_REQUEST:

@@ -2,7 +2,10 @@ import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./agentSidebar.css";
 import Fortune from "../../Common/fortune.png";
-const AgentSidebar = ({ id }) => {
+import { useSelector } from "react-redux";
+const AgentSidebar = () => {
+  const { user, loading, isAuthenticated } = useSelector((state) => state.user);
+console.log(user._id)
   return (
     <>
       <div>
@@ -23,7 +26,7 @@ const AgentSidebar = ({ id }) => {
                   </NavLink>
                   <NavLink
                     className="listingType"
-                    to={`/agent/viewlisting/${id}`}
+                    to={`/agent/viewlisting/${user._id}`}
                   >
                     <i className="dashboardIcon ms-4 me-4 fas fa-list-alt"></i>
                     <span className="title">View Listing</span>
